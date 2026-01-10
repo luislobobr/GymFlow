@@ -146,16 +146,12 @@ const firebaseAuth = {
             await this._handleUser(user);
             return user;
         } catch (error) {
-            // 3. Fallback to Redirect if Popup fails (blocked, closed, mobile desktop mode)
-            if (error.code === 'auth/popup-blocked' ||
-                error.code === 'auth/popup-closed-by-user' ||
-                error.code === 'auth/cancelled-popup-request') {
-
-                console.warn('Popup failed, falling back to redirect:', error.code);
-                await signInWithRedirect(auth, googleProvider);
-                return null;
-            }
-            throw error;
+            // 3. FALLBACK TO REDIRECT ON ANY ERROR
+            // If the popup fails for ANY reason (closed, blocked, network, etc),
+            // we assume the environment is hostile to popups (common on mobile in-app browsers).
+            console.warn('Popup login failed, forcing redirect fallback. Error:', error);
+            await signInWithRedirect(auth, googleProvider);
+            return null;
         }
     },
 
