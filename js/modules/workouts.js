@@ -5,267 +5,269 @@
 
 import { db, STORES } from '../database.js';
 import { timer } from './timer.js';
+import modal from '../components/modal.js';
+import toast from '../components/toast.js';
 
 // Default workout templates
 const WORKOUT_TEMPLATES = [
-    {
-        name: 'PPL - Push (Empurrar)',
-        description: 'Peito, Ombros, Tríceps',
-        color: '#10b981',
-        muscles: ['peito', 'ombros', 'triceps'],
-        exercises: [
-            { exerciseId: 1, name: 'Supino Reto com Barra', sets: 4, reps: '8-12', rest: 90 },
-            { exerciseId: 2, name: 'Supino Inclinado com Halteres', sets: 3, reps: '10-12', rest: 60 },
-            { exerciseId: 34, name: 'Desenvolvimento com Halteres', sets: 4, reps: '8-12', rest: 90 },
-            { exerciseId: 35, name: 'Elevação Lateral', sets: 3, reps: '12-15', rest: 45 },
-            { exerciseId: 49, name: 'Tríceps Corda', sets: 3, reps: '12-15', rest: 45 },
-            { exerciseId: 48, name: 'Tríceps Testa', sets: 3, reps: '10-12', rest: 60 }
-        ]
-    },
-    {
-        name: 'PPL - Pull (Puxar)',
-        description: 'Costas, Bíceps',
-        color: '#06b6d4',
-        muscles: ['costas', 'biceps'],
-        exercises: [
-            { exerciseId: 11, name: 'Barra Fixa', sets: 4, reps: '6-10', rest: 120 },
-            { exerciseId: 13, name: 'Remada Curvada com Barra', sets: 4, reps: '8-12', rest: 90 },
-            { exerciseId: 14, name: 'Remada Sentada no Cabo', sets: 3, reps: '10-12', rest: 60 },
-            { exerciseId: 12, name: 'Puxada Alta', sets: 3, reps: '10-12', rest: 60 },
-            { exerciseId: 41, name: 'Rosca Direta com Barra', sets: 3, reps: '10-12', rest: 60 },
-            { exerciseId: 44, name: 'Rosca Martelo', sets: 3, reps: '12-15', rest: 45 }
-        ]
-    },
-    {
-        name: 'PPL - Legs (Pernas)',
-        description: 'Quadríceps, Posterior, Glúteos, Panturrilha',
-        color: '#8b5cf6',
-        muscles: ['pernas'],
-        exercises: [
-            { exerciseId: 21, name: 'Agachamento Livre', sets: 4, reps: '6-10', rest: 180 },
-            { exerciseId: 22, name: 'Leg Press 45°', sets: 4, reps: '10-12', rest: 120 },
-            { exerciseId: 25, name: 'Stiff', sets: 3, reps: '10-12', rest: 90 },
-            { exerciseId: 23, name: 'Cadeira Extensora', sets: 3, reps: '12-15', rest: 60 },
-            { exerciseId: 24, name: 'Mesa Flexora', sets: 3, reps: '12-15', rest: 60 },
-            { exerciseId: 29, name: 'Panturrilha em Pé', sets: 4, reps: '15-20', rest: 45 }
-        ]
-    }
+  {
+    name: 'PPL - Push (Empurrar)',
+    description: 'Peito, Ombros, Tríceps',
+    color: '#10b981',
+    muscles: ['peito', 'ombros', 'triceps'],
+    exercises: [
+      { exerciseId: 1, name: 'Supino Reto com Barra', sets: 4, reps: '8-12', rest: 90 },
+      { exerciseId: 2, name: 'Supino Inclinado com Halteres', sets: 3, reps: '10-12', rest: 60 },
+      { exerciseId: 34, name: 'Desenvolvimento com Halteres', sets: 4, reps: '8-12', rest: 90 },
+      { exerciseId: 35, name: 'Elevação Lateral', sets: 3, reps: '12-15', rest: 45 },
+      { exerciseId: 49, name: 'Tríceps Corda', sets: 3, reps: '12-15', rest: 45 },
+      { exerciseId: 48, name: 'Tríceps Testa', sets: 3, reps: '10-12', rest: 60 }
+    ]
+  },
+  {
+    name: 'PPL - Pull (Puxar)',
+    description: 'Costas, Bíceps',
+    color: '#06b6d4',
+    muscles: ['costas', 'biceps'],
+    exercises: [
+      { exerciseId: 11, name: 'Barra Fixa', sets: 4, reps: '6-10', rest: 120 },
+      { exerciseId: 13, name: 'Remada Curvada com Barra', sets: 4, reps: '8-12', rest: 90 },
+      { exerciseId: 14, name: 'Remada Sentada no Cabo', sets: 3, reps: '10-12', rest: 60 },
+      { exerciseId: 12, name: 'Puxada Alta', sets: 3, reps: '10-12', rest: 60 },
+      { exerciseId: 41, name: 'Rosca Direta com Barra', sets: 3, reps: '10-12', rest: 60 },
+      { exerciseId: 44, name: 'Rosca Martelo', sets: 3, reps: '12-15', rest: 45 }
+    ]
+  },
+  {
+    name: 'PPL - Legs (Pernas)',
+    description: 'Quadríceps, Posterior, Glúteos, Panturrilha',
+    color: '#8b5cf6',
+    muscles: ['pernas'],
+    exercises: [
+      { exerciseId: 21, name: 'Agachamento Livre', sets: 4, reps: '6-10', rest: 180 },
+      { exerciseId: 22, name: 'Leg Press 45°', sets: 4, reps: '10-12', rest: 120 },
+      { exerciseId: 25, name: 'Stiff', sets: 3, reps: '10-12', rest: 90 },
+      { exerciseId: 23, name: 'Cadeira Extensora', sets: 3, reps: '12-15', rest: 60 },
+      { exerciseId: 24, name: 'Mesa Flexora', sets: 3, reps: '12-15', rest: 60 },
+      { exerciseId: 29, name: 'Panturrilha em Pé', sets: 4, reps: '15-20', rest: 45 }
+    ]
+  }
 ];
 
 class WorkoutsManager {
-    constructor() {
-        this.currentWorkout = null;
-        this.workoutSession = null;
-        this.currentExerciseIndex = 0;
+  constructor() {
+    this.currentWorkout = null;
+    this.workoutSession = null;
+    this.currentExerciseIndex = 0;
+  }
+
+  /**
+   * Get all workouts for current user
+   */
+  async getWorkouts(userId) {
+    return db.getByIndex(STORES.workouts, 'userId', userId);
+  }
+
+  /**
+   * Get workout by ID
+   */
+  async getWorkout(id) {
+    return db.get(STORES.workouts, id);
+  }
+
+  /**
+   * Create new workout
+   */
+  async createWorkout(workout) {
+    return db.add(STORES.workouts, {
+      ...workout,
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  /**
+   * Update workout
+   */
+  async updateWorkout(workout) {
+    return db.update(STORES.workouts, workout);
+  }
+
+  /**
+   * Delete workout
+   */
+  async deleteWorkout(id) {
+    return db.delete(STORES.workouts, id);
+  }
+
+  /**
+   * Create workouts from templates for new user
+   */
+  async createTemplatesForUser(userId) {
+    for (const template of WORKOUT_TEMPLATES) {
+      await this.createWorkout({
+        userId,
+        ...template
+      });
     }
+  }
 
-    /**
-     * Get all workouts for current user
-     */
-    async getWorkouts(userId) {
-        return db.getByIndex(STORES.workouts, 'userId', userId);
+  /**
+   * Start workout execution session
+   */
+  startSession(workout) {
+    this.currentWorkout = workout;
+    this.currentExerciseIndex = 0;
+    this.workoutSession = {
+      workoutId: workout.id,
+      workoutName: workout.name,
+      startTime: new Date().toISOString(),
+      endTime: null,
+      exercises: workout.exercises.map(ex => ({
+        ...ex,
+        completed: false,
+        setsCompleted: 0,
+        logsPerSet: [] // { setNumber, reps, weight, timestamp }
+      }))
+    };
+    return this.workoutSession;
+  }
+
+  /**
+   * Get current exercise in session
+   */
+  getCurrentExercise() {
+    if (!this.workoutSession) return null;
+    return this.workoutSession.exercises[this.currentExerciseIndex];
+  }
+
+  /**
+   * Log a completed set
+   */
+  logSet(setNumber, reps, weight) {
+    if (!this.workoutSession) return;
+
+    const exercise = this.workoutSession.exercises[this.currentExerciseIndex];
+    exercise.logsPerSet.push({
+      setNumber,
+      reps: parseInt(reps),
+      weight: parseFloat(weight),
+      timestamp: new Date().toISOString()
+    });
+    exercise.setsCompleted = exercise.logsPerSet.length;
+
+    // Check if all sets completed
+    if (exercise.setsCompleted >= exercise.sets) {
+      exercise.completed = true;
     }
+  }
 
-    /**
-     * Get workout by ID
-     */
-    async getWorkout(id) {
-        return db.get(STORES.workouts, id);
+  /**
+   * Move to next exercise
+   */
+  nextExercise() {
+    if (!this.workoutSession) return null;
+
+    if (this.currentExerciseIndex < this.workoutSession.exercises.length - 1) {
+      this.currentExerciseIndex++;
+      return this.getCurrentExercise();
     }
+    return null;
+  }
 
-    /**
-     * Create new workout
-     */
-    async createWorkout(workout) {
-        return db.add(STORES.workouts, {
-            ...workout,
-            createdAt: new Date().toISOString()
-        });
+  /**
+   * Move to previous exercise
+   */
+  previousExercise() {
+    if (!this.workoutSession) return null;
+
+    if (this.currentExerciseIndex > 0) {
+      this.currentExerciseIndex--;
+      return this.getCurrentExercise();
     }
+    return null;
+  }
 
-    /**
-     * Update workout
-     */
-    async updateWorkout(workout) {
-        return db.update(STORES.workouts, workout);
+  /**
+   * Skip current exercise
+   */
+  skipExercise() {
+    const exercise = this.getCurrentExercise();
+    if (exercise) {
+      exercise.skipped = true;
     }
+    return this.nextExercise();
+  }
 
-    /**
-     * Delete workout
-     */
-    async deleteWorkout(id) {
-        return db.delete(STORES.workouts, id);
-    }
+  /**
+   * Check if workout is complete
+   */
+  isWorkoutComplete() {
+    if (!this.workoutSession) return false;
+    return this.workoutSession.exercises.every(ex => ex.completed || ex.skipped);
+  }
 
-    /**
-     * Create workouts from templates for new user
-     */
-    async createTemplatesForUser(userId) {
-        for (const template of WORKOUT_TEMPLATES) {
-            await this.createWorkout({
-                userId,
-                ...template
-            });
-        }
-    }
+  /**
+   * Finish workout session
+   */
+  async finishSession(userId) {
+    if (!this.workoutSession) return null;
 
-    /**
-     * Start workout execution session
-     */
-    startSession(workout) {
-        this.currentWorkout = workout;
-        this.currentExerciseIndex = 0;
-        this.workoutSession = {
-            workoutId: workout.id,
-            workoutName: workout.name,
-            startTime: new Date().toISOString(),
-            endTime: null,
-            exercises: workout.exercises.map(ex => ({
-                ...ex,
-                completed: false,
-                setsCompleted: 0,
-                logsPerSet: [] // { setNumber, reps, weight, timestamp }
-            }))
-        };
-        return this.workoutSession;
-    }
+    this.workoutSession.endTime = new Date().toISOString();
+    this.workoutSession.userId = userId;
 
-    /**
-     * Get current exercise in session
-     */
-    getCurrentExercise() {
-        if (!this.workoutSession) return null;
-        return this.workoutSession.exercises[this.currentExerciseIndex];
-    }
+    // Calculate duration
+    const startTime = new Date(this.workoutSession.startTime);
+    const endTime = new Date(this.workoutSession.endTime);
+    this.workoutSession.durationMinutes = Math.round((endTime - startTime) / 60000);
 
-    /**
-     * Log a completed set
-     */
-    logSet(setNumber, reps, weight) {
-        if (!this.workoutSession) return;
+    // Calculate stats
+    this.workoutSession.totalSets = this.workoutSession.exercises.reduce(
+      (sum, ex) => sum + ex.setsCompleted, 0
+    );
+    this.workoutSession.totalVolume = this.workoutSession.exercises.reduce(
+      (sum, ex) => sum + ex.logsPerSet.reduce((s, l) => s + (l.reps * l.weight), 0), 0
+    );
 
-        const exercise = this.workoutSession.exercises[this.currentExerciseIndex];
-        exercise.logsPerSet.push({
-            setNumber,
-            reps: parseInt(reps),
-            weight: parseFloat(weight),
-            timestamp: new Date().toISOString()
-        });
-        exercise.setsCompleted = exercise.logsPerSet.length;
+    // Save to history
+    const historyId = await db.add(STORES.history, this.workoutSession);
 
-        // Check if all sets completed
-        if (exercise.setsCompleted >= exercise.sets) {
-            exercise.completed = true;
-        }
-    }
+    // Clear session
+    const completedSession = { ...this.workoutSession, id: historyId };
+    this.workoutSession = null;
+    this.currentWorkout = null;
+    this.currentExerciseIndex = 0;
 
-    /**
-     * Move to next exercise
-     */
-    nextExercise() {
-        if (!this.workoutSession) return null;
+    return completedSession;
+  }
 
-        if (this.currentExerciseIndex < this.workoutSession.exercises.length - 1) {
-            this.currentExerciseIndex++;
-            return this.getCurrentExercise();
-        }
-        return null;
-    }
+  /**
+   * Cancel workout session
+   */
+  cancelSession() {
+    this.workoutSession = null;
+    this.currentWorkout = null;
+    this.currentExerciseIndex = 0;
+  }
 
-    /**
-     * Move to previous exercise
-     */
-    previousExercise() {
-        if (!this.workoutSession) return null;
+  /**
+   * Get workout progress percentage
+   */
+  getSessionProgress() {
+    if (!this.workoutSession) return 0;
+    const completed = this.workoutSession.exercises.filter(ex => ex.completed || ex.skipped).length;
+    return Math.round((completed / this.workoutSession.exercises.length) * 100);
+  }
 
-        if (this.currentExerciseIndex > 0) {
-            this.currentExerciseIndex--;
-            return this.getCurrentExercise();
-        }
-        return null;
-    }
+  /**
+   * Render workout card HTML
+   */
+  renderWorkoutCard(workout, isExecuting = false) {
+    const exerciseCount = workout.exercises?.length || 0;
+    const estimatedTime = workout.exercises?.reduce((sum, ex) => {
+      return sum + (ex.sets * 1.5) + (ex.sets * (ex.rest || 60) / 60);
+    }, 0) || 0;
 
-    /**
-     * Skip current exercise
-     */
-    skipExercise() {
-        const exercise = this.getCurrentExercise();
-        if (exercise) {
-            exercise.skipped = true;
-        }
-        return this.nextExercise();
-    }
-
-    /**
-     * Check if workout is complete
-     */
-    isWorkoutComplete() {
-        if (!this.workoutSession) return false;
-        return this.workoutSession.exercises.every(ex => ex.completed || ex.skipped);
-    }
-
-    /**
-     * Finish workout session
-     */
-    async finishSession(userId) {
-        if (!this.workoutSession) return null;
-
-        this.workoutSession.endTime = new Date().toISOString();
-        this.workoutSession.userId = userId;
-
-        // Calculate duration
-        const startTime = new Date(this.workoutSession.startTime);
-        const endTime = new Date(this.workoutSession.endTime);
-        this.workoutSession.durationMinutes = Math.round((endTime - startTime) / 60000);
-
-        // Calculate stats
-        this.workoutSession.totalSets = this.workoutSession.exercises.reduce(
-            (sum, ex) => sum + ex.setsCompleted, 0
-        );
-        this.workoutSession.totalVolume = this.workoutSession.exercises.reduce(
-            (sum, ex) => sum + ex.logsPerSet.reduce((s, l) => s + (l.reps * l.weight), 0), 0
-        );
-
-        // Save to history
-        const historyId = await db.add(STORES.history, this.workoutSession);
-
-        // Clear session
-        const completedSession = { ...this.workoutSession, id: historyId };
-        this.workoutSession = null;
-        this.currentWorkout = null;
-        this.currentExerciseIndex = 0;
-
-        return completedSession;
-    }
-
-    /**
-     * Cancel workout session
-     */
-    cancelSession() {
-        this.workoutSession = null;
-        this.currentWorkout = null;
-        this.currentExerciseIndex = 0;
-    }
-
-    /**
-     * Get workout progress percentage
-     */
-    getSessionProgress() {
-        if (!this.workoutSession) return 0;
-        const completed = this.workoutSession.exercises.filter(ex => ex.completed || ex.skipped).length;
-        return Math.round((completed / this.workoutSession.exercises.length) * 100);
-    }
-
-    /**
-     * Render workout card HTML
-     */
-    renderWorkoutCard(workout, isExecuting = false) {
-        const exerciseCount = workout.exercises?.length || 0;
-        const estimatedTime = workout.exercises?.reduce((sum, ex) => {
-            return sum + (ex.sets * 1.5) + (ex.sets * (ex.rest || 60) / 60);
-        }, 0) || 0;
-
-        return `
+    return `
       <div class="card card-gradient workout-card" data-workout-id="${workout.id}" style="cursor: pointer; border-left: 4px solid ${workout.color || 'var(--accent-primary)'}">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-md);">
           <div>
@@ -304,19 +306,19 @@ class WorkoutsManager {
         </div>
       </div>
     `;
-    }
+  }
 
-    /**
-     * Render workout execution UI
-     */
-    renderExecutionUI(container) {
-        if (!this.workoutSession) return;
+  /**
+   * Render workout execution UI
+   */
+  renderExecutionUI(container) {
+    if (!this.workoutSession) return;
 
-        const exercise = this.getCurrentExercise();
-        const progress = this.getSessionProgress();
-        const totalExercises = this.workoutSession.exercises.length;
+    const exercise = this.getCurrentExercise();
+    const progress = this.getSessionProgress();
+    const totalExercises = this.workoutSession.exercises.length;
 
-        container.innerHTML = `
+    container.innerHTML = `
       <div class="workout-execution animate-slide-up">
         <!-- Header -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
@@ -352,6 +354,12 @@ class WorkoutsManager {
               </svg>
             </div>
             <h2 style="margin-bottom: var(--spacing-sm);">${exercise.name}</h2>
+            <button class="btn btn-sm btn-ghost watch-video-btn" title="Ver vídeo demonstrativo" style="margin-bottom: var(--spacing-sm); color: var(--accent-primary);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Ver Vídeo
+            </button>
             <p style="color: var(--accent-primary); font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--spacing-md);">
               ${exercise.sets} séries × ${exercise.reps} reps
             </p>
@@ -402,43 +410,43 @@ class WorkoutsManager {
             Pular
           </button>
           ${this.currentExerciseIndex === totalExercises - 1
-                ? `<button class="btn btn-success finish-workout-btn">
+        ? `<button class="btn btn-success finish-workout-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
                 Finalizar
               </button>`
-                : `<button class="btn btn-primary next-exercise-btn">
+        : `<button class="btn btn-primary next-exercise-btn">
                 Próximo
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
               </button>`
-            }
+      }
         </div>
       </div>
     `;
 
-        // Initialize timer
-        const timerContainer = container.querySelector('#rest-timer');
-        timer.createTimerUI(timerContainer, exercise.rest || 60);
+    // Initialize timer
+    const timerContainer = container.querySelector('#rest-timer');
+    timer.createTimerUI(timerContainer, exercise.rest || 60);
 
-        // Setup event listeners
-        this.setupExecutionListeners(container);
-    }
+    // Setup event listeners
+    this.setupExecutionListeners(container);
+  }
 
-    /**
-     * Render sets display circles
-     */
-    renderSetsDisplay(exercise) {
-        let html = '';
-        for (let i = 1; i <= exercise.sets; i++) {
-            const log = exercise.logsPerSet.find(l => l.setNumber === i);
-            const isCompleted = !!log;
-            const isCurrent = exercise.logsPerSet.length + 1 === i;
+  /**
+   * Render sets display circles
+   */
+  renderSetsDisplay(exercise) {
+    let html = '';
+    for (let i = 1; i <= exercise.sets; i++) {
+      const log = exercise.logsPerSet.find(l => l.setNumber === i);
+      const isCompleted = !!log;
+      const isCurrent = exercise.logsPerSet.length + 1 === i;
 
-            html += `
+      html += `
         <div style="
           width: 48px; height: 48px; 
           border-radius: 50%; 
@@ -450,141 +458,191 @@ class WorkoutsManager {
           font-weight: 600;
         " title="${log ? `${log.weight}kg × ${log.reps} reps` : `Série ${i}`}">
           ${isCompleted
-                    ? `<span>${log.weight}</span><span style="font-size: 10px;">×${log.reps}</span>`
-                    : `<span>${i}</span>`
-                }
+          ? `<span>${log.weight}</span><span style="font-size: 10px;">×${log.reps}</span>`
+          : `<span>${i}</span>`
+        }
         </div>
       `;
+    }
+    return html;
+  }
+
+  /**
+   * Setup execution event listeners
+   */
+  setupExecutionListeners(container) {
+    const logSetBtn = container.querySelector('.log-set-btn');
+    const weightInput = container.querySelector('#weight-input');
+    const repsInput = container.querySelector('#reps-input');
+
+    logSetBtn?.addEventListener('click', () => {
+      const weight = weightInput.value;
+      const reps = repsInput.value;
+
+      if (!reps) {
+        window.toast?.warning('Informe o número de repetições');
+        return;
+      }
+
+      const exercise = this.getCurrentExercise();
+      const setNumber = exercise.setsCompleted + 1;
+
+      this.logSet(setNumber, reps, weight || 0);
+
+      // Update display
+      const setsDisplay = container.querySelector('#sets-display');
+      setsDisplay.innerHTML = this.renderSetsDisplay(exercise);
+
+      // Clear inputs
+      repsInput.value = '';
+
+      // Show toast
+      window.toast?.success(`Série ${setNumber} registrada!`);
+
+      // Start timer if not last set
+      if (exercise.setsCompleted < exercise.sets) {
+        timer.start(exercise.rest || 60, {
+          onTick: (remaining, progress) => {
+            const timerValue = container.querySelector('.timer-value');
+            const progressRing = container.querySelector('.timer-ring-progress');
+            if (timerValue) timerValue.textContent = timer.formatTime(remaining);
+            if (progressRing) {
+              const circumference = 2 * Math.PI * 45;
+              progressRing.style.strokeDashoffset = circumference - (progress / 100) * circumference;
+            }
+          },
+          onComplete: () => {
+            window.toast?.success('Descanso finalizado! Próxima série.');
+          }
+        });
+      }
+
+      // Check if exercise complete
+      if (exercise.completed) {
+        window.toast?.success(`${exercise.name} concluído! 💪`);
+      }
+    });
+
+    container.querySelector('.watch-video-btn')?.addEventListener('click', async () => {
+      const exercise = this.getCurrentExercise();
+      if (exercise?.exerciseId) {
+        try {
+          const fullExercise = await db.get(STORES.exercises, exercise.exerciseId);
+          if (fullExercise?.videoUrl) {
+            let videoContent = '';
+            if (fullExercise.videoUrl.includes('youtube.com') || fullExercise.videoUrl.includes('youtu.be')) {
+              // Extract ID
+              let videoId = '';
+              if (fullExercise.videoUrl.includes('v=')) {
+                videoId = fullExercise.videoUrl.split('v=')[1].split('&')[0];
+              } else if (fullExercise.videoUrl.includes('youtu.be/')) {
+                videoId = fullExercise.videoUrl.split('youtu.be/')[1];
+              }
+
+              if (videoId) {
+                videoContent = `
+                                    <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: var(--radius-md);">
+                                        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                                    </div>
+                                `;
+              } else {
+                // Fallback to link
+                videoContent = `<a href="${fullExercise.videoUrl}" target="_blank" class="btn btn-primary" style="width: 100%;">Abrir Vídeo no YouTube</a>`;
+              }
+            } else {
+              videoContent = `<a href="${fullExercise.videoUrl}" target="_blank" class="btn btn-primary" style="width: 100%;">Abrir Vídeo</a>`;
+            }
+
+            modal.open({
+              title: fullExercise.name,
+              content: `
+                                ${videoContent}
+                                <div style="margin-top: var(--spacing-md);">
+                                    <h4>Instruções</h4>
+                                    <p style="color: var(--text-muted); line-height: 1.6;">${fullExercise.instructions || 'Sem instruções disponíveis.'}</p>
+                                </div>
+                            `
+            });
+          } else {
+            toast.warning('Vídeo não disponível para este exercício');
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error('Erro ao carregar vídeo');
         }
-        return html;
-    }
+      }
+    });
 
-    /**
-     * Setup execution event listeners
-     */
-    setupExecutionListeners(container) {
-        const logSetBtn = container.querySelector('.log-set-btn');
-        const weightInput = container.querySelector('#weight-input');
-        const repsInput = container.querySelector('#reps-input');
+    container.querySelector('.prev-exercise-btn')?.addEventListener('click', () => {
+      timer.stop();
+      this.previousExercise();
+      this.renderExecutionUI(container);
+    });
 
-        logSetBtn?.addEventListener('click', () => {
-            const weight = weightInput.value;
-            const reps = repsInput.value;
+    container.querySelector('.next-exercise-btn')?.addEventListener('click', () => {
+      timer.stop();
+      const next = this.nextExercise();
+      if (next) {
+        this.renderExecutionUI(container);
+      }
+    });
 
-            if (!reps) {
-                window.toast?.warning('Informe o número de repetições');
-                return;
-            }
+    container.querySelector('.skip-exercise-btn')?.addEventListener('click', async () => {
+      const confirm = await window.modal?.confirm({
+        title: 'Pular Exercício',
+        message: 'Deseja pular este exercício?',
+        confirmText: 'Pular',
+        cancelText: 'Cancelar'
+      });
 
-            const exercise = this.getCurrentExercise();
-            const setNumber = exercise.setsCompleted + 1;
+      if (confirm) {
+        timer.stop();
+        const next = this.skipExercise();
+        if (next) {
+          this.renderExecutionUI(container);
+        } else {
+          // Was last exercise
+          this.renderExecutionUI(container);
+        }
+      }
+    });
 
-            this.logSet(setNumber, reps, weight || 0);
+    container.querySelector('.cancel-workout-btn')?.addEventListener('click', async () => {
+      const confirm = await window.modal?.confirm({
+        title: 'Cancelar Treino',
+        message: 'Tem certeza que deseja cancelar o treino? Todo progresso será perdido.',
+        confirmText: 'Cancelar Treino',
+        cancelText: 'Continuar',
+        danger: true
+      });
 
-            // Update display
-            const setsDisplay = container.querySelector('#sets-display');
-            setsDisplay.innerHTML = this.renderSetsDisplay(exercise);
+      if (confirm) {
+        timer.stop();
+        this.cancelSession();
+        window.location.hash = 'workouts';
+      }
+    });
 
-            // Clear inputs
-            repsInput.value = '';
+    container.querySelector('.finish-workout-btn')?.addEventListener('click', async () => {
+      timer.stop();
+      const userId = window.MFIT?.state?.user?.id;
+      const result = await this.finishSession(userId);
 
-            // Show toast
-            window.toast?.success(`Série ${setNumber} registrada!`);
+      if (result) {
+        window.toast?.success(`Treino finalizado! 🎉 ${result.durationMinutes} min, ${result.totalSets} séries`);
+        window.location.hash = 'workouts';
+      }
+    });
+  }
 
-            // Start timer if not last set
-            if (exercise.setsCompleted < exercise.sets) {
-                timer.start(exercise.rest || 60, {
-                    onTick: (remaining, progress) => {
-                        const timerValue = container.querySelector('.timer-value');
-                        const progressRing = container.querySelector('.timer-ring-progress');
-                        if (timerValue) timerValue.textContent = timer.formatTime(remaining);
-                        if (progressRing) {
-                            const circumference = 2 * Math.PI * 45;
-                            progressRing.style.strokeDashoffset = circumference - (progress / 100) * circumference;
-                        }
-                    },
-                    onComplete: () => {
-                        window.toast?.success('Descanso finalizado! Próxima série.');
-                    }
-                });
-            }
+  /**
+   * Render create/edit workout modal
+   */
+  renderWorkoutForm(workout = null) {
+    const isEdit = !!workout;
+    const colors = ['#10b981', '#06b6d4', '#8b5cf6', '#f59e0b', '#ef4444', '#ec4899'];
 
-            // Check if exercise complete
-            if (exercise.completed) {
-                window.toast?.success(`${exercise.name} concluído! 💪`);
-            }
-        });
-
-        container.querySelector('.prev-exercise-btn')?.addEventListener('click', () => {
-            timer.stop();
-            this.previousExercise();
-            this.renderExecutionUI(container);
-        });
-
-        container.querySelector('.next-exercise-btn')?.addEventListener('click', () => {
-            timer.stop();
-            const next = this.nextExercise();
-            if (next) {
-                this.renderExecutionUI(container);
-            }
-        });
-
-        container.querySelector('.skip-exercise-btn')?.addEventListener('click', async () => {
-            const confirm = await window.modal?.confirm({
-                title: 'Pular Exercício',
-                message: 'Deseja pular este exercício?',
-                confirmText: 'Pular',
-                cancelText: 'Cancelar'
-            });
-
-            if (confirm) {
-                timer.stop();
-                const next = this.skipExercise();
-                if (next) {
-                    this.renderExecutionUI(container);
-                } else {
-                    // Was last exercise
-                    this.renderExecutionUI(container);
-                }
-            }
-        });
-
-        container.querySelector('.cancel-workout-btn')?.addEventListener('click', async () => {
-            const confirm = await window.modal?.confirm({
-                title: 'Cancelar Treino',
-                message: 'Tem certeza que deseja cancelar o treino? Todo progresso será perdido.',
-                confirmText: 'Cancelar Treino',
-                cancelText: 'Continuar',
-                danger: true
-            });
-
-            if (confirm) {
-                timer.stop();
-                this.cancelSession();
-                window.location.hash = 'workouts';
-            }
-        });
-
-        container.querySelector('.finish-workout-btn')?.addEventListener('click', async () => {
-            timer.stop();
-            const userId = window.MFIT?.state?.user?.id;
-            const result = await this.finishSession(userId);
-
-            if (result) {
-                window.toast?.success(`Treino finalizado! 🎉 ${result.durationMinutes} min, ${result.totalSets} séries`);
-                window.location.hash = 'workouts';
-            }
-        });
-    }
-
-    /**
-     * Render create/edit workout modal
-     */
-    renderWorkoutForm(workout = null) {
-        const isEdit = !!workout;
-        const colors = ['#10b981', '#06b6d4', '#8b5cf6', '#f59e0b', '#ef4444', '#ec4899'];
-
-        return `
+    return `
       <div id="workout-form">
         <div class="form-group">
           <label class="form-label">Nome do Treino</label>
@@ -624,10 +682,10 @@ class WorkoutsManager {
         </div>
       </div>
     `;
-    }
+  }
 
-    renderExerciseItem(exercise, index) {
-        return `
+  renderExerciseItem(exercise, index) {
+    return `
       <div class="exercise-item" data-index="${index}" style="
         display: flex; align-items: center; gap: var(--spacing-md);
         padding: var(--spacing-md); background: var(--bg-tertiary);
@@ -647,7 +705,7 @@ class WorkoutsManager {
         </button>
       </div>
     `;
-    }
+  }
 }
 
 // Export singleton

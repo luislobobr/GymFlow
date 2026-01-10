@@ -286,9 +286,22 @@ function showUserMenu() {
 async function logout() {
   state.user = null;
   await db.setSetting('currentUserId', null);
+
+  // Try to sign out from Firebase if logged in with Google
+  try {
+    const firebaseModule = await import('./firebase-config.js');
+    if (firebaseModule.auth?.currentUser) {
+      await firebaseModule.firebaseAuth.signOut();
+    }
+  } catch (e) {
+    // Firebase not initialized, ignore
+  }
+
   updateUserUI();
-  toast.success('Você saiu da conta');
-  router.navigate('dashboard'); // Will trigger login modal
+  toast.success('Você saiu da conta. Até logo!');
+
+  // Reload page to clear any cached state
+  setTimeout(() => location.reload(), 500);
 }
 
 /**
