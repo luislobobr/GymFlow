@@ -5,8 +5,8 @@
 
 import { db, STORES } from '../database.js';
 import { timer } from './timer.js';
-import modal from '../components/modal.js';
-import toast from '../components/toast.js';
+import { modal } from '../components/modal.js';
+import { toast } from '../components/toast.js';
 
 // Default workout templates
 const WORKOUT_TEMPLATES = [
