@@ -23,6 +23,11 @@ class Modal {
      * @param {object} config - Modal configuration
      */
     open(config) {
+        // Close any existing modal first
+        if (this.activeModal) {
+            this.close();
+        }
+
         const {
             title = '',
             content = '',
