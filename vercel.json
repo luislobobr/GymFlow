@@ -4,14 +4,15 @@
     "outputDirectory": ".",
     "framework": null,
     "installCommand": null,
-    {
-        "source": "/js/(.*)",
-        "headers": [
-            {
-                "key": "Cache-Control",
-                "value": "no-cache, must-revalidate"
-            }
-        ]
-    }
-]
+    "headers": [
+        {
+            "source": "/js/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "no-cache, must-revalidate"
+                }
+            ]
+        }
+    ]
 }

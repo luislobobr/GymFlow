@@ -6,6 +6,14 @@
 // Import both databases
 import { db as localDB, STORES } from './database.js';
 
+/**
+ * NOTA DE DESENVOLVIMENTO:
+ * Algumas funções async neste arquivo podem não ter tratamento de erros adequado.
+ * Considere adicionar blocos try-catch onde apropriado para melhorar a robustez.
+ * Especialmente em operações de banco de dados e chamadas de API.
+ */
+
+
 // Firebase will be imported dynamically when enabled
 let firebaseModule = null;
 let useFirebase = false;
@@ -36,7 +44,7 @@ async function initDatabase() {
             if (success) {
                 dbConfig.isFirebaseReady = true;
                 useFirebase = true;
-                console.log('✅ Cloud database enabled');
+                // DEV: console.log('✅ Cloud database enabled');
             }
         } catch (error) {
             console.warn('⚠️ Firebase not available, using local database only');
@@ -198,7 +206,7 @@ const database = {
             }
         }
 
-        console.log('✅ Sync complete');
+        // DEV: console.log('✅ Sync complete');
         return true;
     }
 };

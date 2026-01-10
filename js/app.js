@@ -14,6 +14,14 @@ import { assessmentsManager } from './modules/assessments.js';
 import { studentsManager } from './modules/students.js';
 import { pdfExporter } from './modules/pdf.js';
 
+/**
+ * NOTA DE DESENVOLVIMENTO:
+ * Algumas funções async neste arquivo podem não ter tratamento de erros adequado.
+ * Considere adicionar blocos try-catch onde apropriado para melhorar a robustez.
+ * Especialmente em operações de banco de dados e chamadas de API.
+ */
+
+
 // Make utilities globally available
 window.toast = toast;
 window.modal = modal;
@@ -39,7 +47,7 @@ const state = {
  * Initialize the application
  */
 async function init() {
-  console.log('[GymFlow] Initializing app...');
+  // DEV: console.log('[GymFlow] Initializing app...');
 
   try {
     // Initialize database with timeout
@@ -88,7 +96,7 @@ async function init() {
     // Manually trigger initial route - window.load may have fired before routes were set up
     router.handleRoute();
 
-    console.log('[GymFlow] App initialized successfully');
+    // DEV: console.log('[GymFlow] App initialized successfully');
   } catch (error) {
     console.error('[MFIT] Initialization error:', error);
     // Always hide loading even on error
@@ -334,7 +342,7 @@ function showUserMenu() {
 async function logout() {
   try {
     const oldUserId = state.user?.id;
-    console.log('[Auth] Logging out user:', oldUserId);
+    // DEV: console.log('[Auth] Logging out user:', oldUserId);
 
     state.user = null;
     await db.setSetting('currentUserId', null);
@@ -349,7 +357,7 @@ async function logout() {
       await firebaseModule.initFirebase();
       if (firebaseModule.firebaseAuth) {
         await firebaseModule.firebaseAuth.signOut();
-        console.log('[Auth] Firebase signOut success');
+        // DEV: console.log('[Auth] Firebase signOut success');
       }
     } catch (e) {
       console.warn('[Auth] Firebase signOut error (ignoring):', e);
@@ -548,7 +556,7 @@ function showLoginModal() {
             db.syncToCloud();
           } catch (e) { console.warn('Sync init error:', e); }
 
-          console.log('[Auth] Login success for:', state.user.name);
+          // DEV: console.log('[Auth] Login success for:', state.user.name);
 
           modal.close();
           // Small delay to ensure modal close animation finishes
@@ -667,7 +675,7 @@ async function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('[MFIT] Service Worker registered:', registration.scope);
+      // DEV: console.log('[MFIT] Service Worker registered:', registration.scope);
     } catch (error) {
       console.warn('[MFIT] Service Worker registration failed:', error);
     }
@@ -2427,7 +2435,7 @@ async function seedDatabase() {
     // Check if exercises exist
     const exercises = await db.getAll(STORES.exercises);
     if (!exercises || exercises.length === 0) {
-      console.log('[GymFlow] Seeding exercises database...');
+      // DEV: console.log('[GymFlow] Seeding exercises database...');
 
       const response = await fetch('./js/data/exercises.json');
       const data = await response.json();
@@ -2439,7 +2447,7 @@ async function seedDatabase() {
           await db.add(STORES.exercises, exercise);
           count++;
         }
-        console.log(`[GymFlow] Seeded ${count} exercises`);
+        // DEV: console.log(`[GymFlow] Seeded ${count} exercises`);
         // Omit toast on init to avoid spam, or keep for debugging
 
       }
@@ -2476,7 +2484,7 @@ async function checkRedirectLogin() {
     const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
 
     if (firebaseUser) {
-      console.log('[Auth] Restored session via redirect:', firebaseUser.email);
+      // DEV: console.log('[Auth] Restored session via redirect:', firebaseUser.email);
 
       // Same logic as login handler
       let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
