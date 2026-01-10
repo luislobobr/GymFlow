@@ -2288,6 +2288,37 @@ function renderProfile() {
   `;
 }
 
+
+/**
+ * Seed database with initial data
+ */
+async function seedDatabase() {
+  try {
+    // Check if exercises exist
+    const exercises = await db.getAll(STORES.exercises);
+    if (!exercises || exercises.length === 0) {
+      console.log('[GymFlow] Seeding exercises database...');
+
+      const response = await fetch('./js/data/exercises.json');
+      const data = await response.json();
+
+      if (data && data.exercises) {
+        let count = 0;
+        for (const exercise of data.exercises) {
+          // Ensure ID is preserved
+          await db.add(STORES.exercises, exercise);
+          count++;
+        }
+        console.log(`[GymFlow] Seeded ${count} exercises`);
+        // Omit toast on init to avoid spam, or keep for debugging
+
+      }
+    }
+  } catch (error) {
+    console.error('[GymFlow] Error seeding database:', error);
+  }
+}
+
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', init);
 
