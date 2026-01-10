@@ -55,6 +55,9 @@ async function init() {
       // Continue anyway - app can work with fresh DB
     }
 
+    // Seed database with initial data if needed
+    await seedDatabase();
+
     // Load settings
     await loadSettings();
 
