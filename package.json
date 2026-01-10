@@ -1,0 +1,20 @@
+{
+    "name": "gymflow",
+    "version": "1.0.0",
+    "short_name": "GymFlow",
+    "description": "Aplicativo de gestão de treinos para Personal Trainers",
+    "main": "index.html",
+    "scripts": {
+        "start": "http-server -p 3000 -c-1",
+        "dev": "http-server -p 3000 -c-1 -o",
+        "build": "echo 'No build required - static site'"
+    },
+    "keywords": [
+        "fitness",
+        "workout",
+        "personal trainer",
+        "gym"
+    ],
+    "author": "GymFlow",
+    "license": "MIT"
+}

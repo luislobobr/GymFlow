@@ -1,0 +1,5117 @@
+{
+  "exercises": [
+    {
+      "id": 1,
+      "name": "Supino Reto com Barra",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Deite no banco, segure a barra com pegada média, desça até o peito e empurre.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 2,
+      "name": "Supino Inclinado com Halteres",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "No banco inclinado a 30-45°, empurre os halteres para cima.",
+      "videoUrl": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
+    },
+    {
+      "id": 3,
+      "name": "Supino Declinado",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "No banco declinado, realize o movimento focando na parte inferior do peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=LfyQBUKR8SE"
+    },
+    {
+      "id": 4,
+      "name": "Flexão de Braço",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Mantenha o corpo reto, desça até quase tocar o chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 5,
+      "name": "Crossover no Cabo",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Com os cabos nas posições altas, cruze os braços à frente do corpo.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 6,
+      "name": "Peck Deck (Voador)",
+      "muscle": "peito",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado na máquina, aproxime os braços à frente do peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=Z57CtFmRMxA"
+    },
+    {
+      "id": 7,
+      "name": "Crucifixo com Halteres",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Deitado, abra os braços com os halteres e retorne.",
+      "videoUrl": "https://www.youtube.com/watch?v=eozdVDA78K0"
+    },
+    {
+      "id": 8,
+      "name": "Mergulho (Dips)",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Nas barras paralelas, incline o tronco e desça.",
+      "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+    },
+    {
+      "id": 9,
+      "name": "Pullover com Haltere",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Deitado, leve o halter atrás da cabeça.",
+      "videoUrl": "https://www.youtube.com/watch?v=FK4rHfWKEac"
+    },
+    {
+      "id": 10,
+      "name": "Supino na Máquina",
+      "muscle": "peito",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Sentado na máquina, empurre os pegadores.",
+      "videoUrl": "https://www.youtube.com/watch?v=xUm0BiZCWlQ"
+    },
+    {
+      "id": 11,
+      "name": "Flexão Diamante",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão com as mãos juntas formando um diamante.",
+      "videoUrl": "https://www.youtube.com/watch?v=J0DnG1_S92I"
+    },
+    {
+      "id": 12,
+      "name": "Supino com Halteres",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Deitado no banco reto, empurre os halteres.",
+      "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+    },
+    {
+      "id": 13,
+      "name": "Flexão Inclinada",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Flexão com as mãos em superfície elevada.",
+      "videoUrl": "https://www.youtube.com/watch?v=4dF1DOWzf20"
+    },
+    {
+      "id": 14,
+      "name": "Flexão Declinada",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com os pés elevados.",
+      "videoUrl": "https://www.youtube.com/watch?v=SKPab2YC8BE"
+    },
+    {
+      "id": 15,
+      "name": "Supino com Pegada Neutra",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino com halteres paralelos.",
+      "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+    },
+    {
+      "id": 16,
+      "name": "Crossover Baixo",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Cabos na posição baixa, cruze para cima.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 17,
+      "name": "Flexão com Palmas",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão explosiva batendo palmas.",
+      "videoUrl": "https://www.youtube.com/watch?v=EYwWCgM198U"
+    },
+    {
+      "id": 18,
+      "name": "Supino Guillotina",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino descendo a barra até o pescoço.",
+      "videoUrl": "https://www.youtube.com/watch?v=yPBsBpFA2qU"
+    },
+    {
+      "id": 19,
+      "name": "Crucifixo Inclinado",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crucifixo no banco inclinado.",
+      "videoUrl": "https://www.youtube.com/watch?v=eozdVDA78K0"
+    },
+    {
+      "id": 20,
+      "name": "Supino com Corrente",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino com correntes para resistência variável.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 21,
+      "name": "Barra Fixa Pronada",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Segure a barra com pegada pronada e puxe.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 22,
+      "name": "Puxada Alta",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Sentado, puxe a barra até o peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 23,
+      "name": "Remada Curvada com Barra",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Com o tronco inclinado, puxe a barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ"
+    },
+    {
+      "id": 24,
+      "name": "Remada Sentada no Cabo",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Sentado, puxe o cabo até o abdômen.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 25,
+      "name": "Remada Unilateral",
+      "muscle": "costas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Apoiado no banco, puxe o halter.",
+      "videoUrl": "https://www.youtube.com/watch?v=pYcpY20QaE8"
+    },
+    {
+      "id": 26,
+      "name": "Remada T-Bar",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Na máquina T-Bar, puxe até o peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=j3Igk5nyZE4"
+    },
+    {
+      "id": 27,
+      "name": "Puxada Supinada",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Puxada com pegada supinada.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 28,
+      "name": "Pulldown com Corda",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe a corda para baixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=m0vrg19ogSU"
+    },
+    {
+      "id": 29,
+      "name": "Levantamento Terra",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Levante a barra do chão mantendo as costas retas.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 30,
+      "name": "Remada na Máquina",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Na máquina, puxe os pegadores.",
+      "videoUrl": "https://www.youtube.com/watch?v=roCP6wCXPqo"
+    },
+    {
+      "id": 31,
+      "name": "Barra Fixa Supinada",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Barra fixa com palmas voltadas para você.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 32,
+      "name": "Good Morning",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Com barra nos ombros, incline o tronco.",
+      "videoUrl": "https://www.youtube.com/watch?v=YA-h3n9L4YU"
+    },
+    {
+      "id": 33,
+      "name": "Hiperextensão",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "No banco romano, estenda o tronco.",
+      "videoUrl": "https://www.youtube.com/watch?v=qtKVsRK1WrM"
+    },
+    {
+      "id": 34,
+      "name": "Pulldown Braços Estendidos",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe com braços estendidos.",
+      "videoUrl": "https://www.youtube.com/watch?v=m0vrg19ogSU"
+    },
+    {
+      "id": 35,
+      "name": "Remada Cavalinho",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxe o peso até o peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=j3Igk5nyZE4"
+    },
+    {
+      "id": 36,
+      "name": "Puxada Pegada Neutra",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxada com pegada neutra.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 37,
+      "name": "Face Pull Costas",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe a corda em direção ao rosto.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 38,
+      "name": "Remada Alta",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxe a barra até o queixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 39,
+      "name": "Superman",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deitado de bruços, eleve braços e pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=z6PJMT2y8GQ"
+    },
+    {
+      "id": 40,
+      "name": "Serrátil no Cabo",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Empurre protraindo as escápulas.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 41,
+      "name": "Agachamento Livre",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Com barra nos ombros, agache até as coxas paralelas.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 42,
+      "name": "Leg Press 45°",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Empurre a plataforma com os pés.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZxyjW7MPJQ"
+    },
+    {
+      "id": 43,
+      "name": "Cadeira Extensora",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, estenda as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
+    },
+    {
+      "id": 44,
+      "name": "Mesa Flexora",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Deitado, flexione as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+      "id": 45,
+      "name": "Stiff",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Com pernas semi-estendidas, desça a barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=1uDiW5--rAE"
+    },
+    {
+      "id": 46,
+      "name": "Afundo",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Dê um passo à frente e flexione.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 47,
+      "name": "Agachamento Hack",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Na máquina hack, agache.",
+      "videoUrl": "https://www.youtube.com/watch?v=0tn5K9NlCfo"
+    },
+    {
+      "id": 48,
+      "name": "Agachamento Sumô",
+      "muscle": "pernas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Com pés afastados, agache.",
+      "videoUrl": "https://www.youtube.com/watch?v=9ZuXKqRbT9k"
+    },
+    {
+      "id": 49,
+      "name": "Panturrilha em Pé",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Eleve os calcanhares.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 50,
+      "name": "Panturrilha Sentado",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, eleve os calcanhares.",
+      "videoUrl": "https://www.youtube.com/watch?v=JbyjNymZOt0"
+    },
+    {
+      "id": 51,
+      "name": "Adutora",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, aproxime as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=FPLvMxEhqBg"
+    },
+    {
+      "id": 52,
+      "name": "Abdutora",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, afaste as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=FPLvMxEhqBg"
+    },
+    {
+      "id": 53,
+      "name": "Agachamento Frontal",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento com barra na frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=uYumuL_G_V0"
+    },
+    {
+      "id": 54,
+      "name": "Agachamento Búlgaro",
+      "muscle": "pernas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Afundo com pé traseiro elevado.",
+      "videoUrl": "https://www.youtube.com/watch?v=2C-uNgKwPLE"
+    },
+    {
+      "id": 55,
+      "name": "Step Up",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Suba em um banco alternando pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=dQqApCGd5Ss"
+    },
+    {
+      "id": 56,
+      "name": "Glúteo no Cabo",
+      "muscle": "pernas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Com cabo no tornozelo, estenda a perna.",
+      "videoUrl": "https://www.youtube.com/watch?v=DKUQ1e9RMes"
+    },
+    {
+      "id": 57,
+      "name": "Hip Thrust",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Apoiado em banco, eleve o quadril.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 58,
+      "name": "Leg Curl Deitado",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deitado, flexione os joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+      "id": 59,
+      "name": "Leg Curl Sentado",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, flexione os joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=Orxowest56U"
+    },
+    {
+      "id": 60,
+      "name": "Passada com Halteres",
+      "muscle": "pernas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Caminhe com afundos.",
+      "videoUrl": "https://www.youtube.com/watch?v=L8fvypPraDY"
+    },
+    {
+      "id": 61,
+      "name": "Elevação Pélvica",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deitado, eleve o quadril.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 62,
+      "name": "Agachamento Pistola",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento em uma perna só.",
+      "videoUrl": "https://www.youtube.com/watch?v=vq5-vdgJc0I"
+    },
+    {
+      "id": 63,
+      "name": "Cadeira Flexora",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, flexione as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=Orxowest56U"
+    },
+    {
+      "id": 64,
+      "name": "Agachamento Smith",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento guiado na máquina Smith.",
+      "videoUrl": "https://www.youtube.com/watch?v=IGhQVcsjkkA"
+    },
+    {
+      "id": 65,
+      "name": "Leg Press Horizontal",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Leg press sentado.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZxyjW7MPJQ"
+    },
+    {
+      "id": 66,
+      "name": "Agachamento Goblet",
+      "muscle": "pernas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Agachamento segurando halter no peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=MeIiIdhvXT4"
+    },
+    {
+      "id": 67,
+      "name": "Ponte de Glúteo",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Ponte com uma perna.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 68,
+      "name": "Agachamento Sissy",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Agache inclinando o tronco para trás.",
+      "videoUrl": "https://www.youtube.com/watch?v=VVoYBEHjlEQ"
+    },
+    {
+      "id": 69,
+      "name": "Wall Sit",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sente invisível contra a parede.",
+      "videoUrl": "https://www.youtube.com/watch?v=y-wV4Venusw"
+    },
+    {
+      "id": 70,
+      "name": "Panturrilha no Leg Press",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Panturrilha na plataforma do leg press.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 71,
+      "name": "Desenvolvimento Militar",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Empurre a barra acima da cabeça.",
+      "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
+    },
+    {
+      "id": 72,
+      "name": "Desenvolvimento com Halteres",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Empurre os halteres acima.",
+      "videoUrl": "https://www.youtube.com/watch?v=qEwKCR5JCog"
+    },
+    {
+      "id": 73,
+      "name": "Elevação Lateral",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Eleve os braços lateralmente.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 74,
+      "name": "Elevação Frontal",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Eleve os halteres à frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=-t7fuZ0KhDA"
+    },
+    {
+      "id": 75,
+      "name": "Crucifixo Invertido",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Inclinado, abra os braços para os lados.",
+      "videoUrl": "https://www.youtube.com/watch?v=lPt0GqwaqEw"
+    },
+    {
+      "id": 76,
+      "name": "Desenvolvimento na Máquina",
+      "muscle": "ombros",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Sentado, empurre para cima.",
+      "videoUrl": "https://www.youtube.com/watch?v=Wqq43dKW1TU"
+    },
+    {
+      "id": 77,
+      "name": "Elevação Lateral no Cabo",
+      "muscle": "ombros",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Eleve o braço lateralmente no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=PPrzBWZLJCU"
+    },
+    {
+      "id": 78,
+      "name": "Face Pull",
+      "muscle": "ombros",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe a corda em direção ao rosto.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 79,
+      "name": "Arnold Press",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Desenvolvimento com rotação.",
+      "videoUrl": "https://www.youtube.com/watch?v=6Z15_WdXmVw"
+    },
+    {
+      "id": 80,
+      "name": "Encolhimento de Ombros",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Eleve os ombros para as orelhas.",
+      "videoUrl": "https://www.youtube.com/watch?v=cJRVVxmytaM"
+    },
+    {
+      "id": 81,
+      "name": "Remada Alta com Barra",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxe a barra até o queixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 82,
+      "name": "Voador Invertido",
+      "muscle": "ombros",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Peck deck invertido.",
+      "videoUrl": "https://www.youtube.com/watch?v=lPt0GqwaqEw"
+    },
+    {
+      "id": 83,
+      "name": "W Raises",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Inclinado, eleve formando W.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 84,
+      "name": "Y Raises",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Inclinado, eleve formando Y.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 85,
+      "name": "Desenvolvimento Push Press",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Desenvolvimento com impulso das pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=X6-DMh-t4nQ"
+    },
+    {
+      "id": 86,
+      "name": "Elevação Lateral Inclinada",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Elevação lateral deitado de lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 87,
+      "name": "Desenvolvimento Sentado",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Desenvolvimento sentado com apoio.",
+      "videoUrl": "https://www.youtube.com/watch?v=qEwKCR5JCog"
+    },
+    {
+      "id": 88,
+      "name": "High Pull",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Puxe a barra explosivamente.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 89,
+      "name": "Elevação Lateral 45°",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Elevação a 45° do corpo.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 90,
+      "name": "Desenvolvimento Atrás Nuca",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Desenvolvimento atrás da cabeça.",
+      "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
+    },
+    {
+      "id": 91,
+      "name": "Rosca Direta com Barra",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Em pé, flexione os cotovelos.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 92,
+      "name": "Rosca Alternada",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Flexione um braço de cada vez.",
+      "videoUrl": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+      "id": 93,
+      "name": "Rosca Concentrada",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Sentado, apoie o cotovelo na coxa.",
+      "videoUrl": "https://www.youtube.com/watch?v=0AUGkch3tzc"
+    },
+    {
+      "id": 94,
+      "name": "Rosca Martelo",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Com halteres em posição neutra.",
+      "videoUrl": "https://www.youtube.com/watch?v=zC3nLlEvin4"
+    },
+    {
+      "id": 95,
+      "name": "Rosca no Cabo",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "No cabo baixo, flexione.",
+      "videoUrl": "https://www.youtube.com/watch?v=NFzTWp2qpiE"
+    },
+    {
+      "id": 96,
+      "name": "Rosca Scott",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "No banco scott, flexione.",
+      "videoUrl": "https://www.youtube.com/watch?v=fIWP-FRFNU0"
+    },
+    {
+      "id": 97,
+      "name": "Rosca 21",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "7 reps inferior, 7 superior, 7 completas.",
+      "videoUrl": "https://www.youtube.com/watch?v=N7V4TZp0y0E"
+    },
+    {
+      "id": 98,
+      "name": "Rosca Inversa",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com pegada pronada.",
+      "videoUrl": "https://www.youtube.com/watch?v=nRgxYX2Ve9w"
+    },
+    {
+      "id": 99,
+      "name": "Rosca Inclinada",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca deitado em banco inclinado.",
+      "videoUrl": "https://www.youtube.com/watch?v=soxrZlIl35U"
+    },
+    {
+      "id": 100,
+      "name": "Rosca Spider",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Rosca deitado de bruços.",
+      "videoUrl": "https://www.youtube.com/watch?v=3FEV5MIBlOY"
+    },
+    {
+      "id": 101,
+      "name": "Rosca Corda",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca no cabo com corda.",
+      "videoUrl": "https://www.youtube.com/watch?v=NFzTWp2qpiE"
+    },
+    {
+      "id": 102,
+      "name": "Rosca 90°",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca parando a 90°.",
+      "videoUrl": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+      "id": 103,
+      "name": "Rosca Cross Body",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rosca cruzando o corpo.",
+      "videoUrl": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+      "id": 104,
+      "name": "Rosca Zottman",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Rosca com rotação no topo.",
+      "videoUrl": "https://www.youtube.com/watch?v=ZrpRBgswtHs"
+    },
+    {
+      "id": 105,
+      "name": "Rosca W com Barra",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Com barra W, flexione.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 106,
+      "name": "Rosca no Banco Scott",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca unilateral no banco scott.",
+      "videoUrl": "https://www.youtube.com/watch?v=fIWP-FRFNU0"
+    },
+    {
+      "id": 107,
+      "name": "Barra Fixa Pegada Fechada",
+      "muscle": "biceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra fixa com pegada bem fechada.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 108,
+      "name": "Rosca Drag",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca arrastando a barra no corpo.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 109,
+      "name": "Rosca Alta no Cabo",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com cabo alto.",
+      "videoUrl": "https://www.youtube.com/watch?v=NFzTWp2qpiE"
+    },
+    {
+      "id": 110,
+      "name": "Rosca Sentado",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rosca alternada sentado.",
+      "videoUrl": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+      "id": 111,
+      "name": "Tríceps Pulley",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "No cabo alto, estenda os braços.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 112,
+      "name": "Tríceps Corda",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Extensão com corda.",
+      "videoUrl": "https://www.youtube.com/watch?v=kiuVA0gs3EI"
+    },
+    {
+      "id": 113,
+      "name": "Tríceps Testa",
+      "muscle": "triceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Deitado, desça a barra até a testa.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 114,
+      "name": "Tríceps Francês",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Sentado, estenda atrás da cabeça.",
+      "videoUrl": "https://www.youtube.com/watch?v=YbX7Wd8jQ-Q"
+    },
+    {
+      "id": 115,
+      "name": "Tríceps Banco (Dips)",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Apoiado em banco, desça e suba.",
+      "videoUrl": "https://www.youtube.com/watch?v=6kALZikXxLc"
+    },
+    {
+      "id": 116,
+      "name": "Tríceps Coice",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Inclinado, estenda o braço para trás.",
+      "videoUrl": "https://www.youtube.com/watch?v=6SS6K3lAwZ8"
+    },
+    {
+      "id": 117,
+      "name": "Mergulho Tríceps",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Nas barras paralelas, tronco reto.",
+      "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+    },
+    {
+      "id": 118,
+      "name": "Supino Fechado",
+      "muscle": "triceps",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino com pegada fechada.",
+      "videoUrl": "https://www.youtube.com/watch?v=wxVRe9pmJdk"
+    },
+    {
+      "id": 119,
+      "name": "Tríceps Unilateral Cabo",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão unilateral no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 120,
+      "name": "Tríceps Overhead Cabo",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "De costas para o cabo, estenda.",
+      "videoUrl": "https://www.youtube.com/watch?v=h3nnvJroXOg"
+    },
+    {
+      "id": 121,
+      "name": "Flexão Diamante Tríceps",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com mãos juntas.",
+      "videoUrl": "https://www.youtube.com/watch?v=J0DnG1_S92I"
+    },
+    {
+      "id": 122,
+      "name": "Tríceps Barra V",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Extensão com barra V.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 123,
+      "name": "Tríceps Cross",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Um braço cruzando o corpo.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 124,
+      "name": "JM Press",
+      "muscle": "triceps",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Híbrido supino fechado e tríceps testa.",
+      "videoUrl": "https://www.youtube.com/watch?v=wxVRe9pmJdk"
+    },
+    {
+      "id": 125,
+      "name": "Tríceps Rolling",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Tríceps testa com rolamento.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 126,
+      "name": "Flexão Fechada",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Flexão com mãos na largura dos ombros.",
+      "videoUrl": "https://www.youtube.com/watch?v=J0DnG1_S92I"
+    },
+    {
+      "id": 127,
+      "name": "Tríceps PJR Pullover",
+      "muscle": "triceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Híbrido pullover e tríceps testa.",
+      "videoUrl": "https://www.youtube.com/watch?v=FK4rHfWKEac"
+    },
+    {
+      "id": 128,
+      "name": "Tríceps Barra Reta",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Extensão com barra reta.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 129,
+      "name": "Tríceps Inclinado",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão inclinado para frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 130,
+      "name": "Skull Crusher com Halteres",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Tríceps testa com halteres.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 131,
+      "name": "Abdominal Crunch",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deitado, eleve os ombros do chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=Xyd_fa5zoEU"
+    },
+    {
+      "id": 132,
+      "name": "Prancha Frontal",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Mantenha o corpo reto apoiado.",
+      "videoUrl": "https://www.youtube.com/watch?v=ASdvN_XEl_c"
+    },
+    {
+      "id": 133,
+      "name": "Elevação de Pernas",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Deitado, eleve as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=JB2oyawG9KI"
+    },
+    {
+      "id": 134,
+      "name": "Mountain Climber",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Em prancha, alterne joelhos ao peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=nmwgirgXLYM"
+    },
+    {
+      "id": 135,
+      "name": "Russian Twist",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Sentado, gire o tronco.",
+      "videoUrl": "https://www.youtube.com/watch?v=wkD8rjkodUI"
+    },
+    {
+      "id": 136,
+      "name": "Abdominal Bicicleta",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Cotovelo ao joelho oposto.",
+      "videoUrl": "https://www.youtube.com/watch?v=9FGilxCbdz8"
+    },
+    {
+      "id": 137,
+      "name": "Prancha Lateral",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Prancha apoiado de lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=K2VljzCC16g"
+    },
+    {
+      "id": 138,
+      "name": "Abdominal Infra",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Eleve pernas e quadril.",
+      "videoUrl": "https://www.youtube.com/watch?v=JB2oyawG9KI"
+    },
+    {
+      "id": 139,
+      "name": "Ab Wheel Rollout",
+      "muscle": "abdomen",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Com a roda, estenda para frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=rqiTPVjPBg8"
+    },
+    {
+      "id": 140,
+      "name": "Hollow Body Hold",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Mantenha posição oca.",
+      "videoUrl": "https://www.youtube.com/watch?v=LlDNef_Ztsc"
+    },
+    {
+      "id": 141,
+      "name": "Dead Bug",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Alterne braço e perna opostos.",
+      "videoUrl": "https://www.youtube.com/watch?v=4XLEnwUr1d8"
+    },
+    {
+      "id": 142,
+      "name": "Bird Dog",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "De quatro, estenda braço e perna.",
+      "videoUrl": "https://www.youtube.com/watch?v=wiFNA3sqjCA"
+    },
+    {
+      "id": 143,
+      "name": "Crunch no Cabo",
+      "muscle": "abdomen",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Ajoelhado, flexione o tronco.",
+      "videoUrl": "https://www.youtube.com/watch?v=2fbujeH3F0E"
+    },
+    {
+      "id": 144,
+      "name": "Dragon Flag",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Deitado, levante o corpo inteiro.",
+      "videoUrl": "https://www.youtube.com/watch?v=njKXkuhY7_0"
+    },
+    {
+      "id": 145,
+      "name": "Toes to Bar",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Pendurado, leve os pés à barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=tazoSYxZ4I8"
+    },
+    {
+      "id": 146,
+      "name": "Prancha com Elevação",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Prancha elevando perna ou braço.",
+      "videoUrl": "https://www.youtube.com/watch?v=ASdvN_XEl_c"
+    },
+    {
+      "id": 147,
+      "name": "V-Up",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Toque mãos nos pés no ar.",
+      "videoUrl": "https://www.youtube.com/watch?v=iP2fjvG0g3w"
+    },
+    {
+      "id": 148,
+      "name": "Sit Up",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Abdominal completo sentando.",
+      "videoUrl": "https://www.youtube.com/watch?v=_HDZODOx7Zw"
+    },
+    {
+      "id": 149,
+      "name": "Flutter Kicks",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deitado, alterne pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=ANVdMDaYRts"
+    },
+    {
+      "id": 150,
+      "name": "Scissor Kicks",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deitado, cruze as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=ANVdMDaYRts"
+    },
+    {
+      "id": 151,
+      "name": "Leg Raise Pendurado",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Pendurado, eleve as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=hdng3Nm1x_E"
+    },
+    {
+      "id": 152,
+      "name": "Knee Raise Pendurado",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Pendurado, eleve os joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=hdng3Nm1x_E"
+    },
+    {
+      "id": 153,
+      "name": "Wipers",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Pendurado, gire as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=njKXkuhY7_0"
+    },
+    {
+      "id": 154,
+      "name": "Pallof Press",
+      "muscle": "abdomen",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Resistindo a rotação do cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=-sKhWg5wAik"
+    },
+    {
+      "id": 155,
+      "name": "Oblique Crunch",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Crunch para os lados.",
+      "videoUrl": "https://www.youtube.com/watch?v=pDTHSnoGoEc"
+    },
+    {
+      "id": 156,
+      "name": "Side Bend",
+      "muscle": "abdomen",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Inclinação lateral com halter.",
+      "videoUrl": "https://www.youtube.com/watch?v=dL9ZzqtQI5c"
+    },
+    {
+      "id": 157,
+      "name": "Woodchop",
+      "muscle": "abdomen",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe o cabo diagonalmente.",
+      "videoUrl": "https://www.youtube.com/watch?v=pAplQXk3dkU"
+    },
+    {
+      "id": 158,
+      "name": "Suitcase Carry",
+      "muscle": "abdomen",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Caminhe segurando peso de um lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=xN2EBpo9hxM"
+    },
+    {
+      "id": 159,
+      "name": "Farmer's Walk",
+      "muscle": "abdomen",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Caminhe com pesos nas duas mãos.",
+      "videoUrl": "https://www.youtube.com/watch?v=Fkzk_RqlYig"
+    },
+    {
+      "id": 160,
+      "name": "Turkish Get Up",
+      "muscle": "abdomen",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Levante-se mantendo peso acima.",
+      "videoUrl": "https://www.youtube.com/watch?v=0bWRPC6gdVg"
+    },
+    {
+      "id": 161,
+      "name": "Rosca Punho Flexora",
+      "muscle": "antebraco",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Apoiado, flexione o punho.",
+      "videoUrl": "https://www.youtube.com/watch?v=Blf8VZ8DBfg"
+    },
+    {
+      "id": 162,
+      "name": "Rosca Punho Extensora",
+      "muscle": "antebraco",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Apoiado, estenda o punho.",
+      "videoUrl": "https://www.youtube.com/watch?v=Blf8VZ8DBfg"
+    },
+    {
+      "id": 163,
+      "name": "Farmer's Hold",
+      "muscle": "antebraco",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Segure pesos pesados parado.",
+      "videoUrl": "https://www.youtube.com/watch?v=Fkzk_RqlYig"
+    },
+    {
+      "id": 164,
+      "name": "Dead Hang",
+      "muscle": "antebraco",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Fique pendurado na barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=wC3VfRsHWjM"
+    },
+    {
+      "id": 165,
+      "name": "Plate Pinch",
+      "muscle": "antebraco",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Segure anilhas com os dedos.",
+      "videoUrl": "https://www.youtube.com/watch?v=MJMz7CRv0EM"
+    },
+    {
+      "id": 166,
+      "name": "Wrist Roller",
+      "muscle": "antebraco",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Role o peso para cima e para baixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=D3DtN4y7ZxI"
+    },
+    {
+      "id": 167,
+      "name": "Reverse Curl",
+      "muscle": "antebraco",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com pegada pronada.",
+      "videoUrl": "https://www.youtube.com/watch?v=nRgxYX2Ve9w"
+    },
+    {
+      "id": 168,
+      "name": "Gripper",
+      "muscle": "antebraco",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Aperte o gripper.",
+      "videoUrl": "https://www.youtube.com/watch?v=MJMz7CRv0EM"
+    },
+    {
+      "id": 169,
+      "name": "Finger Curls",
+      "muscle": "antebraco",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Deixe a barra rolar e curve de volta.",
+      "videoUrl": "https://www.youtube.com/watch?v=Blf8VZ8DBfg"
+    },
+    {
+      "id": 170,
+      "name": "Towel Pull Up",
+      "muscle": "antebraco",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra segurando numa toalha.",
+      "videoUrl": "https://www.youtube.com/watch?v=wC3VfRsHWjM"
+    },
+    {
+      "id": 171,
+      "name": "Kettlebell Swing",
+      "muscle": "gluteos",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Balance o kettlebell com o quadril.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 172,
+      "name": "Glute Bridge Unilateral",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Ponte com uma perna só.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 173,
+      "name": "Cable Pull Through",
+      "muscle": "gluteos",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe o cabo entre as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=DKUQ1e9RMes"
+    },
+    {
+      "id": 174,
+      "name": "Frog Pumps",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Ponte com plantas dos pés juntas.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 175,
+      "name": "Fire Hydrant",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "De quatro, eleve a perna para o lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=CmC8MF7kh4w"
+    },
+    {
+      "id": 176,
+      "name": "Kickback no Cabo",
+      "muscle": "gluteos",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Estenda a perna para trás.",
+      "videoUrl": "https://www.youtube.com/watch?v=DKUQ1e9RMes"
+    },
+    {
+      "id": 177,
+      "name": "Clamshell",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "De lado, abra os joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 178,
+      "name": "Banded Walk",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Caminhe lateralmente com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 179,
+      "name": "Reverse Lunge",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Afundo dando passo para trás.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 180,
+      "name": "Sumo Deadlift",
+      "muscle": "gluteos",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Levantamento terra com pernas afastadas.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 181,
+      "name": "Romanian Deadlift",
+      "muscle": "gluteos",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Stiff mantendo joelhos levemente flexionados.",
+      "videoUrl": "https://www.youtube.com/watch?v=1uDiW5--rAE"
+    },
+    {
+      "id": 182,
+      "name": "Single Leg RDL",
+      "muscle": "gluteos",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Stiff em uma perna.",
+      "videoUrl": "https://www.youtube.com/watch?v=1uDiW5--rAE"
+    },
+    {
+      "id": 183,
+      "name": "Glute Ham Raise",
+      "muscle": "gluteos",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Na GHD, flexione os joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=N9qNvL0Rihc"
+    },
+    {
+      "id": 184,
+      "name": "Back Extension",
+      "muscle": "gluteos",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão focando nos glúteos.",
+      "videoUrl": "https://www.youtube.com/watch?v=qtKVsRK1WrM"
+    },
+    {
+      "id": 185,
+      "name": "Deficit Reverse Lunge",
+      "muscle": "gluteos",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Afundo reverso de uma plataforma.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 186,
+      "name": "Curtsy Lunge",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Afundo cruzando a perna atrás.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 187,
+      "name": "Donkey Kicks",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "De quatro, empurre o pé para cima.",
+      "videoUrl": "https://www.youtube.com/watch?v=CmC8MF7kh4w"
+    },
+    {
+      "id": 188,
+      "name": "B Stance Hip Thrust",
+      "muscle": "gluteos",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Hip thrust com uma perna mais à frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 189,
+      "name": "Hip Abduction Machine",
+      "muscle": "gluteos",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Na máquina, afaste as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=FPLvMxEhqBg"
+    },
+    {
+      "id": 190,
+      "name": "Glute Squeeze",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Em pé, contraia os glúteos.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 191,
+      "name": "Corrida",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Corra em ritmo constante.",
+      "videoUrl": "https://www.youtube.com/watch?v=brFHyOtTwH4"
+    },
+    {
+      "id": 192,
+      "name": "Bike Ergométrica",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Pedale na bicicleta.",
+      "videoUrl": "https://www.youtube.com/watch?v=hV3YnLTSFPc"
+    },
+    {
+      "id": 193,
+      "name": "Elíptico",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Movimente-se no elíptico.",
+      "videoUrl": "https://www.youtube.com/watch?v=hV3YnLTSFPc"
+    },
+    {
+      "id": 194,
+      "name": "Remador",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Reme na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 195,
+      "name": "Pular Corda",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Pule a corda em ritmo.",
+      "videoUrl": "https://www.youtube.com/watch?v=hCuXYrTOMxI"
+    },
+    {
+      "id": 196,
+      "name": "Burpee",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agache, flexão, salte.",
+      "videoUrl": "https://www.youtube.com/watch?v=dZgVxmf6jkA"
+    },
+    {
+      "id": 197,
+      "name": "Jumping Jacks",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Pule abrindo braços e pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=c4DAnQ6DtF8"
+    },
+    {
+      "id": 198,
+      "name": "Box Jump",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Salte sobre uma caixa.",
+      "videoUrl": "https://www.youtube.com/watch?v=52r_Ul5k03g"
+    },
+    {
+      "id": 199,
+      "name": "High Knees",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Corra no lugar elevando joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=ZZZoCNMU48U"
+    },
+    {
+      "id": 200,
+      "name": "Stair Climber",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Suba escadas na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=hV3YnLTSFPc"
+    },
+    {
+      "id": 201,
+      "name": "Sprint",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Corra na velocidade máxima.",
+      "videoUrl": "https://www.youtube.com/watch?v=brFHyOtTwH4"
+    },
+    {
+      "id": 202,
+      "name": "Battle Ropes",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Ondule as cordas de batalha.",
+      "videoUrl": "https://www.youtube.com/watch?v=DU7V0LSwblg"
+    },
+    {
+      "id": 203,
+      "name": "Assault Bike",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Pedale e empurre na air bike.",
+      "videoUrl": "https://www.youtube.com/watch?v=hV3YnLTSFPc"
+    },
+    {
+      "id": 204,
+      "name": "Sled Push",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Empurre o trenó.",
+      "videoUrl": "https://www.youtube.com/watch?v=2uJdyEr6FPc"
+    },
+    {
+      "id": 205,
+      "name": "Sled Pull",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Puxe o trenó.",
+      "videoUrl": "https://www.youtube.com/watch?v=2uJdyEr6FPc"
+    },
+    {
+      "id": 206,
+      "name": "Swimming",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Nade em qualquer estilo.",
+      "videoUrl": "https://www.youtube.com/watch?v=gh5mAtmeR3Y"
+    },
+    {
+      "id": 207,
+      "name": "Bear Crawl",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Caminhe de quatro apoios.",
+      "videoUrl": "https://www.youtube.com/watch?v=p6AuFjKQ_ac"
+    },
+    {
+      "id": 208,
+      "name": "Shuttle Run",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Corra de um ponto ao outro.",
+      "videoUrl": "https://www.youtube.com/watch?v=brFHyOtTwH4"
+    },
+    {
+      "id": 209,
+      "name": "Inchworm",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Caminhe com as mãos para frente e volte.",
+      "videoUrl": "https://www.youtube.com/watch?v=ZY2ji_Ho0dA"
+    },
+    {
+      "id": 210,
+      "name": "Squat Jump",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agache e salte.",
+      "videoUrl": "https://www.youtube.com/watch?v=YGGq0AE5Uyc"
+    },
+    {
+      "id": 211,
+      "name": "Encolhimento com Barra",
+      "muscle": "trapezio",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Eleve os ombros com barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=cJRVVxmytaM"
+    },
+    {
+      "id": 212,
+      "name": "Encolhimento Atrás",
+      "muscle": "trapezio",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Encolhimento com barra atrás.",
+      "videoUrl": "https://www.youtube.com/watch?v=cJRVVxmytaM"
+    },
+    {
+      "id": 213,
+      "name": "Face Pull Trapézio",
+      "muscle": "trapezio",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxe a corda abrindo.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 214,
+      "name": "Farmer's Walk Heavy",
+      "muscle": "trapezio",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Caminhe com pesos muito pesados.",
+      "videoUrl": "https://www.youtube.com/watch?v=Fkzk_RqlYig"
+    },
+    {
+      "id": 215,
+      "name": "Remada Alta Halteres",
+      "muscle": "trapezio",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada alta com halteres.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 216,
+      "name": "Power Shrug",
+      "muscle": "trapezio",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Encolhimento explosivo.",
+      "videoUrl": "https://www.youtube.com/watch?v=cJRVVxmytaM"
+    },
+    {
+      "id": 217,
+      "name": "Y Raise Trap",
+      "muscle": "trapezio",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Eleve formando Y, foco no trap.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 218,
+      "name": "Rack Pull",
+      "muscle": "trapezio",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Levantamento parcial do rack.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 219,
+      "name": "Snatch Grip High Pull",
+      "muscle": "trapezio",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Puxada alta pegada larga.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 220,
+      "name": "Kelso Shrug",
+      "muscle": "trapezio",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Encolhimento inclinado para frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=cJRVVxmytaM"
+    },
+    {
+      "id": 221,
+      "name": "Clean",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Arremesso olímpico completo.",
+      "videoUrl": "https://www.youtube.com/watch?v=sTxXv3QCLjY"
+    },
+    {
+      "id": 222,
+      "name": "Power Clean",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Clean sem agachar completo.",
+      "videoUrl": "https://www.youtube.com/watch?v=sTxXv3QCLjY"
+    },
+    {
+      "id": 223,
+      "name": "Snatch",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Arranco olímpico.",
+      "videoUrl": "https://www.youtube.com/watch?v=9xQp2sldyts"
+    },
+    {
+      "id": 224,
+      "name": "Power Snatch",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Snatch sem agachar completo.",
+      "videoUrl": "https://www.youtube.com/watch?v=9xQp2sldyts"
+    },
+    {
+      "id": 225,
+      "name": "Clean and Jerk",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Clean seguido de arremesso.",
+      "videoUrl": "https://www.youtube.com/watch?v=PjY1rH4_MOA"
+    },
+    {
+      "id": 226,
+      "name": "Hang Clean",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Clean partindo da posição hang.",
+      "videoUrl": "https://www.youtube.com/watch?v=sTxXv3QCLjY"
+    },
+    {
+      "id": 227,
+      "name": "Muscle Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra fixa passando até mergulho.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 228,
+      "name": "Ring Muscle Up",
+      "muscle": "costas",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Muscle up nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 229,
+      "name": "L-Sit Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra mantendo pernas estendidas.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 230,
+      "name": "Archer Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Pull up tendendo para um lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 231,
+      "name": "Commando Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Pull up de lado na barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 232,
+      "name": "Wide Grip Lat Pull",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxada pegada bem larga.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 233,
+      "name": "Close Grip Lat Pull",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Puxada pegada fechada.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 234,
+      "name": "Single Arm Lat Pull",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxada unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 235,
+      "name": "Meadows Row",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Remada unilateral na ponta da barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=j3Igk5nyZE4"
+    },
+    {
+      "id": 236,
+      "name": "Pendlay Row",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Remada explosiva do chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ"
+    },
+    {
+      "id": 237,
+      "name": "Yates Row",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada tronco mais vertical.",
+      "videoUrl": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ"
+    },
+    {
+      "id": 238,
+      "name": "Kroc Row",
+      "muscle": "costas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Remada pesada com balanço.",
+      "videoUrl": "https://www.youtube.com/watch?v=pYcpY20QaE8"
+    },
+    {
+      "id": 239,
+      "name": "Seal Row",
+      "muscle": "costas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada deitado de bruços.",
+      "videoUrl": "https://www.youtube.com/watch?v=pYcpY20QaE8"
+    },
+    {
+      "id": 240,
+      "name": "Chest Supported Row",
+      "muscle": "costas",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada com peito apoiado.",
+      "videoUrl": "https://www.youtube.com/watch?v=pYcpY20QaE8"
+    },
+    {
+      "id": 241,
+      "name": "Supino Hammer",
+      "muscle": "peito",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Supino na máquina hammer.",
+      "videoUrl": "https://www.youtube.com/watch?v=xUm0BiZCWlQ"
+    },
+    {
+      "id": 242,
+      "name": "Supino com Kettlebell",
+      "muscle": "peito",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino com kettlebells.",
+      "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+    },
+    {
+      "id": 243,
+      "name": "Flexão Spiderman",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão trazendo joelho ao cotovelo.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 244,
+      "name": "Flexão Archer",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão tendendo para um lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 245,
+      "name": "Flexão Pike",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com quadril elevado.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 246,
+      "name": "Handstand Push Up",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão parado de mãos.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 247,
+      "name": "Hindu Push Up",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com movimento ondulado.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 248,
+      "name": "Dive Bomber Push Up",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão mergulhando para frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 249,
+      "name": "One Arm Push Up",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão com um braço só.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 250,
+      "name": "Plyo Push Up",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão explosiva saindo do chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=EYwWCgM198U"
+    },
+    {
+      "id": 251,
+      "name": "Cable Fly Alto",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crucifixo de cima para baixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 252,
+      "name": "Cable Fly Médio",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crucifixo na altura do peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 253,
+      "name": "Cable Fly Baixo",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crucifixo de baixo para cima.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 254,
+      "name": "Landmine Press",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Empurre a barra na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=FvjVMz0MHKU"
+    },
+    {
+      "id": 255,
+      "name": "Z Press",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Desenvolvimento sentado no chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
+    },
+    {
+      "id": 256,
+      "name": "Viking Press",
+      "muscle": "ombros",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Desenvolvimento na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=FvjVMz0MHKU"
+    },
+    {
+      "id": 257,
+      "name": "Bradford Press",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Desenvolvimento passa frente/atrás.",
+      "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI"
+    },
+    {
+      "id": 258,
+      "name": "Javelin Press",
+      "muscle": "ombros",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Press unilateral na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=FvjVMz0MHKU"
+    },
+    {
+      "id": 259,
+      "name": "Lu Lateral Raise",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Elevação lateral pegada neutra.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 260,
+      "name": "Partials Laterais",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Elevações parciais no final.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 261,
+      "name": "Prone Y Raise",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "De bruços, levante em Y.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 262,
+      "name": "Prone T Raise",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "De bruços, levante lateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 263,
+      "name": "IYT Raises",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Combine I, Y e T.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 264,
+      "name": "Cuban Press",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Elevação lateral + rotação externa + press.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 265,
+      "name": "Scarecrow",
+      "muscle": "ombros",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rotação externa com braços elevados.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 266,
+      "name": "External Rotation",
+      "muscle": "ombros",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rotação externa no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=oLI2WLjrYIE"
+    },
+    {
+      "id": 267,
+      "name": "Internal Rotation",
+      "muscle": "ombros",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rotação interna no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=oLI2WLjrYIE"
+    },
+    {
+      "id": 268,
+      "name": "Front Plate Raise",
+      "muscle": "ombros",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Elevação frontal com anilha.",
+      "videoUrl": "https://www.youtube.com/watch?v=-t7fuZ0KhDA"
+    },
+    {
+      "id": 269,
+      "name": "Bus Driver",
+      "muscle": "ombros",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Gire a anilha como volante.",
+      "videoUrl": "https://www.youtube.com/watch?v=-t7fuZ0KhDA"
+    },
+    {
+      "id": 270,
+      "name": "Around the World",
+      "muscle": "ombros",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Circule a anilha ao redor.",
+      "videoUrl": "https://www.youtube.com/watch?v=-t7fuZ0KhDA"
+    },
+    {
+      "id": 271,
+      "name": "Box Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento sentando na caixa.",
+      "videoUrl": "https://www.youtube.com/watch?v=3RZI4kCOHEc"
+    },
+    {
+      "id": 272,
+      "name": "Pause Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento com pausa embaixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 273,
+      "name": "1.5 Rep Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Desça, suba meio, desça, suba.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 274,
+      "name": "Zercher Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento com barra nos cotovelos.",
+      "videoUrl": "https://www.youtube.com/watch?v=Z0fhSLANt14"
+    },
+    {
+      "id": 275,
+      "name": "Jefferson Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento com barra entre as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 276,
+      "name": "Anderson Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento partindo de baixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 277,
+      "name": "Split Squat",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Agachamento com pés separados.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 278,
+      "name": "Spanish Squat",
+      "muscle": "pernas",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento com elástico nos joelhos.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 279,
+      "name": "Cyclist Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento com calcanhares elevados.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 280,
+      "name": "Hatfield Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Safety bar squat com apoio.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 281,
+      "name": "Belt Squat",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento com cinto.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 282,
+      "name": "Pendulum Squat",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento na máquina pendulum.",
+      "videoUrl": "https://www.youtube.com/watch?v=0tn5K9NlCfo"
+    },
+    {
+      "id": 283,
+      "name": "Sissy Squat Machine",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Sissy squat na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=VVoYBEHjlEQ"
+    },
+    {
+      "id": 284,
+      "name": "Leg Extension Drop Set",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Extensora com drop set.",
+      "videoUrl": "https://www.youtube.com/watch?v=YyvSfVjQeL0"
+    },
+    {
+      "id": 285,
+      "name": "Nordic Curl",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Ajoelhado, desça controlando.",
+      "videoUrl": "https://www.youtube.com/watch?v=VVoYBEHjlEQ"
+    },
+    {
+      "id": 286,
+      "name": "Reverse Nordic",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "De joelhos, incline para trás.",
+      "videoUrl": "https://www.youtube.com/watch?v=VVoYBEHjlEQ"
+    },
+    {
+      "id": 287,
+      "name": "Natural GHR",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "GHR com os pés presos.",
+      "videoUrl": "https://www.youtube.com/watch?v=N9qNvL0Rihc"
+    },
+    {
+      "id": 288,
+      "name": "Single Leg Curl",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Flexora unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+      "id": 289,
+      "name": "Lying Leg Curl Drop",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Mesa flexora com drop set.",
+      "videoUrl": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+      "id": 290,
+      "name": "Cable Leg Curl",
+      "muscle": "pernas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Flexora no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=DKUQ1e9RMes"
+    },
+    {
+      "id": 291,
+      "name": "Hip Thrust Unilateral",
+      "muscle": "gluteos",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Hip thrust uma perna.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 292,
+      "name": "Banded Hip Thrust",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Hip thrust com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 293,
+      "name": "Smith Hip Thrust",
+      "muscle": "gluteos",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Hip thrust no smith.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 294,
+      "name": "Foot Elevated Hip Thrust",
+      "muscle": "gluteos",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Hip thrust com pés elevados.",
+      "videoUrl": "https://www.youtube.com/watch?v=SEdqd1n0cvg"
+    },
+    {
+      "id": 295,
+      "name": "45° Back Extension",
+      "muscle": "gluteos",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão a 45° focando glúteos.",
+      "videoUrl": "https://www.youtube.com/watch?v=qtKVsRK1WrM"
+    },
+    {
+      "id": 296,
+      "name": "Reverse Hyper",
+      "muscle": "gluteos",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Hiperextensão inversa.",
+      "videoUrl": "https://www.youtube.com/watch?v=qtKVsRK1WrM"
+    },
+    {
+      "id": 297,
+      "name": "Deficit Deadlift",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Terra de cima de uma plataforma.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 298,
+      "name": "Paused Deadlift",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Terra com pausa no meio.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 299,
+      "name": "Snatch Grip Deadlift",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Terra com pegada bem larga.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 300,
+      "name": "Trap Bar Deadlift",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Terra com barra hexagonal.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 301,
+      "name": "Block Deadlift",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Terra de blocos elevados.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 302,
+      "name": "Jefferson Deadlift",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Terra com barra entre pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "id": 303,
+      "name": "Cable Bicep Curl 21s",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "21s no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=N7V4TZp0y0E"
+    },
+    {
+      "id": 304,
+      "name": "EZ Bar Curl",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rosca com barra W.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 305,
+      "name": "Prone Incline Curl",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca deitado de bruços.",
+      "videoUrl": "https://www.youtube.com/watch?v=3FEV5MIBlOY"
+    },
+    {
+      "id": 306,
+      "name": "Bayesian Curl",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Rosca no cabo posição posterior.",
+      "videoUrl": "https://www.youtube.com/watch?v=NFzTWp2qpiE"
+    },
+    {
+      "id": 307,
+      "name": "Waiter Curl",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca segurando por baixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+      "id": 308,
+      "name": "Preacher Hammer Curl",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca martelo no scott.",
+      "videoUrl": "https://www.youtube.com/watch?v=fIWP-FRFNU0"
+    },
+    {
+      "id": 309,
+      "name": "Machine Preacher Curl",
+      "muscle": "biceps",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Scott na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=fIWP-FRFNU0"
+    },
+    {
+      "id": 310,
+      "name": "Cable Hammer Curl",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca martelo com corda.",
+      "videoUrl": "https://www.youtube.com/watch?v=NFzTWp2qpiE"
+    },
+    {
+      "id": 311,
+      "name": "Overhead Triceps Extension",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão acima da cabeça.",
+      "videoUrl": "https://www.youtube.com/watch?v=YbX7Wd8jQ-Q"
+    },
+    {
+      "id": 312,
+      "name": "Machine Triceps Extension",
+      "muscle": "triceps",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Tríceps na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 313,
+      "name": "Rolling Triceps Extension",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Tríceps com rolamento.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 314,
+      "name": "Tate Press",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Cotovelos para os lados.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 315,
+      "name": "California Press",
+      "muscle": "triceps",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Híbrido supino e tríceps.",
+      "videoUrl": "https://www.youtube.com/watch?v=wxVRe9pmJdk"
+    },
+    {
+      "id": 316,
+      "name": "Band Triceps Pushdown",
+      "muscle": "triceps",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Extensão com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 317,
+      "name": "Reverse Grip Pushdown",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Pulley pegada supinada.",
+      "videoUrl": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "id": 318,
+      "name": "Single Arm OH Extension",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Francês unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=YbX7Wd8jQ-Q"
+    },
+    {
+      "id": 319,
+      "name": "Plank to Pushup",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Alterne prancha e flexão.",
+      "videoUrl": "https://www.youtube.com/watch?v=6kALZikXxLc"
+    },
+    {
+      "id": 320,
+      "name": "Ring Dips",
+      "muscle": "triceps",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Mergulho nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+    },
+    {
+      "id": 321,
+      "name": "Medicine Ball Slam",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Arremesse a bola no chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=j1wxfVw88-Y"
+    },
+    {
+      "id": 322,
+      "name": "Hanging Windshield Wipers",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Pendurado, gire as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=njKXkuhY7_0"
+    },
+    {
+      "id": 323,
+      "name": "Decline Crunch",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crunch em banco declinado.",
+      "videoUrl": "https://www.youtube.com/watch?v=Xyd_fa5zoEU"
+    },
+    {
+      "id": 324,
+      "name": "Weighted Plank",
+      "muscle": "abdomen",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Prancha com peso nas costas.",
+      "videoUrl": "https://www.youtube.com/watch?v=ASdvN_XEl_c"
+    },
+    {
+      "id": 325,
+      "name": "L-Sit",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Mantenha L sentado.",
+      "videoUrl": "https://www.youtube.com/watch?v=LlDNef_Ztsc"
+    },
+    {
+      "id": 326,
+      "name": "Hanging L-Sit",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "L-sit pendurado.",
+      "videoUrl": "https://www.youtube.com/watch?v=hdng3Nm1x_E"
+    },
+    {
+      "id": 327,
+      "name": "Plank Jacks",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Prancha abrindo e fechando pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=ASdvN_XEl_c"
+    },
+    {
+      "id": 328,
+      "name": "Spiderman Plank",
+      "muscle": "abdomen",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Prancha trazendo joelho.",
+      "videoUrl": "https://www.youtube.com/watch?v=ASdvN_XEl_c"
+    },
+    {
+      "id": 329,
+      "name": "Anti-Rotation Hold",
+      "muscle": "abdomen",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Resista à rotação do cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=-sKhWg5wAik"
+    },
+    {
+      "id": 330,
+      "name": "Cable Twist",
+      "muscle": "abdomen",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rotação horizontal do cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=pAplQXk3dkU"
+    },
+    {
+      "id": 331,
+      "name": "TRX Crunch",
+      "muscle": "abdomen",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crunch com pés no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 332,
+      "name": "TRX Pike",
+      "muscle": "abdomen",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Pike com pés no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 333,
+      "name": "TRX Fallout",
+      "muscle": "abdomen",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Rollout no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 334,
+      "name": "Pike Push Up",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão em V invertido.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 335,
+      "name": "Wall Walk",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Suba os pés pela parede.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 336,
+      "name": "L-Sit to Shoulder Stand",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Transição L-sit para vertical.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 337,
+      "name": "Kipping Handstand Push Up",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "HSPU com kipping.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 338,
+      "name": "Strict HSPU",
+      "muscle": "ombros",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "HSPU sem impulso.",
+      "videoUrl": "https://www.youtube.com/watch?v=sposDXWEB0A"
+    },
+    {
+      "id": 339,
+      "name": "Ring Face Pull",
+      "muscle": "ombros",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Face pull nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=rep-qVOkqgk"
+    },
+    {
+      "id": 340,
+      "name": "TRX Y",
+      "muscle": "ombros",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Y raise no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 341,
+      "name": "Cable Y Raise",
+      "muscle": "ombros",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Y raise nos cabos.",
+      "videoUrl": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    },
+    {
+      "id": 342,
+      "name": "Kettlebell Press",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Press com kettlebell.",
+      "videoUrl": "https://www.youtube.com/watch?v=qEwKCR5JCog"
+    },
+    {
+      "id": 343,
+      "name": "Kettlebell Bottom Up Press",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Press com KB invertido.",
+      "videoUrl": "https://www.youtube.com/watch?v=qEwKCR5JCog"
+    },
+    {
+      "id": 344,
+      "name": "Bottoms Up Clean",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Clean segurando KB invertido.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 345,
+      "name": "Windmill",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Moinho de vento com KB.",
+      "videoUrl": "https://www.youtube.com/watch?v=0bWRPC6gdVg"
+    },
+    {
+      "id": 346,
+      "name": "Bent Press",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Press inclinando para o lado.",
+      "videoUrl": "https://www.youtube.com/watch?v=0bWRPC6gdVg"
+    },
+    {
+      "id": 347,
+      "name": "See Saw Press",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Press alternado gangorra.",
+      "videoUrl": "https://www.youtube.com/watch?v=qEwKCR5JCog"
+    },
+    {
+      "id": 348,
+      "name": "Double KB Front Squat",
+      "muscle": "pernas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento com 2 KBs.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 349,
+      "name": "KB Goblet Squat",
+      "muscle": "pernas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Goblet squat com KB.",
+      "videoUrl": "https://www.youtube.com/watch?v=MeIiIdhvXT4"
+    },
+    {
+      "id": 350,
+      "name": "KB Sumo Deadlift",
+      "muscle": "pernas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Terra sumô com KB.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 351,
+      "name": "KB Swing One Arm",
+      "muscle": "gluteos",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Swing com um braço.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 352,
+      "name": "KB Snatch",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Snatch com kettlebell.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 353,
+      "name": "KB Clean",
+      "muscle": "costas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Clean com kettlebell.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 354,
+      "name": "KB Clean and Press",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Clean seguido de press.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 355,
+      "name": "KB High Pull",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxada alta com KB.",
+      "videoUrl": "https://www.youtube.com/watch?v=sFWkktTH2H8"
+    },
+    {
+      "id": 356,
+      "name": "KB Halo",
+      "muscle": "ombros",
+      "equipment": "kettlebell",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Circule o KB ao redor da cabeça.",
+      "videoUrl": "https://www.youtube.com/watch?v=0bWRPC6gdVg"
+    },
+    {
+      "id": 357,
+      "name": "KB Dead Clean",
+      "muscle": "costas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Clean partindo do chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=YSxHifyI6s8"
+    },
+    {
+      "id": 358,
+      "name": "KB Figure 8",
+      "muscle": "abdomen",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Passe o KB em 8 entre as pernas.",
+      "videoUrl": "https://www.youtube.com/watch?v=0bWRPC6gdVg"
+    },
+    {
+      "id": 359,
+      "name": "KB Lunge",
+      "muscle": "pernas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Afundo segurando KB.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 360,
+      "name": "KB Step Up",
+      "muscle": "pernas",
+      "equipment": "kettlebell",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Step up com KB.",
+      "videoUrl": "https://www.youtube.com/watch?v=dQqApCGd5Ss"
+    },
+    {
+      "id": 361,
+      "name": "TRX Row",
+      "muscle": "costas",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 362,
+      "name": "TRX Single Arm Row",
+      "muscle": "costas",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada unilateral TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 363,
+      "name": "TRX Bicep Curl",
+      "muscle": "biceps",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 364,
+      "name": "TRX Tricep Extension",
+      "muscle": "triceps",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Tríceps no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 365,
+      "name": "TRX Chest Press",
+      "muscle": "peito",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 366,
+      "name": "TRX Fly",
+      "muscle": "peito",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Crucifixo no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 367,
+      "name": "TRX Squat",
+      "muscle": "pernas",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Agachamento assistido no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 368,
+      "name": "TRX Lunge",
+      "muscle": "pernas",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Afundo com pé no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 369,
+      "name": "TRX Hamstring Curl",
+      "muscle": "pernas",
+      "equipment": "trx",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Flexora no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 370,
+      "name": "TRX Hip Hinge",
+      "muscle": "gluteos",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Stiff no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 371,
+      "name": "TRX Pistol Squat",
+      "muscle": "pernas",
+      "equipment": "trx",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Pistol assistido no TRX.",
+      "videoUrl": "https://www.youtube.com/watch?v=wSu1oLHPb5U"
+    },
+    {
+      "id": 372,
+      "name": "Ring Row",
+      "muscle": "costas",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 373,
+      "name": "Ring Push Up",
+      "muscle": "peito",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 374,
+      "name": "Ring Fly",
+      "muscle": "peito",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Crucifixo nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 375,
+      "name": "Ring Support Hold",
+      "muscle": "ombros",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Segure posição de suporte.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 376,
+      "name": "Ring L-Sit",
+      "muscle": "abdomen",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "L-sit nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 377,
+      "name": "Ring Skin the Cat",
+      "muscle": "ombros",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Rotação nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 378,
+      "name": "Ring Pull Up",
+      "muscle": "costas",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Barra fixa nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 379,
+      "name": "Ring Archer Row",
+      "muscle": "costas",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Remada arqueiro nas argolas.",
+      "videoUrl": "https://www.youtube.com/watch?v=TBq6O8E0Xs8"
+    },
+    {
+      "id": 380,
+      "name": "Band Pull Apart",
+      "muscle": "ombros",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Puxe o elástico afastando.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 381,
+      "name": "Band Face Pull",
+      "muscle": "ombros",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Face pull com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 382,
+      "name": "Band Dislocate",
+      "muscle": "ombros",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Passe o elástico por trás.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 383,
+      "name": "Band Bicep Curl",
+      "muscle": "biceps",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rosca com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 384,
+      "name": "Band Tricep Pushdown",
+      "muscle": "triceps",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Extensão com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 385,
+      "name": "Band Good Morning",
+      "muscle": "costas",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Good morning com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 386,
+      "name": "Band Squat",
+      "muscle": "pernas",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Agachamento com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 387,
+      "name": "Band Deadlift",
+      "muscle": "costas",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Terra com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 388,
+      "name": "Band Press",
+      "muscle": "ombros",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Desenvolvimento com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 389,
+      "name": "Band Row",
+      "muscle": "costas",
+      "equipment": "elastico",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 390,
+      "name": "Band Glute Bridge",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Ponte com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 391,
+      "name": "Band Leg Curl",
+      "muscle": "pernas",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Flexora com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 392,
+      "name": "Band Kickback",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Kickback com elástico.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 393,
+      "name": "Band Lateral Walk",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Caminhada lateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 394,
+      "name": "Band Monster Walk",
+      "muscle": "gluteos",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Caminhada diagonal.",
+      "videoUrl": "https://www.youtube.com/watch?v=IZFezBMXlxw"
+    },
+    {
+      "id": 395,
+      "name": "Swiss Ball Crunch",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Crunch na bola suíça.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 396,
+      "name": "Swiss Ball Pike",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Pike na bola suíça.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 397,
+      "name": "Swiss Ball Rollout",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rollout na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 398,
+      "name": "Swiss Ball Leg Curl",
+      "muscle": "pernas",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Flexora na bola suíça.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 399,
+      "name": "Swiss Ball Back Extension",
+      "muscle": "costas",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Extensão na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 400,
+      "name": "Swiss Ball Jackknife",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Jackknife na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 401,
+      "name": "Swiss Ball Hip Thrust",
+      "muscle": "gluteos",
+      "equipment": "bola",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Hip thrust com pés na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 402,
+      "name": "Swiss Ball Plank",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Prancha com cotovelos na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 403,
+      "name": "Swiss Ball Stir the Pot",
+      "muscle": "abdomen",
+      "equipment": "bola",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Prancha circulando na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 404,
+      "name": "Swiss Ball Push Up",
+      "muscle": "peito",
+      "equipment": "bola",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com mãos na bola.",
+      "videoUrl": "https://www.youtube.com/watch?v=TKg_cdwq9l4"
+    },
+    {
+      "id": 405,
+      "name": "Bosu Ball Squat",
+      "muscle": "pernas",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento no bosu.",
+      "videoUrl": "https://www.youtube.com/watch?v=iwKPaEfD9hA"
+    },
+    {
+      "id": 406,
+      "name": "Bosu Ball Lunge",
+      "muscle": "pernas",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Afundo com pé no bosu.",
+      "videoUrl": "https://www.youtube.com/watch?v=iwKPaEfD9hA"
+    },
+    {
+      "id": 407,
+      "name": "Bosu Ball Plank",
+      "muscle": "abdomen",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Prancha no bosu.",
+      "videoUrl": "https://www.youtube.com/watch?v=iwKPaEfD9hA"
+    },
+    {
+      "id": 408,
+      "name": "Bosu Ball Burpee",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Burpee segurando o bosu.",
+      "videoUrl": "https://www.youtube.com/watch?v=iwKPaEfD9hA"
+    },
+    {
+      "id": 409,
+      "name": "Landmine Row",
+      "muscle": "costas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=j3Igk5nyZE4"
+    },
+    {
+      "id": 410,
+      "name": "Landmine Squat",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 411,
+      "name": "Landmine RDL",
+      "muscle": "gluteos",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Stiff na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=1uDiW5--rAE"
+    },
+    {
+      "id": 412,
+      "name": "Landmine Rotation",
+      "muscle": "abdomen",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rotação na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=pAplQXk3dkU"
+    },
+    {
+      "id": 413,
+      "name": "Landmine Lunge",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Afundo na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 414,
+      "name": "Landmine Floor Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino no chão na landmine.",
+      "videoUrl": "https://www.youtube.com/watch?v=FvjVMz0MHKU"
+    },
+    {
+      "id": 415,
+      "name": "Landmine Thruster",
+      "muscle": "pernas",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agacha e empurra.",
+      "videoUrl": "https://www.youtube.com/watch?v=FvjVMz0MHKU"
+    },
+    {
+      "id": 416,
+      "name": "Parallel Bar Dip",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Mergulho nas paralelas.",
+      "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+    },
+    {
+      "id": 417,
+      "name": "Weighted Dip",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Mergulho com peso.",
+      "videoUrl": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+    },
+    {
+      "id": 418,
+      "name": "Weighted Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra fixa com peso.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 419,
+      "name": "Weighted Chin Up",
+      "muscle": "biceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra supinada com peso.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 420,
+      "name": "Neutral Grip Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Barra pegada neutra.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 421,
+      "name": "Wide Grip Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra pegada bem larga.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 422,
+      "name": "Close Grip Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Barra pegada fechada.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 423,
+      "name": "Typewriter Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra movendo para os lados.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 424,
+      "name": "Negative Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Desça lentamente.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 425,
+      "name": "Band Assisted Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Barra com elástico auxiliando.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 426,
+      "name": "Clapping Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra explosiva batendo palmas.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 427,
+      "name": "Around the World Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Barra circulando.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 428,
+      "name": "Chin Up",
+      "muscle": "biceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Barra supinada.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 429,
+      "name": "Mixed Grip Pull Up",
+      "muscle": "costas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Uma mão pronada, uma supinada.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 430,
+      "name": "One Arm Lat Pulldown",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Puxada unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 431,
+      "name": "Behind Neck Pulldown",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Puxada atrás da nuca.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 432,
+      "name": "V-Bar Pulldown",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Puxada com barra V.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 433,
+      "name": "Rope Pulldown",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Puxada com corda.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 434,
+      "name": "Straight Bar Pulldown",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Puxada com barra reta.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 435,
+      "name": "Cable Close Grip Row",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada pegada fechada.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 436,
+      "name": "Cable Wide Grip Row",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada pegada larga.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 437,
+      "name": "Cable Single Arm Row",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 438,
+      "name": "Standing Cable Row",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada em pé.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 439,
+      "name": "High Cable Row",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada com cabo alto.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 440,
+      "name": "Low Cable Row",
+      "muscle": "costas",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada com cabo baixo.",
+      "videoUrl": "https://www.youtube.com/watch?v=GZbfZ033f74"
+    },
+    {
+      "id": 441,
+      "name": "Machine Row",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=roCP6wCXPqo"
+    },
+    {
+      "id": 442,
+      "name": "Machine Lat Pulldown",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Puxada na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "id": 443,
+      "name": "Assisted Pull Up Machine",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Barra assistida.",
+      "videoUrl": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "id": 444,
+      "name": "Prone Row Machine",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Remada deitado na máquina.",
+      "videoUrl": "https://www.youtube.com/watch?v=roCP6wCXPqo"
+    },
+    {
+      "id": 445,
+      "name": "Iso-Lateral Row",
+      "muscle": "costas",
+      "equipment": "maquina",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Remada iso-lateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=roCP6wCXPqo"
+    },
+    {
+      "id": 446,
+      "name": "Floor Press Barbell",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino no chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 447,
+      "name": "Floor Press Dumbbell",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino no chão com halteres.",
+      "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+    },
+    {
+      "id": 448,
+      "name": "Pause Bench Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino com pausa no peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 449,
+      "name": "Spoto Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino parando antes do peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 450,
+      "name": "Larsen Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino com pernas estendidas.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 451,
+      "name": "Reverse Grip Bench",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino pegada supinada.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 452,
+      "name": "Wide Grip Bench",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino pegada larga.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 453,
+      "name": "Pin Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino partindo dos pinos.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 454,
+      "name": "Board Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino com bloco no peito.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 455,
+      "name": "Slingshot Bench",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Supino com slingshot.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 456,
+      "name": "Tempo Bench Press",
+      "muscle": "peito",
+      "equipment": "barra",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino controlando o tempo.",
+      "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "id": 457,
+      "name": "Incline Hammer Curl",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Martelo inclinado.",
+      "videoUrl": "https://www.youtube.com/watch?v=zC3nLlEvin4"
+    },
+    {
+      "id": 458,
+      "name": "Cable Preacher Curl",
+      "muscle": "biceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Scott no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=NFzTWp2qpiE"
+    },
+    {
+      "id": 459,
+      "name": "Concentration Hammer",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Concentrada martelo.",
+      "videoUrl": "https://www.youtube.com/watch?v=0AUGkch3tzc"
+    },
+    {
+      "id": 460,
+      "name": "Supinating Curl",
+      "muscle": "biceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com rotação.",
+      "videoUrl": "https://www.youtube.com/watch?v=sAq_ocpRh_I"
+    },
+    {
+      "id": 461,
+      "name": "Plate Curl",
+      "muscle": "biceps",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Rosca com anilha.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 462,
+      "name": "Towel Curl",
+      "muscle": "biceps",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com toalha.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 463,
+      "name": "Fat Grip Curl",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com pegada grossa.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 464,
+      "name": "Cheat Curl",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Rosca com impulso.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 465,
+      "name": "Gironda Drag Curl",
+      "muscle": "biceps",
+      "equipment": "barra",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Rosca arrastando.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 466,
+      "name": "Blood Flow Restriction Curl",
+      "muscle": "biceps",
+      "equipment": "elastico",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com restrição de fluxo.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 467,
+      "name": "Arm Blaster Curl",
+      "muscle": "biceps",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Rosca com arm blaster.",
+      "videoUrl": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "id": 468,
+      "name": "Prone Tricep Extension",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Tríceps deitado de bruços.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 469,
+      "name": "Floor Tricep Extension",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Tríceps testa no chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "id": 470,
+      "name": "Cable Overhead Extension",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão overhead no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=h3nnvJroXOg"
+    },
+    {
+      "id": 471,
+      "name": "Rope Overhead Extension",
+      "muscle": "triceps",
+      "equipment": "cabo",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Francês com corda.",
+      "videoUrl": "https://www.youtube.com/watch?v=h3nnvJroXOg"
+    },
+    {
+      "id": 472,
+      "name": "Two Arm Kickback",
+      "muscle": "triceps",
+      "equipment": "halteres",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Coice dois braços.",
+      "videoUrl": "https://www.youtube.com/watch?v=6SS6K3lAwZ8"
+    },
+    {
+      "id": 473,
+      "name": "Diamond Cutter Push Up",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão diamante explosiva.",
+      "videoUrl": "https://www.youtube.com/watch?v=J0DnG1_S92I"
+    },
+    {
+      "id": 474,
+      "name": "Bodyweight Tricep Extension",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Extensão na barra.",
+      "videoUrl": "https://www.youtube.com/watch?v=6kALZikXxLc"
+    },
+    {
+      "id": 475,
+      "name": "Tiger Bend Push Up",
+      "muscle": "triceps",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Flexão com cotovelos no chão.",
+      "videoUrl": "https://www.youtube.com/watch?v=6kALZikXxLc"
+    },
+    {
+      "id": 476,
+      "name": "Dumbbell Squeeze Press",
+      "muscle": "peito",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino apertando os halteres.",
+      "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+    },
+    {
+      "id": 477,
+      "name": "Svend Press",
+      "muscle": "peito",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Empurre anilhas à frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=VmB1G1K7v94"
+    },
+    {
+      "id": 478,
+      "name": "Cable Incline Press",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino inclinado no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 479,
+      "name": "One Arm Cable Press",
+      "muscle": "peito",
+      "equipment": "cabo",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Supino unilateral no cabo.",
+      "videoUrl": "https://www.youtube.com/watch?v=taI4XduLpTk"
+    },
+    {
+      "id": 480,
+      "name": "Push Up Plus",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com protração.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 481,
+      "name": "Deficit Push Up",
+      "muscle": "peito",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Flexão com mãos elevadas.",
+      "videoUrl": "https://www.youtube.com/watch?v=IODxDxX7oi4"
+    },
+    {
+      "id": 482,
+      "name": "Single Leg Romanian Deadlift",
+      "muscle": "gluteos",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Stiff unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=1uDiW5--rAE"
+    },
+    {
+      "id": 483,
+      "name": "Kickstand RDL",
+      "muscle": "gluteos",
+      "equipment": "halteres",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "RDL com pé de apoio.",
+      "videoUrl": "https://www.youtube.com/watch?v=1uDiW5--rAE"
+    },
+    {
+      "id": 484,
+      "name": "45 Degree Leg Press Calf",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Panturrilha no leg press.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 485,
+      "name": "Donkey Calf Raise",
+      "muscle": "pernas",
+      "equipment": "maquina",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Panturrilha burro.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 486,
+      "name": "Single Leg Calf Raise",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Panturrilha unilateral.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 487,
+      "name": "Tibialis Raise",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "iniciante",
+      "instructions": "Eleve a ponta dos pés.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 488,
+      "name": "Tib Bar Raise",
+      "muscle": "pernas",
+      "equipment": "acessorio",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Tibialis na barra tib.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 489,
+      "name": "Sliding Leg Curl",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Flexora deslizando os pés.",
+      "videoUrl": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+      "id": 490,
+      "name": "Hamstring Walkout",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "intermediario",
+      "instructions": "Caminhe os pés para frente.",
+      "videoUrl": "https://www.youtube.com/watch?v=1Tq3QdYUuHs"
+    },
+    {
+      "id": 491,
+      "name": "Sissy Squat Leg Curl",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "isolador",
+      "level": "avancado",
+      "instructions": "Combo sissy e flexora.",
+      "videoUrl": "https://www.youtube.com/watch?v=VVoYBEHjlEQ"
+    },
+    {
+      "id": 492,
+      "name": "Front Foot Elevated Split",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Split com pé frontal elevado.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 493,
+      "name": "Rear Foot Elevated Split",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Split búlgaro.",
+      "videoUrl": "https://www.youtube.com/watch?v=2C-uNgKwPLE"
+    },
+    {
+      "id": 494,
+      "name": "Skater Squat",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento patinador.",
+      "videoUrl": "https://www.youtube.com/watch?v=vq5-vdgJc0I"
+    },
+    {
+      "id": 495,
+      "name": "Shrimp Squat",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento camarão.",
+      "videoUrl": "https://www.youtube.com/watch?v=vq5-vdgJc0I"
+    },
+    {
+      "id": 496,
+      "name": "Cossack Squat",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Agachamento lateral profundo.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 497,
+      "name": "Dragon Squat",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "avancado",
+      "instructions": "Agachamento dragão.",
+      "videoUrl": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "id": 498,
+      "name": "ATG Split Squat",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Split profundo ATG.",
+      "videoUrl": "https://www.youtube.com/watch?v=QOVaHwm-Q6U"
+    },
+    {
+      "id": 499,
+      "name": "Patrick Step",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "iniciante",
+      "instructions": "Step para tibialis.",
+      "videoUrl": "https://www.youtube.com/watch?v=3UWi44yN-wM"
+    },
+    {
+      "id": 500,
+      "name": "Poliquin Step Up",
+      "muscle": "pernas",
+      "equipment": "peso_corporal",
+      "type": "composto",
+      "level": "intermediario",
+      "instructions": "Step com ponta do pé.",
+      "videoUrl": "https://www.youtube.com/watch?v=dQqApCGd5Ss"
+    }
+  ],
+  "muscleGroups": [
+    {
+      "id": "peito",
+      "name": "Peito",
+      "icon": "💪"
+    },
+    {
+      "id": "costas",
+      "name": "Costas",
+      "icon": "🔙"
+    },
+    {
+      "id": "pernas",
+      "name": "Pernas",
+      "icon": "🦵"
+    },
+    {
+      "id": "ombros",
+      "name": "Ombros",
+      "icon": "🏋️"
+    },
+    {
+      "id": "biceps",
+      "name": "Bíceps",
+      "icon": "💪"
+    },
+    {
+      "id": "triceps",
+      "name": "Tríceps",
+      "icon": "💪"
+    },
+    {
+      "id": "abdomen",
+      "name": "Abdômen",
+      "icon": "🎯"
+    },
+    {
+      "id": "antebraco",
+      "name": "Antebraço",
+      "icon": "✊"
+    },
+    {
+      "id": "trapezio",
+      "name": "Trapézio",
+      "icon": "🏔️"
+    },
+    {
+      "id": "gluteos",
+      "name": "Glúteos",
+      "icon": "🍑"
+    },
+    {
+      "id": "cardio",
+      "name": "Cardio",
+      "icon": "❤️"
+    }
+  ],
+  "equipmentTypes": [
+    {
+      "id": "barra",
+      "name": "Barra"
+    },
+    {
+      "id": "halteres",
+      "name": "Halteres"
+    },
+    {
+      "id": "maquina",
+      "name": "Máquina"
+    },
+    {
+      "id": "cabo",
+      "name": "Cabo"
+    },
+    {
+      "id": "peso_corporal",
+      "name": "Peso Corporal"
+    },
+    {
+      "id": "acessorio",
+      "name": "Acessório"
+    },
+    {
+      "id": "kettlebell",
+      "name": "Kettlebell"
+    },
+    {
+      "id": "elastico",
+      "name": "Elástico"
+    },
+    {
+      "id": "bola",
+      "name": "Bola Suíça"
+    },
+    {
+      "id": "trx",
+      "name": "TRX/Suspensão"
+    }
+  ],
+  "difficultyLevels": [
+    {
+      "id": "iniciante",
+      "name": "Iniciante"
+    },
+    {
+      "id": "intermediario",
+      "name": "Intermediário"
+    },
+    {
+      "id": "avancado",
+      "name": "Avançado"
+    }
+  ]
+}

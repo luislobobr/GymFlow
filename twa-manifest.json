@@ -1,0 +1,42 @@
+{
+    "host": "gym-flow-dpdv.vercel.app",
+    "name": "GymFlow",
+    "launcherName": "GymFlow",
+    "display": "standalone",
+    "themeColor": "#10b981",
+    "navigationColor": "#0a0a0f",
+    "backgroundColor": "#0a0a0f",
+    "enableNotifications": true,
+    "startUrl": "/",
+    "iconUrl": "https://gym-flow-dpdv.vercel.app/assets/icons/icon-512.png",
+    "maskableIconUrl": "https://gym-flow-dpdv.vercel.app/assets/icons/icon-512.png",
+    "shortcuts": [
+        {
+            "name": "Novo Treino",
+            "shortName": "Treino",
+            "url": "/?action=new-workout"
+        }
+    ],
+    "signing": {
+        "keyPath": "./gymflow.keystore",
+        "keyAlias": "gymflow"
+    },
+    "appVersionCode": 1,
+    "appVersionName": "1.0.0",
+    "packageId": "app.gymflow.android",
+    "webManifestUrl": "https://gym-flow-dpdv.vercel.app/manifest.json",
+    "fallbackType": "customtabs",
+    "features": {
+        "locationDelegation": false,
+        "playBilling": false
+    },
+    "alphaDependencies": {
+        "enabled": false
+    },
+    "splashScreenFadeOutDuration": 300,
+    "isChromeOSOnly": false,
+    "isMetaQuest": false,
+    "fullScopeUrl": "https://gym-flow-dpdv.vercel.app/",
+    "minSdkVersion": 19,
+    "orientation": "portrait"
+}
