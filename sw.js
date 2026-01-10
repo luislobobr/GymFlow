@@ -6,6 +6,8 @@ const ASSETS_TO_CACHE = [
   '/css/styles.css',
   '/js/app.js',
   '/js/database.js',
+  '/js/db-adapter.js',
+  '/js/firebase-config.js',
   '/js/router.js',
   '/js/data/exercises.json',
   '/manifest.json'
