@@ -131,19 +131,32 @@ const firebaseAuth = {
         return userCredential.user;
     },
 
-    // Sign in with Google (Popup)
+    // Sign in with Google (Popup with Redirect Fallback)
     async signInWithGoogle() {
-        // Use redirect on mobile devices for better reliability
+        // 1. Prefer Redirect on known mobile devices
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             await signInWithRedirect(auth, googleProvider);
-            // This promise never resolves (page redirects)
             return null;
         }
 
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
-        await this._handleUser(user);
-        return user;
+        // 2. Try Popup on Desktop/Other
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            await this._handleUser(user);
+            return user;
+        } catch (error) {
+            // 3. Fallback to Redirect if Popup fails (blocked, closed, mobile desktop mode)
+            if (error.code === 'auth/popup-blocked' ||
+                error.code === 'auth/popup-closed-by-user' ||
+                error.code === 'auth/cancelled-popup-request') {
+
+                console.warn('Popup failed, falling back to redirect:', error.code);
+                await signInWithRedirect(auth, googleProvider);
+                return null;
+            }
+            throw error;
+        }
     },
 
     // Handle user data after login
