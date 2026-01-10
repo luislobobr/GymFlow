@@ -3,7 +3,7 @@
  * Entry point for the SPA
  */
 
-import { db, STORES } from './database.js';
+import { database as db, STORES } from './db-adapter.js';
 import { router } from './router.js';
 import { toast } from './components/toast.js';
 import { modal } from './components/modal.js';
@@ -104,6 +104,17 @@ async function loadSettings() {
   const userId = await db.getSetting('currentUserId');
   if (userId) {
     state.user = await db.get(STORES.users, userId);
+
+    // If user is logged in, enable cloud sync
+    if (state.user) {
+      try {
+        await db.enableCloud();
+        // Trigger initial sync (Cloud -> Local logic needs to be in adapter or here)
+        // For now, enableCloud initializes Firebase
+      } catch (e) {
+        console.warn('Could not enable cloud sync:', e);
+      }
+    }
   }
 }
 
@@ -251,6 +262,14 @@ function showUserMenu() {
           🔄 ${state.user.type === 'trainer' ? 'Mudar para Aluno' : 'Tornar-me Personal'}
         </button>
         
+        <button class="btn btn-secondary" id="sync-data-btn">
+          🔄 Sincronizar Dados
+        </button>
+
+        <button class="btn btn-secondary" id="download-app-btn">
+          📲 Baixar App
+        </button>
+        
         <hr style="border: 0; border-top: 1px solid var(--border); margin: var(--spacing-sm) 0;">
         
         <button class="btn" id="logout-btn" style="background: var(--danger); color: white;">
@@ -260,6 +279,29 @@ function showUserMenu() {
     `,
     closable: true,
     onOpen: (overlay) => {
+      overlay.querySelector('#sync-data-btn')?.addEventListener('click', async () => {
+        const btn = overlay.querySelector('#sync-data-btn');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Sincronizando...';
+
+        try {
+          await db.syncToCloud();
+          toast.success('Sincronização concluída!');
+        } catch (e) {
+          console.error(e);
+          toast.error('Erro na sincronização');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      });
+
+      overlay.querySelector('#download-app-btn')?.addEventListener('click', () => {
+        modal.close();
+        showDownloadModal();
+      });
+
       overlay.querySelector('#edit-profile-btn')?.addEventListener('click', () => {
         modal.close();
         router.navigate('profile');
@@ -810,6 +852,58 @@ async function renderDashboard() {
 
   return container;
 }
+
+function showDownloadModal() {
+  modal.open({
+    title: 'Baixar GymFlow',
+    content: `
+            <div style="text-align: center;">
+                <p style="margin-bottom: var(--spacing-lg);">Escolha como deseja instalar o aplicativo:</p>
+                
+                <div style="display: grid; gap: var(--spacing-md);">
+                    <div style="padding: var(--spacing-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                        <h3 style="margin-bottom: var(--spacing-xs);">📱 Versão Web (PWA)</h3>
+                        <p style="color: var(--text-muted); font-size: var(--font-size-sm); margin-bottom: var(--spacing-sm);">
+                            Instalação nativa, atualizações automáticas e não ocupa espaço.
+                        </p>
+                        <button class="btn btn-primary" onclick="installPWA()" style="width: 100%;">
+                            Instalar Agora
+                        </button>
+                    </div>
+
+                    <div style="padding: var(--spacing-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
+                        <h3 style="margin-bottom: var(--spacing-xs);">🤖 Android (APK)</h3>
+                        <p style="color: var(--text-muted); font-size: var(--font-size-sm); margin-bottom: var(--spacing-sm);">
+                            Arquivo de instalação manual.
+                        </p>
+                        <a href="https://github.com/luislobobr/GymFlow/releases/download/v1.0.0/gymflow.apk" target="_blank" class="btn btn-secondary" style="width: 100%; display: block; text-decoration: none;">
+                            Baixar APK
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `,
+    closable: true
+  });
+}
+
+// PWA Install helper
+window.deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window.deferredPrompt = e;
+});
+
+window.installPWA = async () => {
+  if (!window.deferredPrompt) {
+    toast.info('Para instalar, use a opção "Adicionar à Tela Inicial" do seu navegador.');
+    return;
+  }
+  window.deferredPrompt.prompt();
+  const { outcome } = await window.deferredPrompt.userChoice;
+  window.deferredPrompt = null;
+}
+
 
 async function renderWorkouts() {
   // Load workouts from database
