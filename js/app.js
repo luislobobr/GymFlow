@@ -533,6 +533,12 @@ function showLoginModal() {
 
           await db.setSetting('currentUserId', state.user.id);
 
+          // Enable cloud sync
+          try {
+            await db.enableCloud();
+            db.syncToCloud();
+          } catch (e) { console.warn('Sync init error:', e); }
+
           console.log('[Auth] Login success for:', state.user.name);
 
           modal.close();
