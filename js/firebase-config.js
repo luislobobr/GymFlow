@@ -27,6 +27,8 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
     GoogleAuthProvider,
     signOut,
     onAuthStateChanged
@@ -129,11 +131,23 @@ const firebaseAuth = {
         return userCredential.user;
     },
 
-    // Sign in with Google
+    // Sign in with Google (Popup)
     async signInWithGoogle() {
+        // Use redirect on mobile devices for better reliability
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            await signInWithRedirect(auth, googleProvider);
+            // This promise never resolves (page redirects)
+            return null;
+        }
+
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
+        await this._handleUser(user);
+        return user;
+    },
 
+    // Handle user data after login
+    async _handleUser(user) {
         // Check if user exists, if not create document
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (!userDoc.exists()) {
@@ -146,8 +160,21 @@ const firebaseAuth = {
                 createdAt: new Date().toISOString()
             });
         }
+    },
 
-        return user;
+    // Check for redirect result (called on page load)
+    async checkRedirectResult() {
+        try {
+            const result = await getRedirectResult(auth);
+            if (result && result.user) {
+                await this._handleUser(result.user);
+                return result.user;
+            }
+        } catch (error) {
+            console.error('Redirect result error:', error);
+            throw error;
+        }
+        return null;
     },
 
     // Sign out

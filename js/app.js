@@ -58,6 +58,9 @@ async function init() {
     // Seed database with initial data if needed
     await seedDatabase();
 
+    // Check for pending redirect login (Mobile auth)
+    await checkRedirectLogin();
+
     // Load settings
     await loadSettings();
 
@@ -514,6 +517,12 @@ function showLoginModal() {
           const firebaseModule = await import('./firebase-config.js');
           await firebaseModule.initFirebase();
           const firebaseUser = await firebaseModule.firebaseAuth.signInWithGoogle();
+
+          // If null, it triggered a redirect (Mobile) - stop here
+          if (!firebaseUser) {
+            btn.innerHTML = '🔄 Redirecionando...';
+            return;
+          }
 
           // Check if user exists locally, if not create
           let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
@@ -2443,5 +2452,65 @@ async function seedDatabase() {
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', init);
 
-// Export for debugging
+/**
+ * Check for pending redirect login results
+ */
+async function checkRedirectLogin() {
+  // Only check if not logged in
+  if (state.user) return;
+
+  try {
+    // Dynamically import to avoid loading Firebase on every load
+    // But we need to check if we are possibly returning from a redirect
+    // Simple heuristic: If we are on mobile, we might be returning.
+    // Or just always try minimal check?
+    // Let's rely on sessionStorage flag or just try catch is cheap if connection is established.
+    // To minimize impact, we only load if we lack a user.
+
+    // Actually, getting redirect result requires blocking.
+    // Let's try only if we don't have a user.
+    const firebaseModule = await import('./firebase-config.js');
+    await firebaseModule.initFirebase();
+
+    // Check result
+    const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
+
+    if (firebaseUser) {
+      console.log('[Auth] Restored session via redirect:', firebaseUser.email);
+
+      // Same logic as login handler
+      let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
+      if (users.length === 0) {
+        const userId = await db.add(STORES.users, {
+          name: firebaseUser.displayName || 'Usuário Google',
+          email: firebaseUser.email,
+          type: 'student',
+          avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
+          googleId: firebaseUser.uid,
+          createdAt: new Date().toISOString()
+        });
+        state.user = await db.get(STORES.users, userId);
+      } else {
+        state.user = users[0];
+      }
+
+      await db.setSetting('currentUserId', state.user.id);
+
+      try {
+        await db.enableCloud();
+        db.syncToCloud();
+      } catch (e) { console.warn('Sync init error:', e); }
+
+      updateUserUI();
+      router.navigate('dashboard');
+      toast.success(`Bem-vindo de volta, ${state.user.name}!`);
+    }
+  } catch (error) {
+    // If it's just 'no redirect result', ignore.
+    // console.log('No redirect result');
+  }
+}
+
+// Global Exports for debugging
+window.db = db;
 window.MFIT = { state, db, router, toast, modal };
