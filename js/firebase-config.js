@@ -4,7 +4,7 @@
  */
 
 // Firebase SDK imports (using CDN modules)
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { initializeApp, getApps } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import {
     getFirestore,
     collection,
@@ -60,210 +60,217 @@ let googleProvider = null;
  */
 async function initFirebase() {
     try {
-        app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        auth = getAuth(app);
-        storage = getStorage(app);
-        googleProvider = new GoogleAuthProvider();
-
-        // Enable offline persistence
         try {
-            await enableIndexedDbPersistence(db);
-            console.log('✅ Offline persistence enabled');
-        } catch (err) {
-            if (err.code === 'failed-precondition') {
-                console.warn('Multiple tabs open, persistence enabled in first tab only');
-            } else if (err.code === 'unimplemented') {
-                console.warn('Browser does not support persistence');
+            if (!getApps().length) {
+                app = initializeApp(firebaseConfig);
+            } else {
+                app = getApps()[0];
             }
-        }
 
-        console.log('✅ Firebase initialized');
-        return true;
-    } catch (error) {
-        console.error('❌ Firebase initialization error:', error);
-        return false;
+            // Initialize services only if not already done
+            if (!db) db = getFirestore(app);
+            if (!auth) auth = getAuth(app);
+            if (!storage) storage = getStorage(app);
+            if (!googleProvider) googleProvider = new GoogleAuthProvider();
+
+            // Enable offline persistence
+            try {
+                await enableIndexedDbPersistence(db);
+                console.log('✅ Offline persistence enabled');
+            } catch (err) {
+                if (err.code === 'failed-precondition') {
+                    console.warn('Multiple tabs open, persistence enabled in first tab only');
+                } else if (err.code === 'unimplemented') {
+                    console.warn('Browser does not support persistence');
+                }
+            }
+
+            console.log('✅ Firebase initialized');
+            return true;
+        } catch (error) {
+            console.error('❌ Firebase initialization error:', error);
+            return false;
+        }
     }
-}
 
 /**
  * Authentication methods
  */
 const firebaseAuth = {
-    // Get current user
-    getCurrentUser() {
-        return auth?.currentUser;
-    },
+        // Get current user
+        getCurrentUser() {
+            return auth?.currentUser;
+        },
 
-    // Listen to auth state changes
-    onAuthChange(callback) {
-        return onAuthStateChanged(auth, callback);
-    },
+        // Listen to auth state changes
+        onAuthChange(callback) {
+            return onAuthStateChanged(auth, callback);
+        },
 
-    // Sign up with email/password
-    async signUp(email, password, name) {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        // Sign up with email/password
+        async signUp(email, password, name) {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-        // Create user document in Firestore
-        await setDoc(doc(db, 'users', user.uid), {
-            uid: user.uid,
-            email: email,
-            name: name,
-            type: 'student',
-            createdAt: new Date().toISOString()
-        });
-
-        return user;
-    },
-
-    // Sign in with email/password
-    async signIn(email, password) {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        return userCredential.user;
-    },
-
-    // Sign in with Google
-    async signInWithGoogle() {
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
-
-        // Check if user exists, if not create document
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (!userDoc.exists()) {
+            // Create user document in Firestore
             await setDoc(doc(db, 'users', user.uid), {
                 uid: user.uid,
-                email: user.email,
-                name: user.displayName || 'Usuário',
-                avatar: user.photoURL,
+                email: email,
+                name: name,
                 type: 'student',
                 createdAt: new Date().toISOString()
             });
+
+            return user;
+        },
+
+        // Sign in with email/password
+        async signIn(email, password) {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            return userCredential.user;
+        },
+
+        // Sign in with Google
+        async signInWithGoogle() {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+
+            // Check if user exists, if not create document
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (!userDoc.exists()) {
+                await setDoc(doc(db, 'users', user.uid), {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName || 'Usuário',
+                    avatar: user.photoURL,
+                    type: 'student',
+                    createdAt: new Date().toISOString()
+                });
+            }
+
+            return user;
+        },
+
+        // Sign out
+        async signOut() {
+            await signOut(auth);
         }
+    };
 
-        return user;
-    },
+    /**
+     * Firestore database wrapper (compatible with existing API)
+     */
+    const firebaseDB = {
+        // Collections
+        COLLECTIONS: {
+            users: 'users',
+            workouts: 'workouts',
+            exercises: 'exercises',
+            history: 'history',
+            assessments: 'assessments',
+            progress: 'progress',
+            students: 'students',
+            settings: 'settings'
+        },
 
-    // Sign out
-    async signOut() {
-        await signOut(auth);
-    }
-};
+        // Get document by ID
+        async get(collectionName, id) {
+            const docRef = doc(db, collectionName, String(id));
+            const docSnap = await getDoc(docRef);
+            return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+        },
 
-/**
- * Firestore database wrapper (compatible with existing API)
- */
-const firebaseDB = {
-    // Collections
-    COLLECTIONS: {
-        users: 'users',
-        workouts: 'workouts',
-        exercises: 'exercises',
-        history: 'history',
-        assessments: 'assessments',
-        progress: 'progress',
-        students: 'students',
-        settings: 'settings'
-    },
+        // Get all documents in collection
+        async getAll(collectionName) {
+            const querySnapshot = await getDocs(collection(db, collectionName));
+            return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        },
 
-    // Get document by ID
-    async get(collectionName, id) {
-        const docRef = doc(db, collectionName, String(id));
-        const docSnap = await getDoc(docRef);
-        return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
-    },
+        // Get documents by index (field value)
+        async getByIndex(collectionName, field, value) {
+            const q = query(collection(db, collectionName), where(field, '==', value));
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        },
 
-    // Get all documents in collection
-    async getAll(collectionName) {
-        const querySnapshot = await getDocs(collection(db, collectionName));
-        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    },
+        // Add new document
+        async add(collectionName, data) {
+            const docRef = await addDoc(collection(db, collectionName), {
+                ...data,
+                createdAt: new Date().toISOString()
+            });
+            return docRef.id;
+        },
 
-    // Get documents by index (field value)
-    async getByIndex(collectionName, field, value) {
-        const q = query(collection(db, collectionName), where(field, '==', value));
-        const querySnapshot = await getDocs(q);
-        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    },
+        // Update document
+        async update(collectionName, data) {
+            const docRef = doc(db, collectionName, String(data.id));
+            await updateDoc(docRef, {
+                ...data,
+                updatedAt: new Date().toISOString()
+            });
+            return data;
+        },
 
-    // Add new document
-    async add(collectionName, data) {
-        const docRef = await addDoc(collection(db, collectionName), {
-            ...data,
-            createdAt: new Date().toISOString()
-        });
-        return docRef.id;
-    },
+        // Delete document
+        async delete(collectionName, id) {
+            await deleteDoc(doc(db, collectionName, String(id)));
+            return true;
+        },
 
-    // Update document
-    async update(collectionName, data) {
-        const docRef = doc(db, collectionName, String(data.id));
-        await updateDoc(docRef, {
-            ...data,
-            updatedAt: new Date().toISOString()
-        });
-        return data;
-    },
+        // Get setting
+        async getSetting(key, userId = 'global') {
+            const docRef = doc(db, 'settings', `${userId}_${key}`);
+            const docSnap = await getDoc(docRef);
+            return docSnap.exists() ? docSnap.data().value : null;
+        },
 
-    // Delete document
-    async delete(collectionName, id) {
-        await deleteDoc(doc(db, collectionName, String(id)));
-        return true;
-    },
+        // Set setting
+        async setSetting(key, value, userId = 'global') {
+            await setDoc(doc(db, 'settings', `${userId}_${key}`), {
+                key,
+                value,
+                userId,
+                updatedAt: new Date().toISOString()
+            });
+            return true;
+        },
 
-    // Get setting
-    async getSetting(key, userId = 'global') {
-        const docRef = doc(db, 'settings', `${userId}_${key}`);
-        const docSnap = await getDoc(docRef);
-        return docSnap.exists() ? docSnap.data().value : null;
-    },
+        // Subscribe to real-time updates
+        subscribe(collectionName, field, value, callback) {
+            const q = query(collection(db, collectionName), where(field, '==', value));
+            return onSnapshot(q, (snapshot) => {
+                const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                callback(data);
+            });
+        }
+    };
 
-    // Set setting
-    async setSetting(key, value, userId = 'global') {
-        await setDoc(doc(db, 'settings', `${userId}_${key}`), {
-            key,
-            value,
-            userId,
-            updatedAt: new Date().toISOString()
-        });
-        return true;
-    },
+    /**
+     * Storage methods for photos
+     */
+    const firebaseStorage = {
+        // Upload image (base64)
+        async uploadImage(path, base64Data) {
+            const storageRef = ref(storage, path);
+            const snapshot = await uploadString(storageRef, base64Data, 'data_url');
+            return await getDownloadURL(snapshot.ref);
+        },
 
-    // Subscribe to real-time updates
-    subscribe(collectionName, field, value, callback) {
-        const q = query(collection(db, collectionName), where(field, '==', value));
-        return onSnapshot(q, (snapshot) => {
-            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            callback(data);
-        });
-    }
-};
+        // Get image URL
+        async getImageUrl(path) {
+            const storageRef = ref(storage, path);
+            return await getDownloadURL(storageRef);
+        }
+    };
 
-/**
- * Storage methods for photos
- */
-const firebaseStorage = {
-    // Upload image (base64)
-    async uploadImage(path, base64Data) {
-        const storageRef = ref(storage, path);
-        const snapshot = await uploadString(storageRef, base64Data, 'data_url');
-        return await getDownloadURL(snapshot.ref);
-    },
-
-    // Get image URL
-    async getImageUrl(path) {
-        const storageRef = ref(storage, path);
-        return await getDownloadURL(storageRef);
-    }
-};
-
-// Export
-export {
-    initFirebase,
-    firebaseAuth,
-    firebaseDB,
-    firebaseStorage,
-    db,
-    auth,
-    storage
-};
+    // Export
+    export {
+        initFirebase,
+        firebaseAuth,
+        firebaseDB,
+        firebaseStorage,
+        db,
+        auth,
+        storage
+    };

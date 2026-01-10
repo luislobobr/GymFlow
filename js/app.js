@@ -287,24 +287,39 @@ function showUserMenu() {
  * Logout user
  */
 async function logout() {
-  state.user = null;
-  await db.setSetting('currentUserId', null);
-
-  // Try to sign out from Firebase if logged in with Google
   try {
-    const firebaseModule = await import('./firebase-config.js');
-    if (firebaseModule.auth?.currentUser) {
-      await firebaseModule.firebaseAuth.signOut();
+    const oldUserId = state.user?.id;
+    console.log('[Auth] Logging out user:', oldUserId);
+
+    state.user = null;
+    await db.setSetting('currentUserId', null);
+
+    // Clear localStorage as failsafe
+    localStorage.removeItem('user_session');
+
+    // Try to sign out from Firebase if logged in with Google
+    try {
+      const firebaseModule = await import('./firebase-config.js');
+      // Ensure firebase is init before signing out
+      await firebaseModule.initFirebase();
+      if (firebaseModule.firebaseAuth) {
+        await firebaseModule.firebaseAuth.signOut();
+        console.log('[Auth] Firebase signOut success');
+      }
+    } catch (e) {
+      console.warn('[Auth] Firebase signOut error (ignoring):', e);
     }
-  } catch (e) {
-    // Firebase not initialized, ignore
+
+    updateUserUI();
+    toast.success('Você saiu da conta. Até logo!');
+
+    // Force reload to clean state
+    setTimeout(() => window.location.reload(), 500);
+  } catch (err) {
+    console.error('[Auth] Logout failed:', err);
+    // Force reload anyway
+    window.location.reload();
   }
-
-  updateUserUI();
-  toast.success('Você saiu da conta. Até logo!');
-
-  // Reload page to clear any cached state
-  setTimeout(() => location.reload(), 500);
 }
 
 /**
@@ -475,10 +490,16 @@ function showLoginModal() {
           }
 
           await db.setSetting('currentUserId', state.user.id);
+
+          console.log('[Auth] Login success for:', state.user.name);
+
           modal.close();
-          updateUserUI();
-          router.navigate('dashboard');
-          toast.success(`Bem-vindo, ${state.user.name}!`);
+          // Small delay to ensure modal close animation finishes
+          setTimeout(() => {
+            updateUserUI();
+            router.navigate('dashboard');
+            toast.success(`Bem-vindo, ${state.user.name}!`);
+          }, 100);
         } catch (error) {
           console.error('Google login error:', error);
           btn.disabled = false;
