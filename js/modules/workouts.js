@@ -360,6 +360,7 @@ class WorkoutsManager {
               </svg>
               Ver Vídeo
             </button>
+            <div id="inline-video-container" style="margin-bottom: var(--spacing-md);"></div>
             <p style="color: var(--accent-primary); font-size: var(--font-size-xl); font-weight: 700; margin-bottom: var(--spacing-md);">
               ${exercise.sets} séries × ${exercise.reps} reps
             </p>
@@ -525,51 +526,73 @@ class WorkoutsManager {
 
     container.querySelector('.watch-video-btn')?.addEventListener('click', async () => {
       const exercise = this.getCurrentExercise();
-      if (exercise?.exerciseId) {
-        try {
-          const fullExercise = await db.get(STORES.exercises, exercise.exerciseId);
-          if (fullExercise?.videoUrl) {
-            let videoContent = '';
-            if (fullExercise.videoUrl.includes('youtube.com') || fullExercise.videoUrl.includes('youtu.be')) {
-              // Extract ID
-              let videoId = '';
-              if (fullExercise.videoUrl.includes('v=')) {
-                videoId = fullExercise.videoUrl.split('v=')[1].split('&')[0];
-              } else if (fullExercise.videoUrl.includes('youtu.be/')) {
-                videoId = fullExercise.videoUrl.split('youtu.be/')[1];
-              }
+      const videoContainer = container.querySelector('#inline-video-container');
+      const btn = container.querySelector('.watch-video-btn');
 
-              if (videoId) {
-                videoContent = `
-                                    <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: var(--radius-md);">
-                                        <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                                    </div>
-                                `;
-              } else {
-                // Fallback to link
-                videoContent = `<a href="${fullExercise.videoUrl}" target="_blank" class="btn btn-primary" style="width: 100%;">Abrir Vídeo no YouTube</a>`;
-              }
-            } else {
-              videoContent = `<a href="${fullExercise.videoUrl}" target="_blank" class="btn btn-primary" style="width: 100%;">Abrir Vídeo</a>`;
+      if (!exercise?.exerciseId || !videoContainer) return;
+
+      // Toggle off
+      if (videoContainer.innerHTML) {
+        videoContainer.innerHTML = '';
+        btn.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          Ver Vídeo
+        `;
+        return;
+      }
+
+      // Loading state
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '⏳ Carregando...';
+
+      try {
+        const fullExercise = await db.get(STORES.exercises, exercise.exerciseId);
+
+        if (fullExercise?.videoUrl) {
+          let videoContent = '';
+          if (fullExercise.videoUrl.includes('youtube.com') || fullExercise.videoUrl.includes('youtu.be')) {
+            // Extract ID
+            let videoId = '';
+            if (fullExercise.videoUrl.includes('v=')) {
+              videoId = fullExercise.videoUrl.split('v=')[1].split('&')[0];
+            } else if (fullExercise.videoUrl.includes('youtu.be/')) {
+              videoId = fullExercise.videoUrl.split('youtu.be/')[1];
             }
 
-            modal.open({
-              title: fullExercise.name,
-              content: `
-                                ${videoContent}
-                                <div style="margin-top: var(--spacing-md);">
-                                    <h4>Instruções</h4>
-                                    <p style="color: var(--text-muted); line-height: 1.6;">${fullExercise.instructions || 'Sem instruções disponíveis.'}</p>
-                                </div>
-                            `
-            });
+            if (videoId) {
+              videoContent = `
+                <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: var(--radius-md);">
+                  <iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                </div>
+                <div style="margin-top: var(--spacing-sm); padding: var(--spacing-sm); background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                  <p style="color: var(--text-muted); font-size: var(--font-size-sm); line-height: 1.5;">${fullExercise.instructions || 'Sem instruções.'}</p>
+                </div>
+              `;
+            } else {
+              videoContent = `<a href="${fullExercise.videoUrl}" target="_blank" class="btn btn-primary" style="width: 100%;">Abrir Vídeo no YouTube</a>`;
+            }
           } else {
-            toast.warning('Vídeo não disponível para este exercício');
+            videoContent = `<a href="${fullExercise.videoUrl}" target="_blank" class="btn btn-primary" style="width: 100%;">Abrir Vídeo</a>`;
           }
-        } catch (error) {
-          console.error(error);
-          toast.error('Erro ao carregar vídeo');
+
+          videoContainer.innerHTML = videoContent;
+          btn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Fechar Vídeo
+          `;
+        } else {
+          toast.warning('Vídeo não disponível');
+          btn.innerHTML = originalText;
         }
+      } catch (error) {
+        console.error(error);
+        toast.error('Erro ao carregar vídeo');
+        btn.innerHTML = originalText;
       }
     });
 
