@@ -548,6 +548,12 @@ function showLoginModal() {
             state.user = users[0];
           }
 
+
+          // Force close ALL modals
+          document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+          modal.activeModal = null;
+          document.body.style.overflow = '';
+
           await db.setSetting('currentUserId', state.user.id);
 
           // Enable cloud sync
@@ -558,8 +564,7 @@ function showLoginModal() {
 
           // DEV: console.log('[Auth] Login success for:', state.user.name);
 
-          modal.close();
-          // Small delay to ensure modal close animation finishes
+          // Small delay to ensure UI updates
           setTimeout(() => {
             updateUserUI();
             router.navigate('dashboard');
