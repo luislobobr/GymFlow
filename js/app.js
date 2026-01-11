@@ -574,7 +574,11 @@ function showLoginModal() {
           if (error.code === 'auth/popup-blocked') {
             toast.error('Popup bloqueado. Permita popups neste site.');
           } else if (error.code === 'auth/popup-closed-by-user') {
-            toast.warning('Login cancelado');
+            toast.warning('Login cancelado (v4) - Tentando redirecionar...');
+            // Force redirect here just in case firebase-config failed to do it
+            const firebaseModule = await import('./firebase-config.js');
+            await firebaseModule.initFirebase();
+            firebaseModule.firebaseAuth.signInWithRedirect(firebaseModule.auth, firebaseModule.googleProvider);
           } else if (error.code === 'auth/network-request-failed') {
             toast.error('Sem conexão. Verifique sua internet.');
           } else if (error.message?.includes('Google sign-in requires cloud mode')) {
