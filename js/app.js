@@ -141,7 +141,155 @@ async function loadSettings() {
   }
 }
 
-// ... 
+/**
+ * Check if user is authenticated
+ */
+async function checkAuth() {
+  // Always register the auth hook
+  router.beforeEach((path) => {
+    if (router.requiresAuth(path) && !state.user) {
+      showLoginModal();
+      return false;
+    }
+    return true;
+  });
+
+  // Show login immediately if no user and on authenticated route
+  if (!state.user) {
+    const currentPath = location.hash.replace('#', '') || 'dashboard';
+    if (router.requiresAuth(currentPath)) {
+      showLoginModal();
+    }
+  }
+}
+
+/**
+ * Setup global event listeners
+ */
+function setupEventListeners() {
+  // Menu toggle (mobile)
+  document.querySelector('.menu-toggle')?.addEventListener('click', toggleSidebar);
+
+  // Theme toggle
+  document.querySelector('.theme-toggle')?.addEventListener('click', toggleTheme);
+
+  // Sidebar nav items
+  document.querySelectorAll('.nav-item[data-route]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      router.navigate(item.dataset.route);
+      if (window.innerWidth < 768) {
+        toggleSidebar();
+      }
+    });
+  });
+
+  // Close sidebar on outside click (mobile)
+  document.querySelector('.sidebar')?.addEventListener('click', (e) => {
+    if (e.target.classList.contains('sidebar') && state.user?.sidebarOpen) {
+      toggleSidebar();
+    }
+  });
+
+  // User profile click - show login if not logged in, profile menu if logged in
+  document.getElementById('user-profile-btn')?.addEventListener('click', () => {
+    if (state.user) {
+      showUserMenu();
+    } else {
+      showLoginModal();
+    }
+  });
+}
+
+/**
+ * Show user menu with logout option
+ */
+function showUserMenu() {
+  modal.open({
+    title: 'Minha Conta',
+    content: `
+      <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+        <div style="display: flex; align-items: center; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--surface); border-radius: var(--radius-lg);">
+          <div class="user-avatar" style="width: 60px; height: 60px; font-size: 1.5rem;">
+            ${state.user.avatar || state.user.name.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <h3 style="margin: 0;">${state.user.name}</h3>
+            <p style="margin: 0; color: var(--text-muted);">${state.user.email}</p>
+            <span class="badge">${state.user.type === 'trainer' ? 'Personal Trainer' : 'Aluno'}</span>
+          </div>
+        </div>
+        
+        <button class="btn btn-secondary" id="edit-profile-btn">
+          ✏️ Editar Perfil
+        </button>
+        
+        <button class="btn btn-secondary" id="change-account-type-btn">
+          🔄 ${state.user.type === 'trainer' ? 'Mudar para Aluno' : 'Tornar-me Personal'}
+        </button>
+        
+        <button class="btn btn-secondary" id="sync-data-btn">
+          🔄 Sincronizar Dados
+        </button>
+
+        <button class="btn btn-secondary" id="download-app-btn">
+          📲 Baixar App
+        </button>
+        
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: var(--spacing-sm) 0;">
+        
+        <button class="btn" id="logout-btn" style="background: var(--danger); color: white;">
+          🚪 Sair da Conta
+        </button>
+      </div>
+    `,
+    closable: true,
+    onOpen: (overlay) => {
+      overlay.querySelector('#sync-data-btn')?.addEventListener('click', async () => {
+        const btn = overlay.querySelector('#sync-data-btn');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Sincronizando...';
+
+        try {
+          await db.syncToCloud();
+          toast.success('Sincronização concluída!');
+        } catch (e) {
+          console.error(e);
+          toast.error('Erro na sincronização');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      });
+
+      overlay.querySelector('#download-app-btn')?.addEventListener('click', () => {
+        modal.close();
+        showDownloadModal();
+      });
+
+      overlay.querySelector('#edit-profile-btn')?.addEventListener('click', () => {
+        modal.close();
+        router.navigate('profile');
+      });
+
+      overlay.querySelector('#change-account-type-btn')?.addEventListener('click', async () => {
+        const newType = state.user.type === 'trainer' ? 'student' : 'trainer';
+        state.user.type = newType;
+        await db.update(STORES.users, state.user);
+        updateUserUI();
+        modal.close();
+        toast.success(newType === 'trainer' ? 'Agora você é Personal Trainer!' : 'Tipo alterado para Aluno');
+        router.navigate('dashboard');
+      });
+
+      overlay.querySelector('#logout-btn')?.addEventListener('click', async () => {
+        await logout();
+        modal.close();
+      });
+    }
+  });
+}
 
 /**
  * Logout user
