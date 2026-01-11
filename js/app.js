@@ -802,68 +802,84 @@ function setupOfflineIndicator() {
 // ============ PAGE RENDERERS ============
 
 async function renderDashboard() {
-  const userName = state.user?.name?.split(' ')[0] || 'Usuário';
-  const userId = state.user?.id;
-
-  // Fetch real data from database
-  let monthlyWorkouts = 0;
-  let totalTime = 0;
-  let streak = 0;
-  let recentWorkouts = [];
-
-  if (userId) {
-    try {
-      const history = await historyManager.getHistory(userId);
-      const now = new Date();
-      const thisMonth = now.getMonth();
-      const thisYear = now.getFullYear();
-
-      // Calculate monthly workouts and total time
-      history.forEach(entry => {
-        const entryDate = new Date(entry.date);
-        if (entryDate.getMonth() === thisMonth && entryDate.getFullYear() === thisYear) {
-          monthlyWorkouts++;
-          totalTime += entry.duration || 0;
-        }
-      });
-
-      // Calculate streak (consecutive days)
-      if (history.length > 0) {
-        const sortedHistory = [...history].sort((a, b) => new Date(b.date) - new Date(a.date));
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        let currentDate = today;
-        for (const entry of sortedHistory) {
-          const entryDate = new Date(entry.date);
-          entryDate.setHours(0, 0, 0, 0);
-
-          const diffDays = Math.floor((currentDate - entryDate) / (1000 * 60 * 60 * 24));
-          if (diffDays <= 1) {
-            streak++;
-            currentDate = entryDate;
-          } else {
-            break;
-          }
-        }
-      }
-
-      // Get recent workouts (last 3)
-      recentWorkouts = history.slice(0, 3);
-    } catch (error) {
-      console.error('Error loading dashboard data:', error);
-    }
-  }
-
-  // Format total time
-  const hours = Math.floor(totalTime / 3600);
-  const minutes = Math.floor((totalTime % 3600) / 60);
-  const timeFormatted = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
-
   const container = document.createElement('div');
   container.className = 'animate-slide-up';
 
+  // Loading state
   container.innerHTML = `
+    <div style="padding: var(--spacing-xl); text-align: center;">
+      <div class="loading-spinner"></div>
+      <p style="color: var(--text-muted); margin-top: var(--spacing-md);">Carregando dashboard...</p>
+    </div>
+  `;
+
+  // Yield to UI
+  await new Promise(resolve => setTimeout(resolve, 0));
+
+  try {
+    const userName = state.user?.name?.split(' ')[0] || 'Usuário';
+    const userId = state.user?.id;
+    if (!userId) throw new Error('Usuário não autenticado');
+
+    // Fetch real data from database
+    let monthlyWorkouts = 0;
+    let totalTime = 0;
+    let streak = 0;
+    let recentWorkouts = [];
+
+    if (userId) {
+      try {
+        const history = await historyManager.getHistory(userId);
+        const now = new Date();
+        const thisMonth = now.getMonth();
+        const thisYear = now.getFullYear();
+
+        // Calculate monthly workouts and total time
+        history.forEach(entry => {
+          const entryDate = new Date(entry.date);
+          if (entryDate.getMonth() === thisMonth && entryDate.getFullYear() === thisYear) {
+            monthlyWorkouts++;
+            totalTime += entry.duration || 0;
+          }
+        });
+
+        // Calculate streak (consecutive days)
+        if (history.length > 0) {
+          const sortedHistory = [...history].sort((a, b) => new Date(b.date) - new Date(a.date));
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          let currentDate = today;
+          for (const entry of sortedHistory) {
+            const entryDate = new Date(entry.date);
+            entryDate.setHours(0, 0, 0, 0);
+
+            const diffDays = Math.floor((currentDate - entryDate) / (1000 * 60 * 60 * 24));
+            if (diffDays <= 1) {
+              streak++;
+              currentDate = entryDate;
+            } else {
+              break;
+            }
+          }
+        }
+
+        // Get recent workouts (last 3)
+        recentWorkouts = history.slice(0, 3);
+      } catch (error) {
+        console.error('Error loading dashboard data:', error);
+      }
+    }
+
+    // Format total time
+    const hours = Math.floor(totalTime / 3600);
+    const minutes = Math.floor((totalTime % 3600) / 60);
+    const timeFormatted = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
+
+    container.innerHTML = `
     <div style="margin-bottom: var(--spacing-xl);">
       <h2 style="margin-bottom: var(--spacing-xs);">Olá, ${userName}! 💪</h2>
       <p style="color: var(--text-muted);">Pronto para o treino de hoje?</p>
@@ -944,13 +960,13 @@ async function renderDashboard() {
     </div>
   `;
 
-  return container;
-}
+    return container;
+  }
 
 function showDownloadModal() {
-  modal.open({
-    title: 'Baixar GymFlow',
-    content: `
+    modal.open({
+      title: 'Baixar GymFlow',
+      content: `
             <div style="text-align: center;">
                 <p style="margin-bottom: var(--spacing-lg);">Escolha como deseja instalar o aplicativo:</p>
                 
@@ -977,44 +993,44 @@ function showDownloadModal() {
                 </div>
             </div>
         `,
-    closable: true
-  });
-}
-
-// PWA Install helper
-window.deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  window.deferredPrompt = e;
-});
-
-window.installPWA = async () => {
-  if (!window.deferredPrompt) {
-    toast.info('Para instalar, use a opção "Adicionar à Tela Inicial" do seu navegador.');
-    return;
+      closable: true
+    });
   }
-  window.deferredPrompt.prompt();
-  const { outcome } = await window.deferredPrompt.userChoice;
+
+  // PWA Install helper
   window.deferredPrompt = null;
-}
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window.deferredPrompt = e;
+  });
 
-
-async function renderWorkouts() {
-  // Load workouts from database
-  let workouts = [];
-  if (state.user) {
-    workouts = await workoutsManager.getWorkouts(state.user.id);
-
-    // If no workouts, create templates
-    if (workouts.length === 0) {
-      await workoutsManager.createTemplatesForUser(state.user.id);
-      workouts = await workoutsManager.getWorkouts(state.user.id);
+  window.installPWA = async () => {
+    if (!window.deferredPrompt) {
+      toast.info('Para instalar, use a opção "Adicionar à Tela Inicial" do seu navegador.');
+      return;
     }
+    window.deferredPrompt.prompt();
+    const { outcome } = await window.deferredPrompt.userChoice;
+    window.deferredPrompt = null;
   }
 
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
-  container.innerHTML = `
+
+  async function renderWorkouts() {
+    // Load workouts from database
+    let workouts = [];
+    if (state.user) {
+      workouts = await workoutsManager.getWorkouts(state.user.id);
+
+      // If no workouts, create templates
+      if (workouts.length === 0) {
+        await workoutsManager.createTemplatesForUser(state.user.id);
+        workouts = await workoutsManager.getWorkouts(state.user.id);
+      }
+    }
+
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
+    container.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl);">
       <div>
         <h2>Meus Treinos</h2>
@@ -1036,8 +1052,8 @@ async function renderWorkouts() {
     
     <div class="grid grid-auto-fit" id="workouts-list">
       ${workouts.length > 0
-      ? workouts.map(w => workoutsManager.renderWorkoutCard(w)).join('')
-      : `<div class="card">
+        ? workouts.map(w => workoutsManager.renderWorkoutCard(w)).join('')
+        : `<div class="card">
             <div class="empty-state">
               <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M14.5 4h-5L7 7H2v13h20V7h-5l-2.5-3z"></path>
@@ -1048,50 +1064,50 @@ async function renderWorkouts() {
               <p class="empty-description">Clique em "Novo Treino" para começar</p>
             </div>
           </div>`
-    }
+      }
     </div>
   `;
 
-  // Setup event listeners directly (works even before DOM insertion)
-  // Start workout buttons
-  container.querySelectorAll('.start-workout-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const workoutId = parseInt(btn.dataset.workoutId);
-      const workout = await workoutsManager.getWorkout(workoutId);
-      if (workout) {
-        workoutsManager.startSession(workout);
-        router.navigate('workout-execute');
-      }
+    // Setup event listeners directly (works even before DOM insertion)
+    // Start workout buttons
+    container.querySelectorAll('.start-workout-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const workoutId = parseInt(btn.dataset.workoutId);
+        const workout = await workoutsManager.getWorkout(workoutId);
+        if (workout) {
+          workoutsManager.startSession(workout);
+          router.navigate('workout-execute');
+        }
+      });
     });
-  });
 
-  // Edit workout buttons
-  container.querySelectorAll('.edit-workout-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const workoutId = parseInt(btn.dataset.workoutId);
-      const workout = await workoutsManager.getWorkout(workoutId);
-      if (workout) showWorkoutCreator(workout);
+    // Edit workout buttons
+    container.querySelectorAll('.edit-workout-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const workoutId = parseInt(btn.dataset.workoutId);
+        const workout = await workoutsManager.getWorkout(workoutId);
+        if (workout) showWorkoutCreator(workout);
+      });
     });
-  });
 
-  // Create workout button
-  const createBtn = container.querySelector('#create-workout-btn');
-  if (createBtn) {
-    createBtn.addEventListener('click', () => {
-      showWorkoutCreator();
-    });
+    // Create workout button
+    const createBtn = container.querySelector('#create-workout-btn');
+    if (createBtn) {
+      createBtn.addEventListener('click', () => {
+        showWorkoutCreator();
+      });
+    }
+
+    return container;
   }
 
-  return container;
-}
+  function renderWorkoutExecution() {
+    const container = document.createElement('div');
 
-function renderWorkoutExecution() {
-  const container = document.createElement('div');
-
-  if (!workoutsManager.workoutSession) {
-    container.innerHTML = `
+    if (!workoutsManager.workoutSession) {
+      container.innerHTML = `
       <div class="card">
         <div class="empty-state">
           <h4 class="empty-title">Nenhum treino em execução</h4>
@@ -1100,29 +1116,29 @@ function renderWorkoutExecution() {
         </div>
       </div>
     `;
+      return container;
+    }
+
+    workoutsManager.renderExecutionUI(container);
     return container;
   }
 
-  workoutsManager.renderExecutionUI(container);
-  return container;
-}
+  async function renderExercises() {
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
 
-async function renderExercises() {
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
+    // Load exercises from JSON
+    let exercisesData = { exercises: [], muscleGroups: [], equipmentTypes: [] };
+    try {
+      const response = await fetch('./js/data/exercises.json');
+      exercisesData = await response.json();
+    } catch (error) {
+      console.error('Error loading exercises:', error);
+    }
 
-  // Load exercises from JSON
-  let exercisesData = { exercises: [], muscleGroups: [], equipmentTypes: [] };
-  try {
-    const response = await fetch('./js/data/exercises.json');
-    exercisesData = await response.json();
-  } catch (error) {
-    console.error('Error loading exercises:', error);
-  }
+    const { exercises, muscleGroups, equipmentTypes } = exercisesData;
 
-  const { exercises, muscleGroups, equipmentTypes } = exercisesData;
-
-  container.innerHTML = `
+    container.innerHTML = `
     <div style="margin-bottom: var(--spacing-xl);">
       <h2>Biblioteca de Exercícios</h2>
       <p style="color: var(--text-muted);">Explore nossa biblioteca com ${exercises.length} exercícios</p>
@@ -1145,16 +1161,16 @@ async function renderExercises() {
     </div>
   `;
 
-  // Render exercises function
-  const renderExercisesList = (filteredExercises) => {
-    const grid = container.querySelector('#exercises-grid');
-    const muscleIcons = {
-      peito: '💪', costas: '🔙', pernas: '🦵', ombros: '🏋️',
-      biceps: '💪', triceps: '💪', abdomen: '🎯',
-      antebraco: '✊', trapezio: '🏔️', gluteos: '🍑', cardio: '❤️'
-    };
+    // Render exercises function
+    const renderExercisesList = (filteredExercises) => {
+      const grid = container.querySelector('#exercises-grid');
+      const muscleIcons = {
+        peito: '💪', costas: '🔙', pernas: '🦵', ombros: '🏋️',
+        biceps: '💪', triceps: '💪', abdomen: '🎯',
+        antebraco: '✊', trapezio: '🏔️', gluteos: '🍑', cardio: '❤️'
+      };
 
-    grid.innerHTML = filteredExercises.slice(0, 30).map(ex => `
+      grid.innerHTML = filteredExercises.slice(0, 30).map(ex => `
       <div class="exercise-card" data-id="${ex.id}">
         <div class="exercise-thumb">
           <span style="font-size: 1.5rem;">${muscleIcons[ex.muscle] || '🏋️'}</span>
@@ -1170,79 +1186,79 @@ async function renderExercises() {
       </div>
     `).join('');
 
-    if (filteredExercises.length > 30) {
-      grid.innerHTML += `
+      if (filteredExercises.length > 30) {
+        grid.innerHTML += `
         <div style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-lg); color: var(--text-muted);">
           Mostrando 30 de ${filteredExercises.length} exercícios. Use os filtros para refinar a busca.
         </div>
       `;
-    }
+      }
 
-    if (filteredExercises.length === 0) {
-      grid.innerHTML = `
+      if (filteredExercises.length === 0) {
+        grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: var(--spacing-xl);">
           <div style="font-size: 3rem; margin-bottom: var(--spacing-md);">🔍</div>
           <h4>Nenhum exercício encontrado</h4>
           <p style="color: var(--text-muted);">Tente outros filtros ou termos de busca</p>
         </div>
       `;
-    }
+      }
 
-    // Add click handlers for exercise details
-    grid.querySelectorAll('.exercise-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const exId = parseInt(card.dataset.id);
-        const ex = exercises.find(e => e.id === exId);
-        if (ex) showExerciseDetail(ex);
+      // Add click handlers for exercise details
+      grid.querySelectorAll('.exercise-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const exId = parseInt(card.dataset.id);
+          const ex = exercises.find(e => e.id === exId);
+          if (ex) showExerciseDetail(ex);
+        });
       });
-    });
-  };
+    };
 
-  // Filter function
-  const applyFilters = () => {
-    const search = container.querySelector('#exercise-search').value.toLowerCase();
-    const muscle = container.querySelector('#muscle-filter').value;
-    const equipment = container.querySelector('#equipment-filter').value;
+    // Filter function
+    const applyFilters = () => {
+      const search = container.querySelector('#exercise-search').value.toLowerCase();
+      const muscle = container.querySelector('#muscle-filter').value;
+      const equipment = container.querySelector('#equipment-filter').value;
 
-    let filtered = exercises;
+      let filtered = exercises;
 
-    if (search) {
-      filtered = filtered.filter(ex => ex.name.toLowerCase().includes(search));
-    }
-    if (muscle) {
-      filtered = filtered.filter(ex => ex.muscle === muscle);
-    }
-    if (equipment) {
-      filtered = filtered.filter(ex => ex.equipment === equipment);
-    }
+      if (search) {
+        filtered = filtered.filter(ex => ex.name.toLowerCase().includes(search));
+      }
+      if (muscle) {
+        filtered = filtered.filter(ex => ex.muscle === muscle);
+      }
+      if (equipment) {
+        filtered = filtered.filter(ex => ex.equipment === equipment);
+      }
 
-    renderExercisesList(filtered);
-  };
+      renderExercisesList(filtered);
+    };
 
-  // Setup listeners directly on container elements (works even before DOM insertion)
-  const searchInput = container.querySelector('#exercise-search');
-  const muscleFilter = container.querySelector('#muscle-filter');
-  const equipmentFilter = container.querySelector('#equipment-filter');
+    // Setup listeners directly on container elements (works even before DOM insertion)
+    const searchInput = container.querySelector('#exercise-search');
+    const muscleFilter = container.querySelector('#muscle-filter');
+    const equipmentFilter = container.querySelector('#equipment-filter');
 
-  if (searchInput) searchInput.addEventListener('input', applyFilters);
-  if (muscleFilter) muscleFilter.addEventListener('change', applyFilters);
-  if (equipmentFilter) equipmentFilter.addEventListener('change', applyFilters);
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (muscleFilter) muscleFilter.addEventListener('change', applyFilters);
+    if (equipmentFilter) equipmentFilter.addEventListener('change', applyFilters);
 
-  // Initial render
-  renderExercisesList(exercises);
+    // Initial render
+    renderExercisesList(exercises);
 
-  return container;
-}
+    return container;
+  }
 
-// Show exercise detail modal
-function showExerciseDetail(exercise) {
-  const muscleNames = {
-    peito: 'Peito', costas: 'Costas', pernas: 'Pernas', ombros: 'Ombros',
-    biceps: 'Bíceps', triceps: 'Tríceps', abdomen: 'Abdômen',
-    antebraco: 'Antebraço', trapezio: 'Trapézio', gluteos: 'Glúteos', cardio: 'Cardio'
-  };
+  // Show exercise detail modal
+  function showExerciseDetail(exercise) {
+    const muscleNames = {
+      peito: 'Peito', costas: 'Costas', pernas: 'Pernas', ombros: 'Ombros',
+      biceps: 'Bíceps', triceps: 'Tríceps', abdomen: 'Abdômen',
+      antebraco: 'Antebraço', trapezio: 'Trapézio', gluteos: 'Glúteos', cardio: 'Cardio'
+    };
 
-  const videoButton = exercise.videoUrl ? `
+    const videoButton = exercise.videoUrl ? `
     <a href="${exercise.videoUrl}" target="_blank" rel="noopener" 
        class="btn btn-primary" style="display: flex; align-items: center; gap: 8px; margin-top: var(--spacing-md);">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -1252,9 +1268,9 @@ function showExerciseDetail(exercise) {
     </a>
   ` : '';
 
-  modal.open({
-    title: exercise.name,
-    content: `
+    modal.open({
+      title: exercise.name,
+      content: `
       <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
         <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
           <span class="exercise-tag muscle">${muscleNames[exercise.muscle] || exercise.muscle}</span>
@@ -1271,26 +1287,26 @@ function showExerciseDetail(exercise) {
         ${videoButton}
       </div>
     `,
-    closable: true
-  });
-}
-
-// Show workout creator/editor modal
-async function showWorkoutCreator(existingWorkout = null) {
-  // Load exercises for picker
-  let exercisesData = { exercises: [], muscleGroups: [] };
-  try {
-    const response = await fetch('./js/data/exercises.json');
-    exercisesData = await response.json();
-  } catch (error) {
-    console.error('Error loading exercises:', error);
+      closable: true
+    });
   }
 
-  const { exercises, muscleGroups } = exercisesData;
-  const isEditing = !!existingWorkout;
-  const workoutExercises = existingWorkout?.exercises || [];
+  // Show workout creator/editor modal
+  async function showWorkoutCreator(existingWorkout = null) {
+    // Load exercises for picker
+    let exercisesData = { exercises: [], muscleGroups: [] };
+    try {
+      const response = await fetch('./js/data/exercises.json');
+      exercisesData = await response.json();
+    } catch (error) {
+      console.error('Error loading exercises:', error);
+    }
 
-  const content = `
+    const { exercises, muscleGroups } = exercisesData;
+    const isEditing = !!existingWorkout;
+    const workoutExercises = existingWorkout?.exercises || [];
+
+    const content = `
     <div style="display: flex; flex-direction: column; gap: var(--spacing-lg); max-height: 70vh; overflow-y: auto;">
       <div class="form-group">
         <label class="form-label">Nome do Treino</label>
@@ -1333,44 +1349,44 @@ async function showWorkoutCreator(existingWorkout = null) {
     </div>
   `;
 
-  let currentExercises = [...workoutExercises];
+    let currentExercises = [...workoutExercises];
 
-  modal.open({
-    title: isEditing ? 'Editar Treino' : 'Novo Treino',
-    content,
-    size: 'large',
-    closable: true,
-    onOpen: (overlay) => {
-      // Cancel button
-      overlay.querySelector('#cancel-workout-btn')?.addEventListener('click', () => {
-        modal.close();
-      });
-
-      // Add exercise button
-      overlay.querySelector('#add-exercise-btn')?.addEventListener('click', () => {
-        showExercisePicker(exercises, muscleGroups, (exercise) => {
-          currentExercises.push({
-            id: exercise.id,
-            name: exercise.name,
-            sets: 3,
-            reps: 12,
-            rest: 60
-          });
-          updateExercisesList();
+    modal.open({
+      title: isEditing ? 'Editar Treino' : 'Novo Treino',
+      content,
+      size: 'large',
+      closable: true,
+      onOpen: (overlay) => {
+        // Cancel button
+        overlay.querySelector('#cancel-workout-btn')?.addEventListener('click', () => {
+          modal.close();
         });
-      });
 
-      // Update exercises list UI
-      const updateExercisesList = () => {
-        const container = overlay.querySelector('#workout-exercises');
-        if (currentExercises.length === 0) {
-          container.innerHTML = `
+        // Add exercise button
+        overlay.querySelector('#add-exercise-btn')?.addEventListener('click', () => {
+          showExercisePicker(exercises, muscleGroups, (exercise) => {
+            currentExercises.push({
+              id: exercise.id,
+              name: exercise.name,
+              sets: 3,
+              reps: 12,
+              rest: 60
+            });
+            updateExercisesList();
+          });
+        });
+
+        // Update exercises list UI
+        const updateExercisesList = () => {
+          const container = overlay.querySelector('#workout-exercises');
+          if (currentExercises.length === 0) {
+            container.innerHTML = `
             <div style="text-align: center; padding: var(--spacing-xl); color: var(--text-muted); border: 2px dashed var(--border-color); border-radius: var(--radius-md);">
               Clique em "Adicionar" para incluir exercícios
             </div>
           `;
-        } else {
-          container.innerHTML = currentExercises.map((ex, idx) => `
+          } else {
+            container.innerHTML = currentExercises.map((ex, idx) => `
             <div class="exercise-row" data-index="${idx}" style="display: flex; gap: var(--spacing-md); align-items: center; padding: var(--spacing-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
               <div style="flex: 1;">
                 <div style="font-weight: 600;">${ex.name}</div>
@@ -1385,92 +1401,92 @@ async function showWorkoutCreator(existingWorkout = null) {
             </div>
           `).join('');
 
-          // Add listeners for sets/reps inputs
-          container.querySelectorAll('input[data-field]').forEach(input => {
-            input.addEventListener('change', (e) => {
-              const idx = parseInt(e.target.dataset.index);
-              const field = e.target.dataset.field;
-              currentExercises[idx][field] = parseInt(e.target.value) || 1;
+            // Add listeners for sets/reps inputs
+            container.querySelectorAll('input[data-field]').forEach(input => {
+              input.addEventListener('change', (e) => {
+                const idx = parseInt(e.target.dataset.index);
+                const field = e.target.dataset.field;
+                currentExercises[idx][field] = parseInt(e.target.value) || 1;
+              });
             });
-          });
 
-          // Remove exercise buttons
-          container.querySelectorAll('.remove-exercise-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-              const idx = parseInt(e.target.dataset.index);
-              currentExercises.splice(idx, 1);
-              updateExercisesList();
+            // Remove exercise buttons
+            container.querySelectorAll('.remove-exercise-btn').forEach(btn => {
+              btn.addEventListener('click', (e) => {
+                const idx = parseInt(e.target.dataset.index);
+                currentExercises.splice(idx, 1);
+                updateExercisesList();
+              });
             });
-          });
-        }
-      };
-
-      // Save workout
-      overlay.querySelector('#save-workout-btn')?.addEventListener('click', async () => {
-        const name = overlay.querySelector('#workout-name').value.trim();
-        const description = overlay.querySelector('#workout-desc').value.trim();
-
-        if (!name) {
-          toast.warning('Digite um nome para o treino');
-          return;
-        }
-
-        if (currentExercises.length === 0) {
-          toast.warning('Adicione pelo menos um exercício');
-          return;
-        }
-
-        try {
-          if (isEditing) {
-            await workoutsManager.updateWorkout({
-              ...existingWorkout,
-              name,
-              description,
-              exercises: currentExercises
-            });
-            toast.success('Treino atualizado!');
-          } else {
-            await workoutsManager.createWorkout({
-              userId: state.user.id,
-              name,
-              description,
-              exercises: currentExercises,
-              color: '#10b981'
-            });
-            toast.success('Treino criado!');
           }
-          modal.close();
-          router.navigate('workouts');
-        } catch (error) {
-          console.error('Error saving workout:', error);
-          toast.error('Erro ao salvar treino');
-        }
-      });
+        };
 
-      // Delete workout
-      overlay.querySelector('#delete-workout-btn')?.addEventListener('click', async () => {
-        if (confirm('Tem certeza que deseja excluir este treino?')) {
+        // Save workout
+        overlay.querySelector('#save-workout-btn')?.addEventListener('click', async () => {
+          const name = overlay.querySelector('#workout-name').value.trim();
+          const description = overlay.querySelector('#workout-desc').value.trim();
+
+          if (!name) {
+            toast.warning('Digite um nome para o treino');
+            return;
+          }
+
+          if (currentExercises.length === 0) {
+            toast.warning('Adicione pelo menos um exercício');
+            return;
+          }
+
           try {
-            await workoutsManager.deleteWorkout(existingWorkout.id);
-            toast.success('Treino excluído!');
+            if (isEditing) {
+              await workoutsManager.updateWorkout({
+                ...existingWorkout,
+                name,
+                description,
+                exercises: currentExercises
+              });
+              toast.success('Treino atualizado!');
+            } else {
+              await workoutsManager.createWorkout({
+                userId: state.user.id,
+                name,
+                description,
+                exercises: currentExercises,
+                color: '#10b981'
+              });
+              toast.success('Treino criado!');
+            }
             modal.close();
             router.navigate('workouts');
           } catch (error) {
-            console.error('Error deleting workout:', error);
-            toast.error('Erro ao excluir treino');
+            console.error('Error saving workout:', error);
+            toast.error('Erro ao salvar treino');
           }
-        }
-      });
-    }
-  });
-}
+        });
 
-// Exercise picker modal
-function showExercisePicker(exercises, muscleGroups, onSelect) {
-  let filtered = [...exercises];
+        // Delete workout
+        overlay.querySelector('#delete-workout-btn')?.addEventListener('click', async () => {
+          if (confirm('Tem certeza que deseja excluir este treino?')) {
+            try {
+              await workoutsManager.deleteWorkout(existingWorkout.id);
+              toast.success('Treino excluído!');
+              modal.close();
+              router.navigate('workouts');
+            } catch (error) {
+              console.error('Error deleting workout:', error);
+              toast.error('Erro ao excluir treino');
+            }
+          }
+        });
+      }
+    });
+  }
 
-  const renderList = (list) => {
-    return list.slice(0, 20).map(ex => `
+  // Exercise picker modal
+  function showExercisePicker(exercises, muscleGroups, onSelect) {
+    let filtered = [...exercises];
+
+    const renderList = (list) => {
+      return list.slice(0, 20).map(ex => `
       <div class="exercise-pick-item" data-id="${ex.id}" style="display: flex; align-items: center; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--bg-tertiary); border-radius: var(--radius-md); cursor: pointer; transition: background 0.2s;">
         <div style="flex: 1;">
           <div style="font-weight: 600;">${ex.name}</div>
@@ -1479,9 +1495,9 @@ function showExercisePicker(exercises, muscleGroups, onSelect) {
         <span style="color: var(--primary);">+</span>
       </div>
     `).join('');
-  };
+    };
 
-  const content = `
+    const content = `
     <div style="display: flex; flex-direction: column; gap: var(--spacing-md); max-height: 60vh;">
       <div style="display: flex; gap: var(--spacing-sm);">
         <input type="search" class="form-input" id="pick-search" placeholder="Buscar..." style="flex: 1;">
@@ -1496,26 +1512,42 @@ function showExercisePicker(exercises, muscleGroups, onSelect) {
     </div>
   `;
 
-  modal.open({
-    title: 'Selecionar Exercício',
-    content,
-    closable: true,
-    onOpen: (overlay) => {
-      const applyFilter = () => {
-        const search = overlay.querySelector('#pick-search').value.toLowerCase();
-        const muscle = overlay.querySelector('#pick-muscle').value;
+    modal.open({
+      title: 'Selecionar Exercício',
+      content,
+      closable: true,
+      onOpen: (overlay) => {
+        const applyFilter = () => {
+          const search = overlay.querySelector('#pick-search').value.toLowerCase();
+          const muscle = overlay.querySelector('#pick-muscle').value;
 
-        filtered = exercises.filter(ex => {
-          const matchSearch = !search || ex.name.toLowerCase().includes(search);
-          const matchMuscle = !muscle || ex.muscle === muscle;
-          return matchSearch && matchMuscle;
-        });
+          filtered = exercises.filter(ex => {
+            const matchSearch = !search || ex.name.toLowerCase().includes(search);
+            const matchMuscle = !muscle || ex.muscle === muscle;
+            return matchSearch && matchMuscle;
+          });
 
-        const list = overlay.querySelector('#pick-list');
-        list.innerHTML = renderList(filtered);
+          const list = overlay.querySelector('#pick-list');
+          list.innerHTML = renderList(filtered);
 
-        // Re-add click handlers
-        list.querySelectorAll('.exercise-pick-item').forEach(item => {
+          // Re-add click handlers
+          list.querySelectorAll('.exercise-pick-item').forEach(item => {
+            item.addEventListener('click', () => {
+              const exId = parseInt(item.dataset.id);
+              const ex = exercises.find(e => e.id === exId);
+              if (ex) {
+                onSelect(ex);
+                modal.close();
+              }
+            });
+          });
+        };
+
+        overlay.querySelector('#pick-search').addEventListener('input', applyFilter);
+        overlay.querySelector('#pick-muscle').addEventListener('change', applyFilter);
+
+        // Initial click handlers
+        overlay.querySelectorAll('.exercise-pick-item').forEach(item => {
           item.addEventListener('click', () => {
             const exId = parseInt(item.dataset.id);
             const ex = exercises.find(e => e.id === exId);
@@ -1525,42 +1557,26 @@ function showExercisePicker(exercises, muscleGroups, onSelect) {
             }
           });
         });
-      };
-
-      overlay.querySelector('#pick-search').addEventListener('input', applyFilter);
-      overlay.querySelector('#pick-muscle').addEventListener('change', applyFilter);
-
-      // Initial click handlers
-      overlay.querySelectorAll('.exercise-pick-item').forEach(item => {
-        item.addEventListener('click', () => {
-          const exId = parseInt(item.dataset.id);
-          const ex = exercises.find(e => e.id === exId);
-          if (ex) {
-            onSelect(ex);
-            modal.close();
-          }
-        });
-      });
-    }
-  });
-}
-
-async function renderHistory() {
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
-
-  // Get history and stats if user is logged in
-  let history = [];
-  let stats = null;
-  let chartData = [];
-
-  if (state.user) {
-    history = await historyManager.getHistory(state.user.id, 20);
-    stats = await historyManager.getStats(state.user.id, 30);
-    chartData = await historyManager.getChartData(state.user.id, 14);
+      }
+    });
   }
 
-  container.innerHTML = `
+  async function renderHistory() {
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
+
+    // Get history and stats if user is logged in
+    let history = [];
+    let stats = null;
+    let chartData = [];
+
+    if (state.user) {
+      history = await historyManager.getHistory(state.user.id, 20);
+      stats = await historyManager.getStats(state.user.id, 30);
+      chartData = await historyManager.getChartData(state.user.id, 14);
+    }
+
+    container.innerHTML = `
     <div style="margin-bottom: var(--spacing-xl);">
       <h2>Histórico de Treinos</h2>
       <p style="color: var(--text-muted);">Acompanhe seus treinos realizados</p>
@@ -1595,33 +1611,33 @@ async function renderHistory() {
     `}
   `;
 
-  // Add event listeners for history cards
-  setTimeout(() => {
-    container.querySelectorAll('.history-card').forEach(card => {
-      card.addEventListener('click', async () => {
-        const entryId = parseInt(card.dataset.historyId);
-        const entry = await historyManager.getEntry(entryId);
-        if (entry) {
-          showHistoryDetail(entry);
-        }
+    // Add event listeners for history cards
+    setTimeout(() => {
+      container.querySelectorAll('.history-card').forEach(card => {
+        card.addEventListener('click', async () => {
+          const entryId = parseInt(card.dataset.historyId);
+          const entry = await historyManager.getEntry(entryId);
+          if (entry) {
+            showHistoryDetail(entry);
+          }
+        });
       });
-    });
-  }, 100);
+    }, 100);
 
-  return container;
-}
+    return container;
+  }
 
-function showHistoryDetail(entry) {
-  const exercises = entry.exercises || [];
-  const content = `
+  function showHistoryDetail(entry) {
+    const exercises = entry.exercises || [];
+    const content = `
     <div style="margin-bottom: var(--spacing-lg);">
       <p style="color: var(--text-muted); font-size: var(--font-size-sm);">
         ${new Date(entry.startTime).toLocaleDateString('pt-BR', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })}
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })}
       </p>
     </div>
     
@@ -1694,29 +1710,29 @@ function showHistoryDetail(entry) {
     </div>
   `;
 
-  modal.open({
-    title: entry.workoutName,
-    content,
-    size: 'lg'
-  });
-}
-
-async function renderProgress() {
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
-
-  // Get progress data
-  let comparison = null;
-  let weightData = [];
-  let latest = null;
-
-  if (state.user) {
-    comparison = await progressManager.getComparison(state.user.id);
-    weightData = await progressManager.getChartData(state.user.id, 'weight', 90);
-    latest = await progressManager.getLatest(state.user.id);
+    modal.open({
+      title: entry.workoutName,
+      content,
+      size: 'lg'
+    });
   }
 
-  container.innerHTML = `
+  async function renderProgress() {
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
+
+    // Get progress data
+    let comparison = null;
+    let weightData = [];
+    let latest = null;
+
+    if (state.user) {
+      comparison = await progressManager.getComparison(state.user.id);
+      weightData = await progressManager.getChartData(state.user.id, 'weight', 90);
+      latest = await progressManager.getLatest(state.user.id);
+    }
+
+    container.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl);">
       <div>
         <h2>Evolução</h2>
@@ -1778,79 +1794,79 @@ async function renderProgress() {
     </div>
   `;
 
-  // Setup event listeners
-  setTimeout(() => {
-    const showMeasurementModal = () => {
-      const formContent = `
+    // Setup event listeners
+    setTimeout(() => {
+      const showMeasurementModal = () => {
+        const formContent = `
         <p style="color: var(--text-muted); margin-bottom: var(--spacing-lg);">
           Registre suas medidas atuais. Deixe em branco os campos que não deseja preencher.
         </p>
         ${progressManager.renderMeasurementForm(latest || {})}
       `;
 
-      modal.open({
-        title: '📏 Nova Medição',
-        content: formContent,
-        size: 'lg',
-        footer: `
+        modal.open({
+          title: '📏 Nova Medição',
+          content: formContent,
+          size: 'lg',
+          footer: `
           <button class="btn btn-secondary" onclick="modal.close()">Cancelar</button>
           <button class="btn btn-primary" id="save-measurement-btn">Salvar</button>
         `,
-        onOpen: (overlay) => {
-          overlay.querySelector('#save-measurement-btn')?.addEventListener('click', async () => {
-            const form = overlay.querySelector('#measurement-form');
-            const formData = new FormData(form);
-            const measurements = {};
+          onOpen: (overlay) => {
+            overlay.querySelector('#save-measurement-btn')?.addEventListener('click', async () => {
+              const form = overlay.querySelector('#measurement-form');
+              const formData = new FormData(form);
+              const measurements = {};
 
-            for (const [key, value] of formData.entries()) {
-              if (value) measurements[key] = parseFloat(value);
-            }
+              for (const [key, value] of formData.entries()) {
+                if (value) measurements[key] = parseFloat(value);
+              }
 
-            if (Object.keys(measurements).length === 0) {
-              toast.warning('Preencha pelo menos uma medida');
-              return;
-            }
+              if (Object.keys(measurements).length === 0) {
+                toast.warning('Preencha pelo menos uma medida');
+                return;
+              }
 
-            await progressManager.saveMeasurement(state.user.id, measurements);
-            modal.close();
-            toast.success('Medidas registradas!');
-            router.navigate('progress');
-          });
-        }
+              await progressManager.saveMeasurement(state.user.id, measurements);
+              modal.close();
+              toast.success('Medidas registradas!');
+              router.navigate('progress');
+            });
+          }
+        });
+      };
+
+      container.querySelector('#new-measurement-btn')?.addEventListener('click', showMeasurementModal);
+      container.querySelector('#empty-new-measurement-btn')?.addEventListener('click', showMeasurementModal);
+
+      // Tab switching
+      container.querySelectorAll('#progress-tabs .tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          container.querySelectorAll('#progress-tabs .tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          // Tab content switching would go here
+          toast.info(`Aba "${tab.textContent}" em breve!`);
+        });
       });
-    };
+    }, 100);
 
-    container.querySelector('#new-measurement-btn')?.addEventListener('click', showMeasurementModal);
-    container.querySelector('#empty-new-measurement-btn')?.addEventListener('click', showMeasurementModal);
-
-    // Tab switching
-    container.querySelectorAll('#progress-tabs .tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        container.querySelectorAll('#progress-tabs .tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        // Tab content switching would go here
-        toast.info(`Aba "${tab.textContent}" em breve!`);
-      });
-    });
-  }, 100);
-
-  return container;
-}
-
-async function renderAssessments() {
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
-
-  // Load existing data
-  let anamnesis = null;
-  let photos = [];
-
-  if (state.user) {
-    anamnesis = await assessmentsManager.getLatestAnamnesis(state.user.id);
-    photos = await assessmentsManager.getPhotos(state.user.id);
+    return container;
   }
 
-  container.innerHTML = `
+  async function renderAssessments() {
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
+
+    // Load existing data
+    let anamnesis = null;
+    let photos = [];
+
+    if (state.user) {
+      anamnesis = await assessmentsManager.getLatestAnamnesis(state.user.id);
+      photos = await assessmentsManager.getPhotos(state.user.id);
+    }
+
+    container.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl);">
       <div>
         <h2>Avaliações Físicas</h2>
@@ -1900,155 +1916,155 @@ async function renderAssessments() {
     </div>
   `;
 
-  // Setup event listeners
-  setTimeout(() => {
-    // Start/Edit Anamnesis
-    const startBtn = container.querySelector('#start-anamnesis-btn');
-    const editBtn = container.querySelector('#edit-anamnesis-btn');
+    // Setup event listeners
+    setTimeout(() => {
+      // Start/Edit Anamnesis
+      const startBtn = container.querySelector('#start-anamnesis-btn');
+      const editBtn = container.querySelector('#edit-anamnesis-btn');
 
-    const showAnamnesisModal = () => {
-      const formContent = assessmentsManager.renderAnamnesisForm(anamnesis?.data || {});
+      const showAnamnesisModal = () => {
+        const formContent = assessmentsManager.renderAnamnesisForm(anamnesis?.data || {});
 
-      modal.open({
-        title: '📋 Anamnese - Questionário de Saúde',
-        content: `
+        modal.open({
+          title: '📋 Anamnese - Questionário de Saúde',
+          content: `
           <div style="max-height: 60vh; overflow-y: auto; padding-right: var(--spacing-sm);">
             ${formContent}
           </div>
         `,
-        size: 'lg',
-        footer: `
+          size: 'lg',
+          footer: `
           <button class="btn btn-secondary" onclick="modal.close()">Cancelar</button>
           <button class="btn btn-primary" id="save-anamnesis-btn">Salvar Anamnese</button>
         `,
-        onOpen: (overlay) => {
-          // Setup chip toggle behavior
-          overlay.querySelectorAll('.chip-option').forEach(chip => {
-            chip.addEventListener('click', () => {
-              chip.classList.toggle('selected');
-              chip.style.background = chip.classList.contains('selected')
-                ? 'var(--accent-primary)'
-                : 'var(--bg-tertiary)';
-              chip.style.color = chip.classList.contains('selected')
-                ? 'white'
-                : 'inherit';
+          onOpen: (overlay) => {
+            // Setup chip toggle behavior
+            overlay.querySelectorAll('.chip-option').forEach(chip => {
+              chip.addEventListener('click', () => {
+                chip.classList.toggle('selected');
+                chip.style.background = chip.classList.contains('selected')
+                  ? 'var(--accent-primary)'
+                  : 'var(--bg-tertiary)';
+                chip.style.color = chip.classList.contains('selected')
+                  ? 'white'
+                  : 'inherit';
+              });
             });
-          });
 
-          overlay.querySelector('#save-anamnesis-btn')?.addEventListener('click', async () => {
-            const form = overlay.querySelector('#anamnesis-form');
-            const formData = new FormData(form);
-            const data = {};
+            overlay.querySelector('#save-anamnesis-btn')?.addEventListener('click', async () => {
+              const form = overlay.querySelector('#anamnesis-form');
+              const formData = new FormData(form);
+              const data = {};
 
-            // Process form data
-            for (const [key, value] of formData.entries()) {
-              if (data[key]) {
-                // Multi-value field (checkboxes)
-                if (!Array.isArray(data[key])) {
-                  data[key] = [data[key]];
+              // Process form data
+              for (const [key, value] of formData.entries()) {
+                if (data[key]) {
+                  // Multi-value field (checkboxes)
+                  if (!Array.isArray(data[key])) {
+                    data[key] = [data[key]];
+                  }
+                  data[key].push(value);
+                } else {
+                  data[key] = value;
                 }
-                data[key].push(value);
-              } else {
-                data[key] = value;
               }
-            }
 
-            await assessmentsManager.saveAnamnesis(state.user.id, data);
-            modal.close();
-            toast.success('Anamnese salva com sucesso!');
-            router.navigate('assessments');
-          });
-        }
-      });
-    };
+              await assessmentsManager.saveAnamnesis(state.user.id, data);
+              modal.close();
+              toast.success('Anamnese salva com sucesso!');
+              router.navigate('assessments');
+            });
+          }
+        });
+      };
 
-    startBtn?.addEventListener('click', showAnamnesisModal);
-    editBtn?.addEventListener('click', showAnamnesisModal);
+      startBtn?.addEventListener('click', showAnamnesisModal);
+      editBtn?.addEventListener('click', showAnamnesisModal);
 
-    // Add Photos
-    container.querySelector('#add-photos-btn')?.addEventListener('click', () => {
-      const photoContent = assessmentsManager.renderPhotoUpload();
+      // Add Photos
+      container.querySelector('#add-photos-btn')?.addEventListener('click', () => {
+        const photoContent = assessmentsManager.renderPhotoUpload();
 
-      modal.open({
-        title: '📸 Adicionar Fotos',
-        content: photoContent,
-        size: 'lg',
-        footer: `
+        modal.open({
+          title: '📸 Adicionar Fotos',
+          content: photoContent,
+          size: 'lg',
+          footer: `
           <button class="btn btn-secondary" onclick="modal.close()">Cancelar</button>
           <button class="btn btn-primary" id="save-photos-btn">Salvar Fotos</button>
         `,
-        onOpen: (overlay) => {
-          // Handle file inputs
-          overlay.querySelectorAll('.photo-input').forEach(input => {
-            input.addEventListener('change', (e) => {
-              const file = e.target.files[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                  const slot = input.closest('.photo-slot');
-                  const preview = slot.querySelector('.photo-preview');
-                  const placeholder = slot.querySelector('.photo-placeholder');
-                  preview.src = event.target.result;
-                  preview.style.display = 'block';
-                  placeholder.style.display = 'none';
-                  slot.dataset.imageData = event.target.result;
-                };
-                reader.readAsDataURL(file);
+          onOpen: (overlay) => {
+            // Handle file inputs
+            overlay.querySelectorAll('.photo-input').forEach(input => {
+              input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    const slot = input.closest('.photo-slot');
+                    const preview = slot.querySelector('.photo-preview');
+                    const placeholder = slot.querySelector('.photo-placeholder');
+                    preview.src = event.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    slot.dataset.imageData = event.target.result;
+                  };
+                  reader.readAsDataURL(file);
+                }
+              });
+            });
+
+            overlay.querySelector('#save-photos-btn')?.addEventListener('click', async () => {
+              const slots = overlay.querySelectorAll('.photo-slot');
+              let savedCount = 0;
+
+              for (const slot of slots) {
+                if (slot.dataset.imageData) {
+                  await assessmentsManager.savePhoto(
+                    state.user.id,
+                    slot.dataset.imageData,
+                    slot.dataset.pose
+                  );
+                  savedCount++;
+                }
+              }
+
+              modal.close();
+              if (savedCount > 0) {
+                toast.success(`${savedCount} foto(s) salva(s)!`);
+                router.navigate('assessments');
+              } else {
+                toast.warning('Nenhuma foto selecionada');
               }
             });
-          });
+          }
+        });
+      });
 
-          overlay.querySelector('#save-photos-btn')?.addEventListener('click', async () => {
-            const slots = overlay.querySelectorAll('.photo-slot');
-            let savedCount = 0;
+      // Quick action cards
+      container.querySelector('#measurements-card')?.addEventListener('click', () => {
+        router.navigate('progress');
+      });
 
-            for (const slot of slots) {
-              if (slot.dataset.imageData) {
-                await assessmentsManager.savePhoto(
-                  state.user.id,
-                  slot.dataset.imageData,
-                  slot.dataset.pose
-                );
-                savedCount++;
-              }
-            }
-
-            modal.close();
-            if (savedCount > 0) {
-              toast.success(`${savedCount} foto(s) salva(s)!`);
-              router.navigate('assessments');
-            } else {
-              toast.warning('Nenhuma foto selecionada');
-            }
-          });
+      container.querySelector('#compare-photos-card')?.addEventListener('click', () => {
+        if (photos.length < 2) {
+          toast.info('Adicione pelo menos 2 fotos para comparar');
+        } else {
+          toast.info('Comparação de fotos em breve!');
         }
       });
-    });
+    }, 100);
 
-    // Quick action cards
-    container.querySelector('#measurements-card')?.addEventListener('click', () => {
-      router.navigate('progress');
-    });
+    return container;
+  }
 
-    container.querySelector('#compare-photos-card')?.addEventListener('click', () => {
-      if (photos.length < 2) {
-        toast.info('Adicione pelo menos 2 fotos para comparar');
-      } else {
-        toast.info('Comparação de fotos em breve!');
-      }
-    });
-  }, 100);
+  async function renderStudents() {
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
 
-  return container;
-}
-
-async function renderStudents() {
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
-
-  // Check if user is a trainer
-  if (state.user?.type !== 'trainer') {
-    container.innerHTML = `
+    // Check if user is a trainer
+    if (state.user?.type !== 'trainer') {
+      container.innerHTML = `
       <div class="card">
         <div class="empty-state">
           <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -2062,23 +2078,23 @@ async function renderStudents() {
       </div>
     `;
 
-    setTimeout(() => {
-      container.querySelector('#become-trainer-btn')?.addEventListener('click', async () => {
-        state.user.type = 'trainer';
-        await db.update(STORES.users, state.user);
-        toast.success('Agora você é um Personal Trainer!');
-        router.navigate('students');
-      });
-    }, 100);
+      setTimeout(() => {
+        container.querySelector('#become-trainer-btn')?.addEventListener('click', async () => {
+          state.user.type = 'trainer';
+          await db.update(STORES.users, state.user);
+          toast.success('Agora você é um Personal Trainer!');
+          router.navigate('students');
+        });
+      }, 100);
 
-    return container;
-  }
+      return container;
+    }
 
-  // Load students
-  const students = await studentsManager.getStudents(state.user.id);
-  const counts = await studentsManager.getStudentCount(state.user.id);
+    // Load students
+    const students = await studentsManager.getStudents(state.user.id);
+    const counts = await studentsManager.getStudentCount(state.user.id);
 
-  container.innerHTML = `
+    container.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl);">
       <div>
         <h2>Meus Alunos</h2>
@@ -2118,97 +2134,97 @@ async function renderStudents() {
     `}
   `;
 
-  // Setup event listeners
-  setTimeout(() => {
-    // Add student button
-    container.querySelector('#add-student-btn')?.addEventListener('click', () => {
-      showStudentModal();
-    });
-
-    // Student cards
-    container.querySelectorAll('.student-card').forEach(card => {
-      card.addEventListener('click', async () => {
-        const studentId = parseInt(card.dataset.studentId);
-        const student = await studentsManager.getStudent(studentId);
-        if (student) {
-          showStudentDetail(student);
-        }
+    // Setup event listeners
+    setTimeout(() => {
+      // Add student button
+      container.querySelector('#add-student-btn')?.addEventListener('click', () => {
+        showStudentModal();
       });
-    });
-  }, 100);
 
-  return container;
-}
+      // Student cards
+      container.querySelectorAll('.student-card').forEach(card => {
+        card.addEventListener('click', async () => {
+          const studentId = parseInt(card.dataset.studentId);
+          const student = await studentsManager.getStudent(studentId);
+          if (student) {
+            showStudentDetail(student);
+          }
+        });
+      });
+    }, 100);
 
-function showStudentModal(student = null) {
-  const isEdit = !!student;
-  const formContent = studentsManager.renderStudentForm(student);
+    return container;
+  }
 
-  modal.open({
-    title: isEdit ? '✏️ Editar Aluno' : '➕ Novo Aluno',
-    content: formContent,
-    size: 'md',
-    footer: `
+  function showStudentModal(student = null) {
+    const isEdit = !!student;
+    const formContent = studentsManager.renderStudentForm(student);
+
+    modal.open({
+      title: isEdit ? '✏️ Editar Aluno' : '➕ Novo Aluno',
+      content: formContent,
+      size: 'md',
+      footer: `
       <button class="btn btn-secondary" onclick="modal.close()">Cancelar</button>
       <button class="btn btn-primary" id="save-student-btn">${isEdit ? 'Salvar' : 'Adicionar'}</button>
     `,
-    onOpen: (overlay) => {
-      overlay.querySelector('#save-student-btn')?.addEventListener('click', async () => {
-        const form = overlay.querySelector('#student-form');
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+      onOpen: (overlay) => {
+        overlay.querySelector('#save-student-btn')?.addEventListener('click', async () => {
+          const form = overlay.querySelector('#student-form');
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
 
-        if (!data.name?.trim()) {
-          toast.warning('Nome é obrigatório');
-          return;
-        }
+          if (!data.name?.trim()) {
+            toast.warning('Nome é obrigatório');
+            return;
+          }
 
-        if (isEdit) {
-          await studentsManager.updateStudent({ ...student, ...data });
-          toast.success('Aluno atualizado!');
-        } else {
-          await studentsManager.addStudent(state.user.id, data);
-          toast.success('Aluno adicionado!');
-        }
+          if (isEdit) {
+            await studentsManager.updateStudent({ ...student, ...data });
+            toast.success('Aluno atualizado!');
+          } else {
+            await studentsManager.addStudent(state.user.id, data);
+            toast.success('Aluno adicionado!');
+          }
 
-        modal.close();
-        router.navigate('students');
-      });
-    }
-  });
-}
+          modal.close();
+          router.navigate('students');
+        });
+      }
+    });
+  }
 
-async function showStudentDetail(student) {
-  const workouts = await studentsManager.getStudentWorkouts(student.id);
-  const detailContent = studentsManager.renderStudentDetail(student, workouts);
+  async function showStudentDetail(student) {
+    const workouts = await studentsManager.getStudentWorkouts(student.id);
+    const detailContent = studentsManager.renderStudentDetail(student, workouts);
 
-  modal.open({
-    title: student.name,
-    content: detailContent,
-    size: 'lg',
-    onOpen: (overlay) => {
-      // Edit student
-      overlay.querySelector('#edit-student-btn')?.addEventListener('click', () => {
-        modal.close();
-        showStudentModal(student);
-      });
+    modal.open({
+      title: student.name,
+      content: detailContent,
+      size: 'lg',
+      onOpen: (overlay) => {
+        // Edit student
+        overlay.querySelector('#edit-student-btn')?.addEventListener('click', () => {
+          modal.close();
+          showStudentModal(student);
+        });
 
-      // Assign workout
-      overlay.querySelector('#assign-workout-btn')?.addEventListener('click', async () => {
-        const trainerWorkouts = await workoutsManager.getWorkouts(state.user.id);
-        const availableWorkouts = trainerWorkouts.filter(
-          w => !student.assignedWorkouts?.includes(w.id)
-        );
+        // Assign workout
+        overlay.querySelector('#assign-workout-btn')?.addEventListener('click', async () => {
+          const trainerWorkouts = await workoutsManager.getWorkouts(state.user.id);
+          const availableWorkouts = trainerWorkouts.filter(
+            w => !student.assignedWorkouts?.includes(w.id)
+          );
 
-        if (availableWorkouts.length === 0) {
-          toast.info('Nenhum treino disponível para atribuir');
-          return;
-        }
+          if (availableWorkouts.length === 0) {
+            toast.info('Nenhum treino disponível para atribuir');
+            return;
+          }
 
-        modal.close();
-        modal.open({
-          title: '📋 Atribuir Treino',
-          content: `
+          modal.close();
+          modal.open({
+            title: '📋 Atribuir Treino',
+            content: `
             <p style="color: var(--text-muted); margin-bottom: var(--spacing-lg);">
               Selecione um treino para atribuir a ${student.name}
             </p>
@@ -2221,45 +2237,45 @@ async function showStudentDetail(student) {
               `).join('')}
             </div>
           `,
-          size: 'md',
-          onOpen: (innerOverlay) => {
-            innerOverlay.querySelectorAll('.assign-btn').forEach(btn => {
-              btn.addEventListener('click', async () => {
-                const workoutId = parseInt(btn.dataset.workoutId);
-                await studentsManager.assignWorkout(student.id, workoutId);
-                modal.close();
-                toast.success('Treino atribuído!');
-                const updatedStudent = await studentsManager.getStudent(student.id);
-                showStudentDetail(updatedStudent);
+            size: 'md',
+            onOpen: (innerOverlay) => {
+              innerOverlay.querySelectorAll('.assign-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                  const workoutId = parseInt(btn.dataset.workoutId);
+                  await studentsManager.assignWorkout(student.id, workoutId);
+                  modal.close();
+                  toast.success('Treino atribuído!');
+                  const updatedStudent = await studentsManager.getStudent(student.id);
+                  showStudentDetail(updatedStudent);
+                });
               });
-            });
-          }
+            }
+          });
         });
-      });
 
-      // Remove workout
-      overlay.querySelectorAll('.remove-workout-btn').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.stopPropagation();
-          const workoutId = parseInt(btn.dataset.workoutId);
-          await studentsManager.removeWorkout(student.id, workoutId);
-          toast.success('Treino removido!');
-          modal.close();
-          const updatedStudent = await studentsManager.getStudent(student.id);
-          showStudentDetail(updatedStudent);
+        // Remove workout
+        overlay.querySelectorAll('.remove-workout-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const workoutId = parseInt(btn.dataset.workoutId);
+            await studentsManager.removeWorkout(student.id, workoutId);
+            toast.success('Treino removido!');
+            modal.close();
+            const updatedStudent = await studentsManager.getStudent(student.id);
+            showStudentDetail(updatedStudent);
+          });
         });
-      });
-    }
-  });
-}
+      }
+    });
+  }
 
-async function renderSettings() {
-  const container = document.createElement('div');
-  container.className = 'animate-slide-up';
+  async function renderSettings() {
+    const container = document.createElement('div');
+    container.className = 'animate-slide-up';
 
-  const workouts = state.user ? await workoutsManager.getWorkouts(state.user.id) : [];
+    const workouts = state.user ? await workoutsManager.getWorkouts(state.user.id) : [];
 
-  container.innerHTML = `
+    container.innerHTML = `
     <div style="margin-bottom: var(--spacing-xl);">
       <h2>Configurações</h2>
       <p style="color: var(--text-muted);">Personalize o aplicativo</p>
@@ -2365,94 +2381,94 @@ async function renderSettings() {
     </div>
   `;
 
-  // Setup event listeners
-  setTimeout(() => {
-    // Theme select
-    container.querySelector('#theme-select')?.addEventListener('change', async (e) => {
-      state.theme = e.target.value;
-      document.body.classList.toggle('light-theme', state.theme === 'light');
-      await db.setSetting('theme', state.theme);
-      toast.success(`Tema ${state.theme === 'dark' ? 'escuro' : 'claro'} aplicado`);
-    });
+    // Setup event listeners
+    setTimeout(() => {
+      // Theme select
+      container.querySelector('#theme-select')?.addEventListener('change', async (e) => {
+        state.theme = e.target.value;
+        document.body.classList.toggle('light-theme', state.theme === 'light');
+        await db.setSetting('theme', state.theme);
+        toast.success(`Tema ${state.theme === 'dark' ? 'escuro' : 'claro'} aplicado`);
+      });
 
-    // Export workout PDF
-    container.querySelector('#export-workout-btn')?.addEventListener('click', async () => {
-      const select = container.querySelector('#workout-export-select');
-      const workoutId = parseInt(select?.value);
+      // Export workout PDF
+      container.querySelector('#export-workout-btn')?.addEventListener('click', async () => {
+        const select = container.querySelector('#workout-export-select');
+        const workoutId = parseInt(select?.value);
 
-      if (!workoutId) {
-        toast.warning('Selecione um treino');
-        return;
-      }
+        if (!workoutId) {
+          toast.warning('Selecione um treino');
+          return;
+        }
 
-      const workout = await workoutsManager.getWorkout(workoutId);
-      if (workout) {
-        pdfExporter.exportWorkout(workout);
+        const workout = await workoutsManager.getWorkout(workoutId);
+        if (workout) {
+          pdfExporter.exportWorkout(workout);
+          toast.success('Gerando PDF...');
+        }
+      });
+
+      // Export assessment PDF
+      container.querySelector('#export-assessment-btn')?.addEventListener('click', async () => {
+        const anamnesis = await assessmentsManager.getLatestAnamnesis(state.user.id);
+        const measurements = await progressManager.getLatest(state.user.id);
+
+        if (!anamnesis && !measurements) {
+          toast.warning('Preencha a anamnese ou medidas primeiro');
+          return;
+        }
+
+        pdfExporter.exportAssessment(anamnesis, measurements, state.user.name);
         toast.success('Gerando PDF...');
-      }
-    });
+      });
 
-    // Export assessment PDF
-    container.querySelector('#export-assessment-btn')?.addEventListener('click', async () => {
-      const anamnesis = await assessmentsManager.getLatestAnamnesis(state.user.id);
-      const measurements = await progressManager.getLatest(state.user.id);
+      // Export all data
+      container.querySelector('#export-data-btn')?.addEventListener('click', async () => {
+        const data = {
+          user: state.user,
+          workouts: await workoutsManager.getWorkouts(state.user.id),
+          history: await historyManager.getHistory(state.user.id, 100),
+          progress: await progressManager.getMeasurements(state.user.id),
+          exportedAt: new Date().toISOString()
+        };
 
-      if (!anamnesis && !measurements) {
-        toast.warning('Preencha a anamnese ou medidas primeiro');
-        return;
-      }
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `gymflow_backup_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast.success('Dados exportados!');
+      });
 
-      pdfExporter.exportAssessment(anamnesis, measurements, state.user.name);
-      toast.success('Gerando PDF...');
-    });
-
-    // Export all data
-    container.querySelector('#export-data-btn')?.addEventListener('click', async () => {
-      const data = {
-        user: state.user,
-        workouts: await workoutsManager.getWorkouts(state.user.id),
-        history: await historyManager.getHistory(state.user.id, 100),
-        progress: await progressManager.getMeasurements(state.user.id),
-        exportedAt: new Date().toISOString()
-      };
-
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `gymflow_backup_${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      toast.success('Dados exportados!');
-    });
-
-    // Logout
-    container.querySelector('#logout-btn')?.addEventListener('click', () => {
-      modal.open({
-        title: '👋 Sair',
-        content: '<p>Deseja realmente sair da sua conta?</p>',
-        footer: `
+      // Logout
+      container.querySelector('#logout-btn')?.addEventListener('click', () => {
+        modal.open({
+          title: '👋 Sair',
+          content: '<p>Deseja realmente sair da sua conta?</p>',
+          footer: `
           <button class="btn btn-secondary" id="cancel-logout-btn">Cancelar</button>
           <button class="btn btn-danger" id="confirm-logout">Sair</button>
         `,
-        onOpen: (overlay) => {
-          overlay.querySelector('#cancel-logout-btn')?.addEventListener('click', () => modal.close());
-          overlay.querySelector('#confirm-logout')?.addEventListener('click', async () => {
-            await logout();
-            modal.close();
-          });
-        }
+          onOpen: (overlay) => {
+            overlay.querySelector('#cancel-logout-btn')?.addEventListener('click', () => modal.close());
+            overlay.querySelector('#confirm-logout')?.addEventListener('click', async () => {
+              await logout();
+              modal.close();
+            });
+          }
+        });
       });
-    });
-  }, 100);
+    }, 100);
 
-  return container;
-}
+    return container;
+  }
 
-function renderProfile() {
-  const user = state.user || { name: 'Usuário', email: '', type: 'student' };
+  function renderProfile() {
+    const user = state.user || { name: 'Usuário', email: '', type: 'student' };
 
-  return `
+    return `
     <div class="animate-slide-up">
       <div style="margin-bottom: var(--spacing-xl);">
         <h2>Meu Perfil</h2>
@@ -2495,108 +2511,108 @@ function renderProfile() {
       </div>
     </div>
   `;
-}
-
-
-/**
- * Seed database with initial data
- */
-async function seedDatabase() {
-  try {
-    const exercises = await db.getAll(STORES.exercises);
-    if (exercises?.length > 0) {
-      // DEV: console.log('[Seed] Exercises already loaded');
-      return;
-    }
-
-    // DEV: console.log('[Seed] Loading exercises...');
-    const response = await fetch('./js/data/exercises.json');
-    const data = await response.json();
-
-    if (!data?.exercises?.length) {
-      console.warn('[Seed] No exercises data found');
-      return;
-    }
-
-    // Batch insert using logic from user request
-    // We access localDB directly or use a loop. 
-    // Since db-adapter abstracts this, we will use the loop but optimized if possible.
-    // The user requested explicit transaction usage.
-
-    // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
-    // But we can try to use db.add in parallel or just loop simple.
-    // User asked for: "const transaction = localDB.db.transaction..."
-    // BUT we don't have 'localDB' imported here. We have 'db'.
-
-    // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
-    // OR we could try to import localDB. 
-    // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
-
-    let count = 0;
-    for (const exercise of data.exercises) {
-      await db.add(STORES.exercises, exercise);
-      count++;
-    }
-    // console.log(`[Seed] Seeded ${count} exercises`);
-
-  } catch (error) {
-    console.error('[Seed] Error:', error);
-    // Non-blocking
   }
-}
 
-// Initialize app when DOM is ready
-document.addEventListener('DOMContentLoaded', init);
 
-/**
- * Check for pending redirect login results
- */
-async function checkRedirectLogin() {
-  if (state.user) return;
-
-  try {
-    const firebaseModule = await import('./firebase-config.js');
-    await firebaseModule.initFirebase();
-
-    const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
-
-    if (firebaseUser) {
-      // Limpar URL de parâmetros do redirect
-      window.history.replaceState(
-        null,
-        '',
-        window.location.pathname + window.location.hash
-      );
-
-      // Buscar/criar usuário local
-      let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
-      if (users.length === 0) {
-        const userId = await db.add(STORES.users, {
-          name: firebaseUser.displayName || 'Usuário Google',
-          email: firebaseUser.email,
-          type: 'student',
-          avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
-          googleId: firebaseUser.uid,
-          createdAt: new Date().toISOString()
-        });
-        state.user = await db.get(STORES.users, userId);
-      } else {
-        state.user = users[0];
+  /**
+   * Seed database with initial data
+   */
+  async function seedDatabase() {
+    try {
+      const exercises = await db.getAll(STORES.exercises);
+      if (exercises?.length > 0) {
+        // DEV: console.log('[Seed] Exercises already loaded');
+        return;
       }
 
-      // Usar função centralizada
-      await handleSuccessfulLogin(state.user);
-    }
+      // DEV: console.log('[Seed] Loading exercises...');
+      const response = await fetch('./js/data/exercises.json');
+      const data = await response.json();
 
-  } catch (error) {
-    console.error('[Auth] Redirect check error:', error);
-    // Não mostrar toast a menos que seja erro real do Firebase
-    if (error.code && error.code !== 'auth/popup-closed-by-user') {
-      toast.error(`Erro no login: ${error.message}`);
+      if (!data?.exercises?.length) {
+        console.warn('[Seed] No exercises data found');
+        return;
+      }
+
+      // Batch insert using logic from user request
+      // We access localDB directly or use a loop. 
+      // Since db-adapter abstracts this, we will use the loop but optimized if possible.
+      // The user requested explicit transaction usage.
+
+      // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
+      // But we can try to use db.add in parallel or just loop simple.
+      // User asked for: "const transaction = localDB.db.transaction..."
+      // BUT we don't have 'localDB' imported here. We have 'db'.
+
+      // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
+      // OR we could try to import localDB. 
+      // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
+
+      let count = 0;
+      for (const exercise of data.exercises) {
+        await db.add(STORES.exercises, exercise);
+        count++;
+      }
+      // console.log(`[Seed] Seeded ${count} exercises`);
+
+    } catch (error) {
+      console.error('[Seed] Error:', error);
+      // Non-blocking
     }
   }
-}
 
-// Global Exports for debugging
-window.db = db;
-window.MFIT = { state, db, router, toast, modal };
+  // Initialize app when DOM is ready
+  document.addEventListener('DOMContentLoaded', init);
+
+  /**
+   * Check for pending redirect login results
+   */
+  async function checkRedirectLogin() {
+    if (state.user) return;
+
+    try {
+      const firebaseModule = await import('./firebase-config.js');
+      await firebaseModule.initFirebase();
+
+      const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
+
+      if (firebaseUser) {
+        // Limpar URL de parâmetros do redirect
+        window.history.replaceState(
+          null,
+          '',
+          window.location.pathname + window.location.hash
+        );
+
+        // Buscar/criar usuário local
+        let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
+        if (users.length === 0) {
+          const userId = await db.add(STORES.users, {
+            name: firebaseUser.displayName || 'Usuário Google',
+            email: firebaseUser.email,
+            type: 'student',
+            avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
+            googleId: firebaseUser.uid,
+            createdAt: new Date().toISOString()
+          });
+          state.user = await db.get(STORES.users, userId);
+        } else {
+          state.user = users[0];
+        }
+
+        // Usar função centralizada
+        await handleSuccessfulLogin(state.user);
+      }
+
+    } catch (error) {
+      console.error('[Auth] Redirect check error:', error);
+      // Não mostrar toast a menos que seja erro real do Firebase
+      if (error.code && error.code !== 'auth/popup-closed-by-user') {
+        toast.error(`Erro no login: ${error.message}`);
+      }
+    }
+  }
+
+  // Global Exports for debugging
+  window.db = db;
+  window.MFIT = { state, db, router, toast, modal };
