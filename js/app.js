@@ -344,27 +344,7 @@ async function logout() {
   }
 }
 
-/**
- * Check if user is authenticated
- */
-async function checkAuth() {
-  // Always register the auth hook
-  router.beforeEach((path) => {
-    if (router.requiresAuth(path) && !state.user) {
-      showLoginModal();
-      return false;
-    }
-    return true;
-  });
 
-  // Show login immediately if no user and on authenticated route
-  if (!state.user) {
-    const currentPath = location.hash.replace('#', '') || 'dashboard';
-    if (router.requiresAuth(currentPath)) {
-      showLoginModal();
-    }
-  }
-}
 
 /**
  * Setup application routes
