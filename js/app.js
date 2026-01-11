@@ -2492,25 +2492,23 @@ async function checkRedirectLogin() {
   if (state.user) return;
 
   try {
-    // Dynamically import to avoid loading Firebase on every load
-    // But we need to check if we are possibly returning from a redirect
-    // Simple heuristic: If we are on mobile, we might be returning.
-    // Or just always try minimal check?
-    // Let's rely on sessionStorage flag or just try catch is cheap if connection is established.
-    // To minimize impact, we only load if we lack a user.
+    // DEV: Force usage of checking
+    // toast.info('Verificando retorno do Google... (Aguarde)', { duration: 2000 });
 
-    // Actually, getting redirect result requires blocking.
-    // Let's try only if we don't have a user.
     const firebaseModule = await import('./firebase-config.js');
     await firebaseModule.initFirebase();
 
-    // Check result
+    // Explicitly check redirect result
     const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
 
     if (firebaseUser) {
-      // DEV: console.log('[Auth] Restored session via redirect:', firebaseUser.email);
+      toast.success(`Login recuperado: ${firebaseUser.email}`);
 
-      // Same logic as login handler
+      // Force close ALL modals
+      document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+      modal.activeModal = null;
+      document.body.style.overflow = '';
+
       let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
       if (users.length === 0) {
         const userId = await db.add(STORES.users, {
@@ -2536,10 +2534,13 @@ async function checkRedirectLogin() {
       updateUserUI();
       router.navigate('dashboard');
       toast.success(`Bem-vindo de volta, ${state.user.name}!`);
+    } else {
+      // DEV: debug
+      // console.log('Nenhum redirecionamento encontrado');
     }
   } catch (error) {
-    // If it's just 'no redirect result', ignore.
-    // console.log('No redirect result');
+    console.error('Redirect check error:', error);
+    toast.error(`Erro no retorno do login: ${error.message}`);
   }
 }
 
