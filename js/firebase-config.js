@@ -133,11 +133,13 @@ const firebaseAuth = {
 
     // Sign in with Google (Popup with Redirect Fallback)
     async signInWithGoogle() {
-        // 1. Prefer Redirect on known mobile devices
+        // 1. Prefer Redirect on known mobile devices - DISABLED (Testing Popup first)
+        /*
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             await signInWithRedirect(auth, googleProvider);
             return null;
         }
+        */
 
         // 2. Try Popup on Desktop/Other
         try {
