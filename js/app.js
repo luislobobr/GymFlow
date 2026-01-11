@@ -336,38 +336,53 @@ function showUserMenu() {
   });
 }
 
+
 /**
  * Logout user
  */
 async function logout() {
+  const btn = document.querySelector('#logout-btn');
+  if (btn) {
+    btn.innerHTML = '⏳ Saindo...';
+    btn.disabled = true;
+  }
+
   try {
     const oldUserId = state.user?.id;
     // DEV: console.log('[Auth] Logging out user:', oldUserId);
 
+    // 1. Clear Local State IMMEDIATELY
     state.user = null;
     await db.setSetting('currentUserId', null);
-
-    // Clear localStorage as failsafe
     localStorage.removeItem('user_session');
 
-    // Try to sign out from Firebase if logged in with Google
+    // 2. Try Remote Logout (with timeout)
     try {
       const firebaseModule = await import('./firebase-config.js');
-      // Ensure firebase is init before signing out
-      await firebaseModule.initFirebase();
-      if (firebaseModule.firebaseAuth) {
-        await firebaseModule.firebaseAuth.signOut();
-        // DEV: console.log('[Auth] Firebase signOut success');
-      }
+
+      // Create a timeout promise (2 seconds max)
+      const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000));
+
+      // Race between init+signOut and timeout
+      await Promise.race([
+        (async () => {
+          await firebaseModule.initFirebase();
+          if (firebaseModule.firebaseAuth) {
+            await firebaseModule.firebaseAuth.signOut();
+          }
+        })(),
+        timeout
+      ]);
+
     } catch (e) {
-      console.warn('[Auth] Firebase signOut error (ignoring):', e);
+      console.warn('[Auth] Remote logout skipped/timed out:', e);
     }
 
-    updateUserUI();
     toast.success('Você saiu da conta. Até logo!');
 
-    // Force reload to clean state
-    setTimeout(() => window.location.reload(), 500);
+    // 3. Reload
+    setTimeout(() => window.location.reload(), 200);
+
   } catch (err) {
     console.error('[Auth] Logout failed:', err);
     // Force reload anyway
