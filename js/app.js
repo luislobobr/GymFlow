@@ -2535,29 +2535,23 @@ document.addEventListener('DOMContentLoaded', init);
  * Check for pending redirect login results
  */
 async function checkRedirectLogin() {
-  if (state.user) return; // Already logged in
+  if (state.user) return;
 
   try {
-    // Check if we just came back from a redirect attempt (heuristic)
-    // We can't know for sure unless we track it, but let's check result anyway.
-
-    // DEV: Use alert for visible mobile debugging
-    // alert('Debug: Iniciando verificação de redirect...');
-
     const firebaseModule = await import('./firebase-config.js');
     await firebaseModule.initFirebase();
 
     const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
 
     if (firebaseUser) {
-      // alert('Debug: Redirect SUCESSO! User: ' + firebaseUser.email);
-      toast.success(`Login recuperado: ${firebaseUser.email}`);
+      // Limpar URL de parâmetros do redirect
+      window.history.replaceState(
+        null,
+        '',
+        window.location.pathname + window.location.hash
+      );
 
-      // Force close ALL modals
-      document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
-      modal.activeModal = null;
-      document.body.style.overflow = '';
-
+      // Buscar/criar usuário local
       let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
       if (users.length === 0) {
         const userId = await db.add(STORES.users, {
@@ -2573,24 +2567,16 @@ async function checkRedirectLogin() {
         state.user = users[0];
       }
 
-      await db.setSetting('currentUserId', state.user.id);
-
-      try {
-        await db.enableCloud();
-        db.syncToCloud();
-      } catch (e) { console.warn('Sync init error:', e); }
-
-      updateUserUI();
-      router.navigate('dashboard');
-      toast.success(`Bem-vindo de volta, ${state.user.name}!`);
-    } else {
-      // Only alert if we suspect a redirect happened but failed?
-      // No, let's look at console/toast.
-      // toast.info('Nenhum login por redirect detectado.');
+      // Usar função centralizada
+      await handleSuccessfulLogin(state.user);
     }
+
   } catch (error) {
-    alert('Debug: ERRO no Redirect: ' + error.message);
-    toast.error(`Erro no retorno do login: ${error.message}`);
+    console.error('[Auth] Redirect check error:', error);
+    // Não mostrar toast a menos que seja erro real do Firebase
+    if (error.code && error.code !== 'auth/popup-closed-by-user') {
+      toast.error(`Erro no login: ${error.message}`);
+    }
   }
 }
 
