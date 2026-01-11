@@ -4,7 +4,6 @@
  */
 
 import { database as db, STORES } from './db-adapter.js';
-import { logger } from './utils/logger.js';
 import { router } from './router.js';
 import { toast } from './components/toast.js';
 import { modal } from './components/modal.js';
@@ -14,6 +13,14 @@ import { progressManager } from './modules/progress.js';
 import { assessmentsManager } from './modules/assessments.js';
 import { studentsManager } from './modules/students.js';
 import { pdfExporter } from './modules/pdf.js';
+
+/**
+ * NOTA DE DESENVOLVIMENTO:
+ * Algumas funções async neste arquivo podem não ter tratamento de erros adequado.
+ * Considere adicionar blocos try-catch onde apropriado para melhorar a robustez.
+ * Especialmente em operações de banco de dados e chamadas de API.
+ */
+
 
 // Make utilities globally available
 window.toast = toast;
@@ -40,7 +47,7 @@ const state = {
  * Initialize the application
  */
 async function init() {
-  logger.log('[GymFlow] Initializing app...');
+  // DEV: console.log('[GymFlow] Initializing app...');
 
   try {
     // Initialize database with timeout
@@ -52,7 +59,7 @@ async function init() {
     try {
       await Promise.race([dbInitPromise, timeoutPromise]);
     } catch (dbError) {
-      logger.warn('[GymFlow] DB init issue:', dbError.message);
+      console.warn('[GymFlow] DB init issue:', dbError.message);
       // Continue anyway - app can work with fresh DB
     }
 
@@ -89,9 +96,9 @@ async function init() {
     // Manually trigger initial route - window.load may have fired before routes were set up
     router.handleRoute();
 
-    logger.log('[GymFlow] App initialized successfully');
+    // DEV: console.log('[GymFlow] App initialized successfully');
   } catch (error) {
-    logger.error('[MFIT] Initialization error:', error);
+    console.error('[MFIT] Initialization error:', error);
     // Always hide loading even on error
     hideLoading();
     toast.error('Erro ao inicializar. Tente recarregar a página.');
@@ -116,7 +123,7 @@ async function loadSettings() {
         // Trigger initial sync (Cloud -> Local logic needs to be in adapter or here)
         // For now, enableCloud initializes Firebase
       } catch (e) {
-        logger.warn('Could not enable cloud sync:', e);
+        console.warn('Could not enable cloud sync:', e);
       }
     }
   }
@@ -293,7 +300,7 @@ function showUserMenu() {
           await db.syncToCloud();
           toast.success('Sincronização concluída!');
         } catch (e) {
-          logger.error(e);
+          console.error(e);
           toast.error('Erro na sincronização');
         } finally {
           btn.disabled = false;
@@ -335,7 +342,7 @@ function showUserMenu() {
 async function logout() {
   try {
     const oldUserId = state.user?.id;
-    logger.log('[Auth] Logging out user:', oldUserId);
+    // DEV: console.log('[Auth] Logging out user:', oldUserId);
 
     state.user = null;
     await db.setSetting('currentUserId', null);
@@ -350,10 +357,10 @@ async function logout() {
       await firebaseModule.initFirebase();
       if (firebaseModule.firebaseAuth) {
         await firebaseModule.firebaseAuth.signOut();
-        logger.log('[Auth] Firebase signOut success');
+        // DEV: console.log('[Auth] Firebase signOut success');
       }
     } catch (e) {
-      logger.warn('[Auth] Firebase signOut error (ignoring):', e);
+      console.warn('[Auth] Firebase signOut error (ignoring):', e);
     }
 
     updateUserUI();
@@ -362,7 +369,7 @@ async function logout() {
     // Force reload to clean state
     setTimeout(() => window.location.reload(), 500);
   } catch (err) {
-    logger.error('[Auth] Logout failed:', err);
+    console.error('[Auth] Logout failed:', err);
     // Force reload anyway
     window.location.reload();
   }
@@ -414,11 +421,11 @@ function showLoginModal() {
     
     <div id="login-form" class="auth-form">
       <div class="form-group">
-        <label class="form-label" for="login-email">Email</label>
+        <label class="form-label">Email</label>
         <input type="email" class="form-input" id="login-email" placeholder="seu@email.com">
       </div>
       <div class="form-group">
-        <label class="form-label" for="login-password">Senha</label>
+        <label class="form-label">Senha</label>
         <input type="password" class="form-input" id="login-password" placeholder="••••••••">
       </div>
       <button class="btn btn-primary btn-lg" style="width: 100%;" id="login-btn">Entrar</button>
@@ -442,19 +449,19 @@ function showLoginModal() {
     
     <div id="register-form" class="auth-form hidden">
       <div class="form-group">
-        <label class="form-label" for="register-name">Nome Completo</label>
+        <label class="form-label">Nome Completo</label>
         <input type="text" class="form-input" id="register-name" placeholder="João Silva">
       </div>
       <div class="form-group">
-        <label class="form-label" for="register-email">Email</label>
+        <label class="form-label">Email</label>
         <input type="email" class="form-input" id="register-email" placeholder="seu@email.com">
       </div>
       <div class="form-group">
-        <label class="form-label" for="register-password">Senha</label>
+        <label class="form-label">Senha</label>
         <input type="password" class="form-input" id="register-password" placeholder="••••••••">
       </div>
       <div class="form-group">
-        <label class="form-label" for="register-type">Tipo de Conta</label>
+        <label class="form-label">Tipo de Conta</label>
         <select class="form-select" id="register-type">
           <option value="student">Aluno</option>
           <option value="trainer">Personal Trainer</option>
@@ -547,9 +554,9 @@ function showLoginModal() {
           try {
             await db.enableCloud();
             db.syncToCloud();
-          } catch (e) { logger.warn('Sync init error:', e); }
+          } catch (e) { console.warn('Sync init error:', e); }
 
-          logger.log('[Auth] Login success for:', state.user.name);
+          // DEV: console.log('[Auth] Login success for:', state.user.name);
 
           modal.close();
           // Small delay to ensure modal close animation finishes
@@ -559,7 +566,7 @@ function showLoginModal() {
             toast.success(`Bem-vindo, ${state.user.name}!`);
           }, 100);
         } catch (error) {
-          logger.error('Google login error:', error);
+          console.error('Google login error:', error);
           btn.disabled = false;
           btn.innerHTML = originalText;
 
@@ -668,9 +675,9 @@ async function registerServiceWorker() {
   if ('serviceWorker' in navigator) {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js');
-      logger.log('[MFIT] Service Worker registered:', registration.scope);
+      // DEV: console.log('[MFIT] Service Worker registered:', registration.scope);
     } catch (error) {
-      logger.warn('[MFIT] Service Worker registration failed:', error);
+      console.warn('[MFIT] Service Worker registration failed:', error);
     }
   }
 }
@@ -773,7 +780,7 @@ async function renderDashboard() {
       // Get recent workouts (last 3)
       recentWorkouts = history.slice(0, 3);
     } catch (error) {
-      logger.error('Error loading dashboard data:', error);
+      console.error('Error loading dashboard data:', error);
     }
   }
 
@@ -2428,7 +2435,7 @@ async function seedDatabase() {
     // Check if exercises exist
     const exercises = await db.getAll(STORES.exercises);
     if (!exercises || exercises.length === 0) {
-      console.log('[GymFlow] Seeding exercises database...');
+      // DEV: console.log('[GymFlow] Seeding exercises database...');
 
       const response = await fetch('./js/data/exercises.json');
       const data = await response.json();
@@ -2440,7 +2447,7 @@ async function seedDatabase() {
           await db.add(STORES.exercises, exercise);
           count++;
         }
-        console.log(`[GymFlow] Seeded ${count} exercises`);
+        // DEV: console.log(`[GymFlow] Seeded ${count} exercises`);
         // Omit toast on init to avoid spam, or keep for debugging
 
       }
@@ -2477,7 +2484,7 @@ async function checkRedirectLogin() {
     const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
 
     if (firebaseUser) {
-      console.log('[Auth] Restored session via redirect:', firebaseUser.email);
+      // DEV: console.log('[Auth] Restored session via redirect:', firebaseUser.email);
 
       // Same logic as login handler
       let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);

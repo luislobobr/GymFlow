@@ -77,7 +77,7 @@ async function initFirebase() {
         // Enable offline persistence
         try {
             await enableIndexedDbPersistence(db);
-            console.log('✅ Offline persistence enabled');
+            // DEV: console.log('✅ Offline persistence enabled');
         } catch (err) {
             if (err.code === 'failed-precondition') {
                 console.warn('Multiple tabs open, persistence enabled in first tab only');
@@ -86,7 +86,7 @@ async function initFirebase() {
             }
         }
 
-        console.log('✅ Firebase initialized');
+        // DEV: console.log('✅ Firebase initialized');
         return true;
     } catch (error) {
         console.error('❌ Firebase initialization error:', error);
@@ -223,7 +223,7 @@ const firebaseDB = {
 
     // Get documents by index (field value)
     async getByIndex(collectionName, field, value) {
-        const q = query(collection(db, collectionName), where(field, '==', value));
+        const q = query(collection(db, collectionName), where(field, '===', value));
         const querySnapshot = await getDocs(q);
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     },
@@ -273,7 +273,7 @@ const firebaseDB = {
 
     // Subscribe to real-time updates
     subscribe(collectionName, field, value, callback) {
-        const q = query(collection(db, collectionName), where(field, '==', value));
+        const q = query(collection(db, collectionName), where(field, '===', value));
         return onSnapshot(q, (snapshot) => {
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             callback(data);

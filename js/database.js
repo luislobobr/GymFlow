@@ -38,13 +38,13 @@ class Database {
             request.onsuccess = () => {
                 this.db = request.result;
                 this.isReady = true;
-                console.log('[DB] Database opened successfully');
+                // DEV: console.log('[DB] Database opened successfully');
                 resolve(this.db);
             };
 
             request.onupgradeneeded = (event) => {
                 const db = event.target.result;
-                console.log('[DB] Upgrading database...');
+                // DEV: console.log('[DB] Upgrading database...');
 
                 // Users store
                 if (!db.objectStoreNames.contains(STORES.users)) {
@@ -100,7 +100,7 @@ class Database {
                     db.createObjectStore(STORES.settings, { keyPath: 'key' });
                 }
 
-                console.log('[DB] Database upgrade complete');
+                // DEV: console.log('[DB] Database upgrade complete');
             };
         });
     }
