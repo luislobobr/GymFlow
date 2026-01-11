@@ -1,5 +1,5 @@
 // MFIT Personal - Service Worker
-const CACHE_NAME = 'mfit-personal-v2';
+const CACHE_NAME = 'mfit-personal-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -10,7 +10,8 @@ const ASSETS_TO_CACHE = [
   '/js/firebase-config.js',
   '/js/router.js',
   '/js/data/exercises.json',
-  '/manifest.json'
+  '/manifest.json',
+  '/.well-known/assetlinks.json'
 ];
 
 // Install event - cache assets

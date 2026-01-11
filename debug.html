@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow Debug TWA</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #111;
+            color: #0f0;
+            padding: 20px;
+        }
+
+        button {
+            padding: 15px;
+            width: 100%;
+            margin: 10px 0;
+            font-size: 16px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        .danger {
+            background: #900;
+        }
+
+        #log {
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-top: 20px;
+            min-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🛠️ Ferramentas de Debug</h1>
+
+    <button class="danger" onclick="hardReset()">⚠️ RESETAR TUDO (Desinstalar/Limpar)</button>
+    <button onclick="checkEnv()">Checar Ambiente</button>
+    <button onclick="location.href='/'">Voltar para o App</button>
+
+    <div id="log">Logs aparecerão aqui...</div>
+
+    <script type="module">
+        import { db, STORES } from './js/database.js';
+
+        const logEl = document.getElementById('log');
+        function log(msg) {
+            logEl.innerText += `\n[${new Date().toLocaleTimeString()}] ${msg}`;
+            console.log(msg);
+        }
+
+        window.checkEnv = async () => {
+            log('User Agent: ' + navigator.userAgent);
+            log('PWA/TWA detectado? ' + (window.matchMedia('(display-mode: standalone)').matches ? 'SIM' : 'NÃO'));
+
+            if ('serviceWorker' in navigator) {
+                const regs = await navigator.serviceWorker.getRegistrations();
+                log(`Service Workers Ativos: ${regs.length}`);
+                regs.forEach(r => log(` - Scope: ${r.scope}`));
+            } else {
+                log('Service Worker não suportado');
+            }
+        }
+
+        window.hardReset = async () => {
+            if (!confirm('Isso vai apagar todos os dados locais e deslogar. Tem certeza?')) return;
+
+            log('Iniciando limpeza...');
+
+            // 1. Unregister SW
+            if ('serviceWorker' in navigator) {
+                const regs = await navigator.serviceWorker.getRegistrations();
+                for (let registration of regs) {
+                    await registration.unregister();
+                    log('Service Worker removido');
+                }
+            }
+
+            // 2. Clear Caches
+            const cacheKeys = await caches.keys();
+            for (let name of cacheKeys) {
+                await caches.delete(name);
+                log(`Cache ${name} deletado`);
+            }
+
+            // 3. Clear LocalStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            log('Storage limpo');
+
+            // 4. Clear IndexedDB
+            const req = indexedDB.deleteDatabase('GymFlowDB');
+            req.onsuccess = () => log('Banco de dados deletado');
+            req.onerror = () => log('Erro ao deletar banco');
+            req.onblocked = () => log('Banco bloqueado (feche e reabra)');
+
+            log('✅ LIMPEZA COMPLETA. Recarregando em 3s...');
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
