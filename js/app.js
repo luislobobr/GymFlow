@@ -113,19 +113,86 @@ async function loadSettings() {
   setTheme(theme);
 
   const userId = await db.getSetting('currentUserId');
+  // DEV: console.log('[Auth] Loaded currentUserId:', userId);
+
   if (userId) {
+    // Basic validation to avoid restoring "null" string or invalid ID
+    if (userId === 'null' || userId === null) {
+      console.warn('[Auth] Invalid userId found, clearing.');
+      await db.setSetting('currentUserId', null);
+      return;
+    }
+
     state.user = await db.get(STORES.users, userId);
 
     // If user is logged in, enable cloud sync
     if (state.user) {
+      // alert('Debug: Restaurou user ' + state.user.name);
       try {
         await db.enableCloud();
-        // Trigger initial sync (Cloud -> Local logic needs to be in adapter or here)
-        // For now, enableCloud initializes Firebase
       } catch (e) {
         console.warn('Could not enable cloud sync:', e);
       }
+    } else {
+      // User ID exists but user not found? Clean up.
+      console.warn('[Auth] User ID exists but User not found. Clearing.');
+      await db.setSetting('currentUserId', null);
     }
+  }
+}
+
+// ... 
+
+/**
+ * Logout user
+ */
+async function logout() {
+  const btn = document.querySelector('#logout-btn');
+  if (btn) {
+    btn.innerHTML = '⏳ Saindo...';
+    btn.disabled = true;
+  }
+
+  try {
+    const oldUserId = state.user?.id;
+
+    // 1. Clear Local State IMMEDIATELY AND AGGRESSIVELY
+    state.user = null;
+
+    // Explicitly DELETE the setting, don't just set to null
+    // Assuming db.setSetting(key, null) works, but let's be safe
+    await db.setSetting('currentUserId', null);
+
+    localStorage.removeItem('user_session');
+
+    // 2. Try Remote Logout (with timeout)
+    try {
+      const firebaseModule = await import('./firebase-config.js');
+
+      const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000));
+
+      await Promise.race([
+        (async () => {
+          await firebaseModule.initFirebase();
+          if (firebaseModule.firebaseAuth) {
+            await firebaseModule.firebaseAuth.signOut();
+          }
+        })(),
+        timeout
+      ]);
+
+    } catch (e) {
+      console.warn('[Auth] Remote logout skipped:', e);
+    }
+
+    toast.success('Você saiu da conta. Até logo!');
+
+    // 3. Reload
+    setTimeout(() => window.location.reload(), 200);
+
+  } catch (err) {
+    console.error('[Auth] Logout failed:', err);
+    window.location.reload();
   }
 }
 
