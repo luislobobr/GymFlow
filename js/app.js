@@ -2489,20 +2489,22 @@ document.addEventListener('DOMContentLoaded', init);
  * Check for pending redirect login results
  */
 async function checkRedirectLogin() {
-  // Only check if not logged in
-  if (state.user) return;
+  if (state.user) return; // Already logged in
 
   try {
-    // DEV: Force usage of checking
-    // toast.info('Verificando retorno do Google... (Aguarde)', { duration: 2000 });
+    // Check if we just came back from a redirect attempt (heuristic)
+    // We can't know for sure unless we track it, but let's check result anyway.
+
+    // DEV: Use alert for visible mobile debugging
+    // alert('Debug: Iniciando verificação de redirect...');
 
     const firebaseModule = await import('./firebase-config.js');
     await firebaseModule.initFirebase();
 
-    // Explicitly check redirect result
     const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
 
     if (firebaseUser) {
+      // alert('Debug: Redirect SUCESSO! User: ' + firebaseUser.email);
       toast.success(`Login recuperado: ${firebaseUser.email}`);
 
       // Force close ALL modals
@@ -2536,11 +2538,12 @@ async function checkRedirectLogin() {
       router.navigate('dashboard');
       toast.success(`Bem-vindo de volta, ${state.user.name}!`);
     } else {
-      // DEV: debug
-      // console.log('Nenhum redirecionamento encontrado');
+      // Only alert if we suspect a redirect happened but failed?
+      // No, let's look at console/toast.
+      // toast.info('Nenhum login por redirect detectado.');
     }
   } catch (error) {
-    console.error('Redirect check error:', error);
+    alert('Debug: ERRO no Redirect: ' + error.message);
     toast.error(`Erro no retorno do login: ${error.message}`);
   }
 }
