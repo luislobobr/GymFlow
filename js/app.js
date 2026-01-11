@@ -440,6 +440,37 @@ function setTheme(theme) {
 }
 
 /**
+ * Handle successful login centralized logic
+ */
+async function handleSuccessfulLogin(user) {
+  // 1. Force close ALL modals synchronously
+  document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+  modal.activeModal = null;
+  document.body.style.overflow = '';
+
+  // 2. Save local state IMMEDIATELY
+  state.user = user;
+  await db.setSetting('currentUserId', user.id);
+
+  // 3. Try enable cloud (fire and forget)
+  try {
+    await db.enableCloud();
+    db.syncToCloud();
+  } catch (e) {
+    console.warn('Cloud sync deferred:', e);
+  }
+
+  // 4. Update UI synchronously
+  updateUserUI();
+
+  // 5. Navigate
+  router.navigate('dashboard');
+
+  // 6. Feedback
+  toast.success(`Bem-vindo, ${user.name}!`);
+}
+
+/**
  * Show login/register modal
  */
 function showLoginModal() {
