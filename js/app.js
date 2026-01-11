@@ -460,6 +460,7 @@ function showLoginModal() {
         </svg>
         Entrar com Google
       </button>
+      <div style="text-align: center; margin-top: 10px; font-size: 10px; color: #555;">v5.0 Check</div>
     </div>
     
     <div id="register-form" class="auth-form hidden">
