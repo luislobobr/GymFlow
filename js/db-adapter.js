@@ -5,6 +5,7 @@
 
 // Import both databases
 import { db as localDB, STORES } from './database.js';
+import { logger } from './utils/logger.js';
 
 // Firebase will be imported dynamically when enabled
 let firebaseModule = null;
@@ -35,11 +36,12 @@ async function initDatabase() {
             const success = await firebaseModule.initFirebase();
             if (success) {
                 dbConfig.isFirebaseReady = true;
+                dbConfig.isFirebaseReady = true;
                 useFirebase = true;
-                console.log('✅ Cloud database enabled');
+                logger.log('✅ Cloud database enabled');
             }
         } catch (error) {
-            console.warn('⚠️ Firebase not available, using local database only');
+            logger.warn('⚠️ Firebase not available, using local database only');
             useFirebase = false;
         }
     }
@@ -176,7 +178,7 @@ const database = {
      */
     async syncToCloud() {
         if (!useFirebase || !firebaseModule) {
-            console.warn('Cloud sync not available');
+            logger.warn('Cloud sync not available');
             return false;
         }
 
@@ -194,11 +196,11 @@ const database = {
                     }
                 }
             } catch (error) {
-                console.error(`Error syncing ${store}:`, error);
+                logger.error(`Error syncing ${store}:`, error);
             }
         }
 
-        console.log('✅ Sync complete');
+        logger.log('✅ Sync complete');
         return true;
     }
 };

@@ -7,7 +7,8 @@
     "scripts": {
         "start": "http-server -p 3000 -c-1",
         "dev": "http-server -p 3000 -c-1 -o",
-        "build": "echo 'No build required - static site'"
+        "build": "echo 'No build required - static site'",
+        "test": "vitest"
     },
     "keywords": [
         "fitness",
@@ -16,5 +17,11 @@
         "gym"
     ],
     "author": "GymFlow",
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+        "@testing-library/dom": "^9.3.4",
+        "@testing-library/user-event": "^14.5.2",
+        "jsdom": "^24.0.0",
+        "vitest": "^1.2.1"
+    }
 }

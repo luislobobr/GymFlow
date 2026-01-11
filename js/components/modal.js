@@ -42,6 +42,9 @@ class Modal {
         const overlay = document.createElement('div');
         overlay.className = 'modal-overlay';
         overlay.dataset.closable = closable;
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-labelledby', 'modal-title');
 
         // Size classes
         const sizeClass = {
@@ -54,9 +57,9 @@ class Modal {
 
         // Create modal
         overlay.innerHTML = `
-      <div class="modal" style="${sizeClass[size] || sizeClass.md}">
+       <div class="modal" style="${sizeClass[size] || sizeClass.md}">
         <div class="modal-header">
-          <h3 class="modal-title">${title}</h3>
+          <h3 class="modal-title" id="modal-title">${title}</h3>
           ${closable ? `
             <button class="modal-close" aria-label="Fechar">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

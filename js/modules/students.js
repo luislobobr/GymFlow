@@ -4,128 +4,174 @@
  */
 
 import { db, STORES } from '../database.js';
+import { logger } from '../utils/logger.js';
 
 class StudentsManager {
-    constructor() {
-        this.statusColors = {
-            active: 'var(--accent-success)',
-            inactive: 'var(--accent-muted)',
-            pending: 'var(--accent-warning)'
-        };
+  constructor() {
+    this.statusColors = {
+      active: 'var(--accent-success)',
+      inactive: 'var(--accent-muted)',
+      pending: 'var(--accent-warning)'
+    };
+  }
+
+  /**
+   * Add a new student
+   */
+  async addStudent(trainerId, studentData) {
+    try {
+      return await db.add(STORES.students, {
+        trainerId,
+        status: 'active',
+        ...studentData,
+        createdAt: new Date().toISOString()
+      });
+    } catch (error) {
+      logger.error('Error adding student:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Add a new student
-     */
-    async addStudent(trainerId, studentData) {
-        return db.add(STORES.students, {
-            trainerId,
-            status: 'active',
-            ...studentData,
-            createdAt: new Date().toISOString()
-        });
+  /**
+   * Get all students for a trainer
+   */
+  async getStudents(trainerId) {
+    try {
+      const students = await db.getByIndex(STORES.students, 'trainerId', trainerId);
+      return students.sort((a, b) => a.name.localeCompare(b.name));
+    } catch (error) {
+      logger.error('Error getting students:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Get all students for a trainer
-     */
-    async getStudents(trainerId) {
-        const students = await db.getByIndex(STORES.students, 'trainerId', trainerId);
-        return students.sort((a, b) => a.name.localeCompare(b.name));
+  /**
+   * Get a single student
+   */
+  async getStudent(id) {
+    try {
+      return await db.get(STORES.students, id);
+    } catch (error) {
+      logger.error('Error getting student:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Get a single student
-     */
-    async getStudent(id) {
-        return db.get(STORES.students, id);
+  /**
+   * Update student data
+   */
+  async updateStudent(student) {
+    try {
+      return await db.update(STORES.students, student);
+    } catch (error) {
+      logger.error('Error updating student:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Update student data
-     */
-    async updateStudent(student) {
-        return db.update(STORES.students, student);
+  /**
+   * Delete student
+   */
+  async deleteStudent(id) {
+    try {
+      return await db.delete(STORES.students, id);
+    } catch (error) {
+      logger.error('Error deleting student:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Delete student
-     */
-    async deleteStudent(id) {
-        return db.delete(STORES.students, id);
+  /**
+   * Get student count
+   */
+  async getStudentCount(trainerId) {
+    try {
+      const students = await this.getStudents(trainerId);
+      return {
+        total: students.length,
+        active: students.filter(s => s.status === 'active').length,
+        inactive: students.filter(s => s.status === 'inactive').length
+      };
+    } catch (error) {
+      logger.error('Error counting students:', error);
+      return { total: 0, active: 0, inactive: 0 };
     }
+  }
 
-    /**
-     * Get student count
-     */
-    async getStudentCount(trainerId) {
-        const students = await this.getStudents(trainerId);
-        return {
-            total: students.length,
-            active: students.filter(s => s.status === 'active').length,
-            inactive: students.filter(s => s.status === 'inactive').length
-        };
-    }
+  /**
+   * Assign workout to student
+   */
+  async assignWorkout(studentId, workoutId) {
+    try {
+      const student = await this.getStudent(studentId);
+      if (!student) return null;
 
-    /**
-     * Assign workout to student
-     */
-    async assignWorkout(studentId, workoutId) {
-        const student = await this.getStudent(studentId);
-        if (!student) return null;
-
-        const assignedWorkouts = student.assignedWorkouts || [];
-        if (!assignedWorkouts.includes(workoutId)) {
-            assignedWorkouts.push(workoutId);
-            student.assignedWorkouts = assignedWorkouts;
-            await this.updateStudent(student);
-        }
-        return student;
-    }
-
-    /**
-     * Remove workout from student
-     */
-    async removeWorkout(studentId, workoutId) {
-        const student = await this.getStudent(studentId);
-        if (!student) return null;
-
-        student.assignedWorkouts = (student.assignedWorkouts || []).filter(id => id !== workoutId);
+      const assignedWorkouts = student.assignedWorkouts || [];
+      if (!assignedWorkouts.includes(workoutId)) {
+        assignedWorkouts.push(workoutId);
+        student.assignedWorkouts = assignedWorkouts;
         await this.updateStudent(student);
-        return student;
+      }
+      return student;
+    } catch (error) {
+      logger.error('Error assigning workout:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Get student's assigned workouts
-     */
-    async getStudentWorkouts(studentId) {
-        const student = await this.getStudent(studentId);
-        if (!student || !student.assignedWorkouts) return [];
+  /**
+   * Remove workout from student
+   */
+  async removeWorkout(studentId, workoutId) {
+    try {
+      const student = await this.getStudent(studentId);
+      if (!student) return null;
 
-        const workouts = [];
-        for (const workoutId of student.assignedWorkouts) {
-            const workout = await db.get(STORES.workouts, workoutId);
-            if (workout) workouts.push(workout);
-        }
-        return workouts;
+      student.assignedWorkouts = (student.assignedWorkouts || []).filter(id => id !== workoutId);
+      await this.updateStudent(student);
+      return student;
+    } catch (error) {
+      logger.error('Error removing workout:', error);
+      throw error;
     }
+  }
 
-    /**
-     * Generate invite code
-     */
-    generateInviteCode() {
-        return Math.random().toString(36).substring(2, 8).toUpperCase();
+  /**
+   * Get student's assigned workouts
+   */
+  async getStudentWorkouts(studentId) {
+    try {
+      const student = await this.getStudent(studentId);
+      if (!student || !student.assignedWorkouts) return [];
+
+      const workouts = [];
+      for (const workoutId of student.assignedWorkouts) {
+        const workout = await db.get(STORES.workouts, workoutId);
+        if (workout) workouts.push(workout);
+      }
+      return workouts;
+    } catch (error) {
+      logger.error('Error getting student workouts:', error);
+      return [];
     }
+  }
 
-    /**
-     * Render student card
-     */
-    renderStudentCard(student) {
-        const statusColor = this.statusColors[student.status] || this.statusColors.inactive;
-        const initials = student.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-        const workoutCount = student.assignedWorkouts?.length || 0;
+  /**
+   * Generate invite code
+   */
+  generateInviteCode() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+  }
 
-        return `
+  /**
+   * Render student card
+   */
+  renderStudentCard(student) {
+    const statusColor = this.statusColors[student.status] || this.statusColors.inactive;
+    const initials = student.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    const workoutCount = student.assignedWorkouts?.length || 0;
+
+    return `
       <div class="card student-card" data-student-id="${student.id}" style="cursor: pointer;">
         <div style="display: flex; gap: var(--spacing-md); align-items: center;">
           <div style="
@@ -180,13 +226,13 @@ class StudentsManager {
         ` : ''}
       </div>
     `;
-    }
+  }
 
-    /**
-     * Render student form
-     */
-    renderStudentForm(student = null) {
-        return `
+  /**
+   * Render student form
+   */
+  renderStudentForm(student = null) {
+    return `
       <form id="student-form">
         <div class="form-group">
           <label class="form-label">Nome Completo *</label>
@@ -242,15 +288,15 @@ class StudentsManager {
         ` : ''}
       </form>
     `;
-    }
+  }
 
-    /**
-     * Render student detail view
-     */
-    renderStudentDetail(student, workouts = []) {
-        const initials = student.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+  /**
+   * Render student detail view
+   */
+  renderStudentDetail(student, workouts = []) {
+    const initials = student.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 
-        return `
+    return `
       <div style="text-align: center; margin-bottom: var(--spacing-xl);">
         <div style="
           width: 80px;
@@ -324,13 +370,13 @@ class StudentsManager {
         </button>
       </div>
     `;
-    }
+  }
 
-    /**
-     * Render stats dashboard for trainers
-     */
-    renderTrainerStats(counts) {
-        return `
+  /**
+   * Render stats dashboard for trainers
+   */
+  renderTrainerStats(counts) {
+    return `
       <div class="grid grid-auto-fit" style="margin-bottom: var(--spacing-xl);">
         <div class="stat-card">
           <div class="stat-icon">
@@ -369,7 +415,7 @@ class StudentsManager {
         </div>
       </div>
     `;
-    }
+  }
 }
 
 // Export singleton

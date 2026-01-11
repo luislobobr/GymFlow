@@ -14,7 +14,7 @@
 
   /* Accent Colors - GymFlow Emerald Theme */
   --accent-primary: #10b981;
-  --accent-primary-light: #34d399;
+  --accent-primary-light: #059669; /* Darkened for better contrast on white */
   --accent-primary-dark: #059669;
   --accent-secondary: #06b6d4;
   --accent-success: #22c55e;
@@ -103,6 +103,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
 html {
@@ -302,6 +307,13 @@ a:hover {
 .nav-item span {
   font-size: var(--font-size-sm);
   font-weight: 500;
+}
+
+.nav-item:focus-visible {
+  background: var(--bg-glass);
+  color: var(--text-primary);
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent-primary);
 }
 
 .nav-badge {

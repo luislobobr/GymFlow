@@ -7,6 +7,7 @@ import { db, STORES } from '../database.js';
 import { timer } from './timer.js';
 import { modal } from '../components/modal.js';
 import { toast } from '../components/toast.js';
+import { logger } from '../utils/logger.js';
 
 // Default workout templates
 const WORKOUT_TEMPLATES = [
@@ -65,49 +66,79 @@ class WorkoutsManager {
    * Get all workouts for current user
    */
   async getWorkouts(userId) {
-    return db.getByIndex(STORES.workouts, 'userId', userId);
+    try {
+      return await db.getByIndex(STORES.workouts, 'userId', userId);
+    } catch (error) {
+      logger.error('Error getting workouts:', error);
+      throw error;
+    }
   }
 
   /**
    * Get workout by ID
    */
   async getWorkout(id) {
-    return db.get(STORES.workouts, id);
+    try {
+      return await db.get(STORES.workouts, id);
+    } catch (error) {
+      logger.error('Error getting workout:', error);
+      throw error;
+    }
   }
 
   /**
    * Create new workout
    */
   async createWorkout(workout) {
-    return db.add(STORES.workouts, {
-      ...workout,
-      createdAt: new Date().toISOString()
-    });
+    try {
+      return await db.add(STORES.workouts, {
+        ...workout,
+        createdAt: new Date().toISOString()
+      });
+    } catch (error) {
+      logger.error('Error creating workout:', error);
+      throw error;
+    }
   }
 
   /**
    * Update workout
    */
   async updateWorkout(workout) {
-    return db.update(STORES.workouts, workout);
+    try {
+      return await db.update(STORES.workouts, workout);
+    } catch (error) {
+      logger.error('Error updating workout:', error);
+      throw error;
+    }
   }
 
   /**
    * Delete workout
    */
   async deleteWorkout(id) {
-    return db.delete(STORES.workouts, id);
+    try {
+      return await db.delete(STORES.workouts, id);
+    } catch (error) {
+      logger.error('Error deleting workout:', error);
+      throw error;
+    }
   }
 
   /**
    * Create workouts from templates for new user
    */
   async createTemplatesForUser(userId) {
-    for (const template of WORKOUT_TEMPLATES) {
-      await this.createWorkout({
-        userId,
-        ...template
-      });
+    try {
+      for (const template of WORKOUT_TEMPLATES) {
+        await this.createWorkout({
+          userId,
+          ...template
+        });
+      }
+    } catch (error) {
+      logger.error('Error creating templates:', error);
+      // Don't throw, partial templates are better than none/crash
     }
   }
 
@@ -229,15 +260,22 @@ class WorkoutsManager {
     );
 
     // Save to history
-    const historyId = await db.add(STORES.history, this.workoutSession);
+    // Save to history
+    try {
+      const historyId = await db.add(STORES.history, this.workoutSession);
 
-    // Clear session
-    const completedSession = { ...this.workoutSession, id: historyId };
-    this.workoutSession = null;
-    this.currentWorkout = null;
-    this.currentExerciseIndex = 0;
+      // Clear session
+      const completedSession = { ...this.workoutSession, id: historyId };
+      this.workoutSession = null;
+      this.currentWorkout = null;
+      this.currentExerciseIndex = 0;
 
-    return completedSession;
+      return completedSession;
+    } catch (error) {
+      logger.error('Error finishing session:', error);
+      toast.error('Erro ao salvar histórico do treino');
+      return null;
+    }
   }
 
   /**
@@ -290,14 +328,14 @@ class WorkoutsManager {
             ~${Math.round(estimatedTime)} min
           </span>
           <div style="display: flex; gap: var(--spacing-sm);">
-            <button class="btn btn-sm btn-secondary edit-workout-btn" data-workout-id="${workout.id}">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="btn btn-sm btn-secondary edit-workout-btn" data-workout-id="${workout.id}" aria-label="Editar treino ${workout.name}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
               </svg>
             </button>
-            <button class="btn btn-sm btn-primary start-workout-btn" data-workout-id="${workout.id}">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="btn btn-sm btn-primary start-workout-btn" data-workout-id="${workout.id}" aria-label="Iniciar treino ${workout.name}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polygon points="5 3 19 12 5 21 5 3"></polygon>
               </svg>
               Iniciar
@@ -373,15 +411,15 @@ class WorkoutsManager {
           <h4 style="margin-bottom: var(--spacing-md);">📝 Registrar Série</h4>
           <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: var(--spacing-md); align-items: end;">
             <div class="form-group" style="margin: 0;">
-              <label class="form-label">Peso (kg)</label>
+              <label class="form-label" for="weight-input">Peso (kg)</label>
               <input type="number" class="form-input" id="weight-input" placeholder="0" step="0.5" min="0">
             </div>
             <div class="form-group" style="margin: 0;">
-              <label class="form-label">Reps</label>
+              <label class="form-label" for="reps-input">Reps</label>
               <input type="number" class="form-input" id="reps-input" placeholder="0" min="0">
             </div>
-            <button class="btn btn-primary log-set-btn" style="height: 48px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="btn btn-primary log-set-btn" style="height: 48px;" aria-label="Registrar série">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </button>
@@ -590,7 +628,7 @@ class WorkoutsManager {
           btn.innerHTML = originalText;
         }
       } catch (error) {
-        console.error(error);
+        logger.error(error);
         toast.error('Erro ao carregar vídeo');
         btn.innerHTML = originalText;
       }
@@ -668,12 +706,12 @@ class WorkoutsManager {
     return `
       <div id="workout-form">
         <div class="form-group">
-          <label class="form-label">Nome do Treino</label>
+          <label class="form-label" for="workout-name">Nome do Treino</label>
           <input type="text" class="form-input" id="workout-name" value="${workout?.name || ''}" placeholder="Ex: Treino A - Push">
         </div>
         
         <div class="form-group">
-          <label class="form-label">Descrição</label>
+          <label class="form-label" for="workout-description">Descrição</label>
           <input type="text" class="form-input" id="workout-description" value="${workout?.description || ''}" placeholder="Ex: Peito, Ombro, Tríceps">
         </div>
         
@@ -681,7 +719,7 @@ class WorkoutsManager {
           <label class="form-label">Cor do Card</label>
           <div style="display: flex; gap: var(--spacing-sm);">
             ${colors.map(c => `
-              <button type="button" class="color-pick" data-color="${c}" style="
+              <button type="button" class="color-pick" data-color="${c}" aria-label="Selecionar cor ${c}" style="
                 width: 40px; height: 40px; border-radius: var(--radius-md);
                 background: ${c}; border: 3px solid ${c === (workout?.color || '#10b981') ? 'white' : 'transparent'};
                 cursor: pointer;
@@ -720,8 +758,8 @@ class WorkoutsManager {
             ${exercise.sets} × ${exercise.reps} | Descanso: ${exercise.rest}s
           </div>
         </div>
-        <button type="button" class="btn btn-ghost btn-sm remove-exercise-btn" data-index="${index}">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button type="button" class="btn btn-ghost btn-sm remove-exercise-btn" data-index="${index}" aria-label="Remover exercício ${exercise.name}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
