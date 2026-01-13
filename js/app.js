@@ -1014,7 +1014,7 @@ async function renderDashboard() {
 
         // Calculate monthly workouts and total time
         history.forEach(entry => {
-          const entryDate = new Date(entry.date);
+          const entryDate = new Date(entry.startTime);
           if (entryDate.getMonth() === thisMonth && entryDate.getFullYear() === thisYear) {
             monthlyWorkouts++;
             totalTime += entry.duration || 0;
@@ -1023,13 +1023,13 @@ async function renderDashboard() {
 
         // Calculate streak (consecutive days)
         if (history.length > 0) {
-          const sortedHistory = [...history].sort((a, b) => new Date(b.date) - new Date(a.date));
+          const sortedHistory = [...history].sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
           const today = new Date();
           today.setHours(0, 0, 0, 0);
 
           let currentDate = today;
           for (const entry of sortedHistory) {
-            const entryDate = new Date(entry.date);
+            const entryDate = new Date(entry.startTime);
             entryDate.setHours(0, 0, 0, 0);
 
             const diffDays = Math.floor((currentDate - entryDate) / (1000 * 60 * 60 * 24));
@@ -1109,7 +1109,7 @@ async function renderDashboard() {
             <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-md); background: var(--bg-tertiary); border-radius: var(--radius-md);">
               <div>
                 <div style="font-weight: 600;">${w.workoutName || 'Treino'}</div>
-                <div style="font-size: var(--font-size-sm); color: var(--text-muted);">${new Date(w.date).toLocaleDateString('pt-BR')}</div>
+                <div style="font-size: var(--font-size-sm); color: var(--text-muted);">${new Date(w.startTime).toLocaleDateString('pt-BR')}</div>
               </div>
               <div style="text-align: right;">
                 <div style="font-weight: 600; color: var(--primary);">${Math.floor((w.duration || 0) / 60)}min</div>
