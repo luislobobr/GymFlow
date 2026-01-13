@@ -13,6 +13,7 @@ import { progressManager } from './modules/progress.js';
 import { assessmentsManager } from './modules/assessments.js';
 import { studentsManager } from './modules/students.js';
 import { pdfExporter } from './modules/pdf.js';
+import { aiWizard } from './modules/ai-wizard.js';
 
 /**
  * NOTA DE DESENVOLVIMENTO:
@@ -1232,13 +1233,18 @@ async function renderWorkouts() {
         <h2>Meus Treinos</h2>
         <p style="color: var(--text-muted);">Gerencie suas rotinas de treino</p>
       </div>
-      <button class="btn btn-primary" id="create-workout-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-        Novo Treino
-      </button>
+      <div style="display: flex; gap: var(--spacing-sm);">
+        <button class="btn btn-secondary" id="create-ai-btn">
+          ✨ Criar com IA
+        </button>
+        <button class="btn btn-primary" id="create-workout-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Novo Treino
+        </button>
+      </div>
     </div>
     
     <div class="tabs">
@@ -1293,6 +1299,14 @@ async function renderWorkouts() {
   if (createBtn) {
     createBtn.addEventListener('click', () => {
       showWorkoutCreator();
+    });
+  }
+
+  // Create AI workout button
+  const createAiBtn = container.querySelector('#create-ai-btn');
+  if (createAiBtn) {
+    createAiBtn.addEventListener('click', () => {
+      showAIWizard();
     });
   }
 
@@ -2875,6 +2889,106 @@ if (document.readyState === 'loading') {
 } else {
   // DOM already ready, call init immediately
   init();
+}
+
+
+/**
+ * Show AI Wizard Modal
+ */
+async function showAIWizard() {
+  const content = await aiWizard.renderWizard();
+  let currentStepIndex = 0;
+  let answers = {};
+
+  const modalOverlay = modal.open({
+    title: '',
+    content,
+    size: 'lg',
+    onOpen: (overlay) => {
+      const container = overlay.querySelector('#wizard-steps');
+
+      const renderStep = () => {
+        const step = aiWizard.steps[currentStepIndex];
+
+        container.innerHTML = `
+          <div class="animate-slide-up">
+            <h3 style="text-align: center; margin-bottom: var(--spacing-xl);">${step.question}</h3>
+            
+            <div class="grid grid-auto-fit" style="gap: var(--spacing-md);">
+              ${step.options.map(opt => `
+                <button class="card wizard-option" data-value="${opt.value}" style="
+                  text-align: left;
+                  transition: transform 0.2s, border-color 0.2s;
+                  cursor: pointer;
+                  border: 2px solid transparent;
+                ">
+                  <div style="font-size: var(--font-size-xl); margin-bottom: var(--spacing-sm); font-weight: 700;">
+                    ${opt.label.split(' ')[0]} ${opt.label.split(' ').slice(1).join(' ')}
+                  </div>
+                  <p style="color: var(--text-muted); font-size: var(--font-size-sm);">${opt.description}</p>
+                </button>
+              `).join('')}
+            </div>
+            
+            <div style="margin-top: var(--spacing-xl); text-align: center; color: var(--text-muted); font-size: var(--font-size-sm);">
+              Passo ${currentStepIndex + 1} de ${aiWizard.steps.length}
+            </div>
+          </div>
+        `;
+
+        // Bind clicks
+        container.querySelectorAll('.wizard-option').forEach(btn => {
+          btn.addEventListener('mouseenter', () => {
+            btn.style.transform = 'translateY(-2px)';
+            btn.style.borderColor = 'var(--accent-primary)';
+          });
+          btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translateY(0)';
+            btn.style.borderColor = 'transparent';
+          });
+
+          btn.addEventListener('click', async () => {
+            const value = btn.dataset.value;
+            answers[step.id] = value;
+
+            if (currentStepIndex < aiWizard.steps.length - 1) {
+              currentStepIndex++;
+              renderStep();
+            } else {
+              // Finish
+              container.innerHTML = `
+                <div style="text-align: center; padding: var(--spacing-xl);">
+                  <div class="loading-spinner"></div>
+                  <p style="margin-top: var(--spacing-lg);">Gerando seu treino personalizado...</p>
+                </div>
+              `;
+
+              try {
+                // Generate
+                const workout = await aiWizard.generateWorkout(answers, state.user.id);
+
+                // Save
+                const workoutId = await workoutsManager.createWorkout(workout);
+
+                modal.close();
+                toast.success('Treino gerado com sucesso! 🤖');
+
+                // Refresh list
+                await renderWorkouts();
+
+              } catch (error) {
+                console.error('AI Gen Error:', error);
+                toast.error('Erro ao gerar treino');
+                modal.close();
+              }
+            }
+          });
+        });
+      };
+
+      renderStep();
+    }
+  });
 }
 
 // ============ GLOBAL ERROR HANDLERS ============
