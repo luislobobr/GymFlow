@@ -51,6 +51,11 @@ async function init() {
   console.log('[Init] Starting...');
 
   try {
+    // Failsafe: hide loading after 10s no matter what
+    const loadingFailsafe = setTimeout(() => {
+      console.warn('[Init] Failsafe triggered - forcing hide loading');
+      hideLoading();
+    }, 10000);
     // Initialize database with timeout
     console.log('[Init] 1. Database init...');
     const dbInitPromise = db.init();
@@ -68,7 +73,11 @@ async function init() {
 
     // Seed database with initial data if needed
     console.log('[Init] 2. Seeding...');
-    await seedDatabase();
+    try {
+      await seedDatabase();
+    } catch (seedError) {
+      console.warn('[Init] 2. Seed error:', seedError);
+    }
     console.log('[Init] 2. Seed OK');
 
     // Check for pending redirect login (Mobile auth)
@@ -116,9 +125,9 @@ async function init() {
     hideLoading();
     console.log('[Init] 11. Loading hidden');
 
-    // Manually trigger initial route - window.load may have fired before routes were set up
     console.log('[Init] 12. Handle route...');
     router.handleRoute();
+    clearTimeout(loadingFailsafe);
     console.log('[Init] COMPLETE!');
   } catch (error) {
     console.error('[MFIT] Initialization error:', error);
@@ -2805,9 +2814,6 @@ async function seedDatabase() {
     const existingExercises = await db.getAll(STORES.exercises);
     const existingIds = new Set(existingExercises.map(e => e.id));
 
-    let addedCount = 0;
-
-    // Batch add/update exercises
     let addedCount = 0;
     let updatedCount = 0;
 
