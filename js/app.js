@@ -47,10 +47,11 @@ const state = {
  * Initialize the application
  */
 async function init() {
-  // DEV: console.log('[GymFlow] Initializing app...');
+  console.log('[Init] Starting...');
 
   try {
     // Initialize database with timeout
+    console.log('[Init] 1. Database init...');
     const dbInitPromise = db.init();
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('DB init timeout')), 5000)
@@ -58,45 +59,66 @@ async function init() {
 
     try {
       await Promise.race([dbInitPromise, timeoutPromise]);
+      console.log('[Init] 1. Database OK');
     } catch (dbError) {
-      console.warn('[GymFlow] DB init issue:', dbError.message);
+      console.warn('[Init] 1. DB issue:', dbError.message);
       // Continue anyway - app can work with fresh DB
     }
 
     // Seed database with initial data if needed
+    console.log('[Init] 2. Seeding...');
     await seedDatabase();
+    console.log('[Init] 2. Seed OK');
 
     // Check for pending redirect login (Mobile auth)
+    console.log('[Init] 3. Redirect check...');
     await checkRedirectLogin();
+    console.log('[Init] 3. Redirect OK');
 
     // Load settings
+    console.log('[Init] 4. Settings...');
     await loadSettings();
+    console.log('[Init] 4. Settings OK');
 
     // Setup routes FIRST - before checkAuth
+    console.log('[Init] 5. Routes...');
     setupRoutes();
+    console.log('[Init] 5. Routes OK');
 
     // Check authentication
+    console.log('[Init] 6. Auth...');
     await checkAuth();
+    console.log('[Init] 6. Auth OK');
 
     // Setup event listeners
+    console.log('[Init] 7. Events...');
     setupEventListeners();
+    console.log('[Init] 7. Events OK');
 
     // Update UI based on user state
+    console.log('[Init] 8. UI...');
     updateUserUI();
+    console.log('[Init] 8. UI OK');
 
     // Register service worker
+    console.log('[Init] 9. SW...');
     registerServiceWorker();
+    console.log('[Init] 9. SW OK');
 
     // Setup offline indicator
+    console.log('[Init] 10. Offline...');
     setupOfflineIndicator();
+    console.log('[Init] 10. Offline OK');
 
     // Hide loading screen
+    console.log('[Init] 11. Hide loading...');
     hideLoading();
+    console.log('[Init] 11. Loading hidden');
 
     // Manually trigger initial route - window.load may have fired before routes were set up
+    console.log('[Init] 12. Handle route...');
     router.handleRoute();
-
-    // DEV: console.log('[GymFlow] App initialized successfully');
+    console.log('[Init] COMPLETE!');
   } catch (error) {
     console.error('[MFIT] Initialization error:', error);
     // Always hide loading even on error
@@ -284,8 +306,8 @@ function showUserMenu() {
       });
 
       overlay.querySelector('#logout-btn')?.addEventListener('click', async () => {
+        // Don't call modal.close - logout() already does window.location.reload()
         await logout();
-        modal.close();
       });
     }
   });
@@ -295,6 +317,7 @@ function showUserMenu() {
  * Logout user
  */
 async function logout() {
+  console.log('[Logout] Starting...');
   const btn = document.querySelector('#logout-btn');
   if (btn) {
     btn.innerHTML = '⏳ Saindo...';
@@ -303,13 +326,20 @@ async function logout() {
 
   try {
     // 1. Clear Local State PRIMEIRO
+    console.log('[Logout] 1. Clearing local state...');
     const oldUserId = state.user?.id;
     state.user = null;
 
     // 2. Limpar todas as formas de persistência
-    await db.setSetting('currentUserId', null);
+    console.log('[Logout] 2. Clearing persistence...');
+    try {
+      await db.setSetting('currentUserId', null);
+    } catch (e) {
+      console.warn('[Logout] DB setSetting failed:', e);
+    }
     localStorage.removeItem('user_session');
     sessionStorage.clear();
+    console.log('[Logout] 2. Done');
 
     // 3. Tentar logout remoto (com timeout)
     try {
@@ -337,10 +367,15 @@ async function logout() {
     modal.activeModal = null;
 
     // 5. Toast
+    console.log('[Logout] 5. Showing toast and reloading...');
     toast.success('Você saiu da conta!');
 
     // 6. Recarregar aplicação
-    setTimeout(() => window.location.reload(), 300);
+    console.log('[Logout] 6. Scheduling reload...');
+    setTimeout(() => {
+      console.log('[Logout] Reloading now!');
+      window.location.reload();
+    }, 300);
 
   } catch (err) {
     console.error('[Auth] Logout error:', err);
@@ -2514,8 +2549,8 @@ async function renderSettings() {
           onOpen: (overlay) => {
             overlay.querySelector('#cancel-logout-btn')?.addEventListener('click', () => modal.close());
             overlay.querySelector('#confirm-logout')?.addEventListener('click', async () => {
+              // Don't call modal.close - logout() already does window.location.reload()
               await logout();
-              modal.close();
             });
           }
         });
