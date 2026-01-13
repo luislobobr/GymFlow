@@ -2523,12 +2523,31 @@ async function renderSettings() {
     }, 100);
 
     return container;
+
+  } catch (error) {
+    console.error('[Settings] Render error:', error);
+    container.innerHTML = `
+      <div class="card">
+        <div class="empty-state">
+          <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <h4 class="empty-title">Erro ao carregar</h4>
+          <p class="empty-description">${error.message}</p>
+          <button class="btn btn-primary" onclick="location.reload()">Recarregar</button>
+        </div>
+      </div>
+    `;
+    return container;
   }
+}
 
-  function renderProfile() {
-    const user = state.user || { name: 'Usuário', email: '', type: 'student' };
+function renderProfile() {
+  const user = state.user || { name: 'Usuário', email: '', type: 'student' };
 
-    return `
+  return `
     <div class="animate-slide-up">
       <div style="margin-bottom: var(--spacing-xl);">
         <h2>Meu Perfil</h2>
@@ -2571,126 +2590,126 @@ async function renderSettings() {
       </div>
     </div>
   `;
+}
+
+
+/**
+ * Seed database with initial data
+ */
+async function seedDatabase() {
+  try {
+    const exercises = await db.getAll(STORES.exercises);
+    if (exercises?.length > 0) {
+      // DEV: console.log('[Seed] Exercises already loaded');
+      return;
+    }
+
+    // DEV: console.log('[Seed] Loading exercises...');
+    const response = await fetch('./js/data/exercises.json');
+    const data = await response.json();
+
+    if (!data?.exercises?.length) {
+      console.warn('[Seed] No exercises data found');
+      return;
+    }
+
+    // Batch insert using logic from user request
+    // We access localDB directly or use a loop. 
+    // Since db-adapter abstracts this, we will use the loop but optimized if possible.
+    // The user requested explicit transaction usage.
+
+    // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
+    // But we can try to use db.add in parallel or just loop simple.
+    // User asked for: "const transaction = localDB.db.transaction..."
+    // BUT we don't have 'localDB' imported here. We have 'db'.
+
+    // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
+    // OR we could try to import localDB. 
+    // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
+
+    let count = 0;
+    for (const exercise of data.exercises) {
+      await db.add(STORES.exercises, exercise);
+      count++;
+    }
+    // console.log(`[Seed] Seeded ${count} exercises`);
+
+  } catch (error) {
+    console.error('[Seed] Error:', error);
+    // Non-blocking
   }
+}
 
+// Initialize app when DOM is ready
+document.addEventListener('DOMContentLoaded', init);
 
-  /**
-   * Seed database with initial data
-   */
-  async function seedDatabase() {
-    try {
-      const exercises = await db.getAll(STORES.exercises);
-      if (exercises?.length > 0) {
-        // DEV: console.log('[Seed] Exercises already loaded');
-        return;
+/**
+ * Check for pending redirect login results
+ */
+async function checkRedirectLogin() {
+  if (state.user) return;
+
+  try {
+    const firebaseModule = await import('./firebase-config.js');
+    await firebaseModule.initFirebase();
+
+    const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
+
+    if (firebaseUser) {
+      // Limpar URL de parâmetros do redirect
+      window.history.replaceState(
+        null,
+        '',
+        window.location.pathname + window.location.hash
+      );
+
+      // Buscar/criar usuário local
+      let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
+      if (users.length === 0) {
+        const userId = await db.add(STORES.users, {
+          name: firebaseUser.displayName || 'Usuário Google',
+          email: firebaseUser.email,
+          type: 'student',
+          avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
+          googleId: firebaseUser.uid,
+          createdAt: new Date().toISOString()
+        });
+        state.user = await db.get(STORES.users, userId);
+      } else {
+        state.user = users[0];
       }
 
-      // DEV: console.log('[Seed] Loading exercises...');
-      const response = await fetch('./js/data/exercises.json');
-      const data = await response.json();
+      // Usar função centralizada
+      await handleSuccessfulLogin(state.user);
+    }
 
-      if (!data?.exercises?.length) {
-        console.warn('[Seed] No exercises data found');
-        return;
-      }
-
-      // Batch insert using logic from user request
-      // We access localDB directly or use a loop. 
-      // Since db-adapter abstracts this, we will use the loop but optimized if possible.
-      // The user requested explicit transaction usage.
-
-      // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
-      // But we can try to use db.add in parallel or just loop simple.
-      // User asked for: "const transaction = localDB.db.transaction..."
-      // BUT we don't have 'localDB' imported here. We have 'db'.
-
-      // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
-      // OR we could try to import localDB. 
-      // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
-
-      let count = 0;
-      for (const exercise of data.exercises) {
-        await db.add(STORES.exercises, exercise);
-        count++;
-      }
-      // console.log(`[Seed] Seeded ${count} exercises`);
-
-    } catch (error) {
-      console.error('[Seed] Error:', error);
-      // Non-blocking
+  } catch (error) {
+    console.error('[Auth] Redirect check error:', error);
+    // Não mostrar toast a menos que seja erro real do Firebase
+    if (error.code && error.code !== 'auth/popup-closed-by-user') {
+      toast.error(`Erro no login: ${error.message}`);
     }
   }
+}
 
-  // Initialize app when DOM is ready
+// Global Exports for debugging
+window.db = db;
+window.MFIT = { state, db, router, toast, modal };
+
+// ============ APP INITIALIZATION ============
+// ES Modules load after DOMContentLoaded, so we check readyState
+if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
+} else {
+  // DOM already ready, call init immediately
+  init();
+}
 
-  /**
-   * Check for pending redirect login results
-   */
-  async function checkRedirectLogin() {
-    if (state.user) return;
+// ============ GLOBAL ERROR HANDLERS ============
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('[Global] Unhandled promise rejection:', event.reason);
+});
 
-    try {
-      const firebaseModule = await import('./firebase-config.js');
-      await firebaseModule.initFirebase();
-
-      const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
-
-      if (firebaseUser) {
-        // Limpar URL de parâmetros do redirect
-        window.history.replaceState(
-          null,
-          '',
-          window.location.pathname + window.location.hash
-        );
-
-        // Buscar/criar usuário local
-        let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
-        if (users.length === 0) {
-          const userId = await db.add(STORES.users, {
-            name: firebaseUser.displayName || 'Usuário Google',
-            email: firebaseUser.email,
-            type: 'student',
-            avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
-            googleId: firebaseUser.uid,
-            createdAt: new Date().toISOString()
-          });
-          state.user = await db.get(STORES.users, userId);
-        } else {
-          state.user = users[0];
-        }
-
-        // Usar função centralizada
-        await handleSuccessfulLogin(state.user);
-      }
-
-    } catch (error) {
-      console.error('[Auth] Redirect check error:', error);
-      // Não mostrar toast a menos que seja erro real do Firebase
-      if (error.code && error.code !== 'auth/popup-closed-by-user') {
-        toast.error(`Erro no login: ${error.message}`);
-      }
-    }
-  }
-
-  // Global Exports for debugging
-  window.db = db;
-  window.MFIT = { state, db, router, toast, modal };
-
-  // ============ APP INITIALIZATION ============
-  // ES Modules load after DOMContentLoaded, so we check readyState
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    // DOM already ready, call init immediately
-    init();
-  }
-
-  // ============ GLOBAL ERROR HANDLERS ============
-  window.addEventListener('unhandledrejection', (event) => {
-    console.error('[Global] Unhandled promise rejection:', event.reason);
-  });
-
-  window.addEventListener('error', (event) => {
-    console.error('[Global] Runtime error:', event.error);
-  });
+window.addEventListener('error', (event) => {
+  console.error('[Global] Runtime error:', event.error);
+});
