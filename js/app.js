@@ -2657,3 +2657,21 @@ function showDownloadModal() {
     // Global Exports for debugging
     window.db = db;
     window.MFIT = { state, db, router, toast, modal };
+
+    // ============ APP INITIALIZATION ============
+    // ES Modules load after DOMContentLoaded, so we check readyState
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      // DOM already ready, call init immediately
+      init();
+    }
+
+    // ============ GLOBAL ERROR HANDLERS ============
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('[Global] Unhandled promise rejection:', event.reason);
+    });
+
+    window.addEventListener('error', (event) => {
+      console.error('[Global] Runtime error:', event.error);
+    });
