@@ -370,7 +370,7 @@ async function logout() {
     console.log('[Logout] 4. Deleting IndexedDB...');
     try {
       // Delete known database names directly (works on all browsers including iOS Safari)
-      const dbNames = ['mfit-personal', 'mfit-personal-db', 'firebaseLocalStorageDb'];
+      const dbNames = ['mfit_personal', 'mfit-personal', 'mfit-personal-db', 'firebaseLocalStorageDb'];
       for (const name of dbNames) {
         try {
           indexedDB.deleteDatabase(name);
