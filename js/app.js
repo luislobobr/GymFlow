@@ -1652,7 +1652,12 @@ async function showWorkoutCreator(existingWorkout = null) {
             toast.success('Treino criado!');
           }
           modal.close();
-          router.navigate('workouts');
+          // Force refresh of the list
+          if (window.location.hash === '#workouts' || !window.location.hash) {
+            await renderWorkouts();
+          } else {
+            router.navigate('workouts');
+          }
         } catch (error) {
           console.error('Error saving workout:', error);
           // Show specific error to user
@@ -1667,7 +1672,12 @@ async function showWorkoutCreator(existingWorkout = null) {
             await workoutsManager.deleteWorkout(existingWorkout.id);
             toast.success('Treino excluído!');
             modal.close();
-            router.navigate('workouts');
+            // Force refresh
+            if (window.location.hash === '#workouts' || !window.location.hash) {
+              await renderWorkouts();
+            } else {
+              router.navigate('workouts');
+            }
           } catch (error) {
             console.error('Error deleting workout:', error);
             toast.error('Erro ao excluir treino');
@@ -1890,16 +1900,33 @@ function showHistoryDetail(entry) {
           </div>
           ${ex.logsPerSet && ex.logsPerSet.length > 0 ? `
             <div style="margin-top: var(--spacing-sm); display: flex; gap: var(--spacing-xs); flex-wrap: wrap;">
-              ${ex.logsPerSet.map((log, i) => `
-                <span style="
-                  font-size: var(--font-size-xs);
-                  padding: 4px 8px;
-                  background: var(--bg-glass);
-                  border-radius: var(--radius-sm);
-                ">
-                  ${log.weight}kg × ${log.reps}
-                </span>
-              `).join('')}
+              ${ex.logsPerSet.map((log, i) => {
+    if (ex.type === 'cardio' || log.distance !== undefined) {
+      const pace = log.distance > 0 ? (log.duration / log.distance).toFixed(2) : 0;
+      return `
+                    <span style="
+                      font-size: var(--font-size-xs);
+                      padding: 4px 8px;
+                      background: var(--bg-glass);
+                      border-radius: var(--radius-sm);
+                      border: 1px solid var(--accent-secondary);
+                    ">
+                      🏃 ${log.distance}km em ${log.duration}min (${pace} min/km)
+                    </span>
+                   `;
+    } else {
+      return `
+                    <span style="
+                      font-size: var(--font-size-xs);
+                      padding: 4px 8px;
+                      background: var(--bg-glass);
+                      border-radius: var(--radius-sm);
+                    ">
+                      ${log.weight}kg × ${log.reps}
+                    </span>
+                   `;
+    }
+  }).join('')}
             </div>
           ` : ''}
         </div>
@@ -2745,15 +2772,12 @@ function renderProfile() {
 /**
  * Seed database with initial data
  */
+/**
+ * Seed database with initial data
+ */
 async function seedDatabase() {
   try {
-    const exercises = await db.getAll(STORES.exercises);
-    if (exercises?.length > 0) {
-      // DEV: console.log('[Seed] Exercises already loaded');
-      return;
-    }
-
-    // DEV: console.log('[Seed] Loading exercises...');
+    // Always load JSON first to check for updates
     const response = await fetch('./js/data/exercises.json');
     const data = await response.json();
 
@@ -2762,26 +2786,25 @@ async function seedDatabase() {
       return;
     }
 
-    // Batch insert using logic from user request
-    // We access localDB directly or use a loop. 
-    // Since db-adapter abstracts this, we will use the loop but optimized if possible.
-    // The user requested explicit transaction usage.
+    // Check if we need to migrate/add new exercises
+    // We get all IDs first to minimize reads inside loop
+    const existingExercises = await db.getAll(STORES.exercises);
+    const existingIds = new Set(existingExercises.map(e => e.id));
 
-    // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
-    // But we can try to use db.add in parallel or just loop simple.
-    // User asked for: "const transaction = localDB.db.transaction..."
-    // BUT we don't have 'localDB' imported here. We have 'db'.
+    let addedCount = 0;
 
-    // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
-    // OR we could try to import localDB. 
-    // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
-
-    let count = 0;
+    // Batch add missing exercises
     for (const exercise of data.exercises) {
-      await db.add(STORES.exercises, exercise);
-      count++;
+      if (!existingIds.has(exercise.id)) {
+        await db.add(STORES.exercises, exercise);
+        addedCount++;
+      }
     }
-    // console.log(`[Seed] Seeded ${count} exercises`);
+
+    if (addedCount > 0) {
+      console.log(`[Seed] Added ${addedCount} new exercises (migration)`);
+      toast.info(`${addedCount} novos exercícios adicionados!`);
+    }
 
   } catch (error) {
     console.error('[Seed] Error:', error);

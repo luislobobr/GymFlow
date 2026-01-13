@@ -175,14 +175,13 @@ class WorkoutsManager {
   /**
    * Log a completed set
    */
-  logSet(setNumber, reps, weight) {
+  logSet(setNumber, data) {
     if (!this.workoutSession) return;
 
     const exercise = this.workoutSession.exercises[this.currentExerciseIndex];
     exercise.logsPerSet.push({
       setNumber,
-      reps: parseInt(reps),
-      weight: parseFloat(weight),
+      ...data,
       timestamp: new Date().toISOString()
     });
     exercise.setsCompleted = exercise.logsPerSet.length;
@@ -257,7 +256,10 @@ class WorkoutsManager {
       (sum, ex) => sum + ex.setsCompleted, 0
     );
     this.workoutSession.totalVolume = this.workoutSession.exercises.reduce(
-      (sum, ex) => sum + ex.logsPerSet.reduce((s, l) => s + (l.reps * l.weight), 0), 0
+      (sum, ex) => {
+        if (ex.type === 'cardio') return sum;
+        return sum + ex.logsPerSet.reduce((s, l) => s + ((l.reps || 0) * (l.weight || 0)), 0);
+      }, 0
     );
 
     // Save to history
@@ -418,14 +420,25 @@ class WorkoutsManager {
         <div class="card" style="margin-bottom: var(--spacing-lg);">
           <h4 style="margin-bottom: var(--spacing-md);">📝 Registrar Série</h4>
           <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: var(--spacing-md); align-items: end;">
-            <div class="form-group" style="margin: 0;">
-              <label class="form-label" for="weight-input">Peso (kg)</label>
-              <input type="number" class="form-input" id="weight-input" placeholder="0" step="0.5" min="0">
-            </div>
-            <div class="form-group" style="margin: 0;">
-              <label class="form-label" for="reps-input">Reps</label>
-              <input type="number" class="form-input" id="reps-input" placeholder="0" min="0">
-            </div>
+            ${exercise.type === 'cardio' ? `
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" for="distance-input">Distância (km)</label>
+                <input type="number" class="form-input" id="distance-input" placeholder="0.00" step="0.01" min="0">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" for="duration-input">Tempo ({exercise.rest ? 'timer' : 'min'})</label>
+                <input type="number" class="form-input" id="duration-input" placeholder="0" min="0">
+              </div>
+            ` : `
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" for="weight-input">Peso (kg)</label>
+                <input type="number" class="form-input" id="weight-input" placeholder="0" step="0.5" min="0">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" for="reps-input">Reps</label>
+                <input type="number" class="form-input" id="reps-input" placeholder="0" min="0">
+              </div>
+            `}
             <button class="btn btn-primary log-set-btn" style="height: 48px;" aria-label="Registrar série">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"></polyline>
@@ -519,29 +532,59 @@ class WorkoutsManager {
    */
   setupExecutionListeners(container) {
     const logSetBtn = container.querySelector('.log-set-btn');
+
+    // Inputs dynamic selection based on exercise type
     const weightInput = container.querySelector('#weight-input');
     const repsInput = container.querySelector('#reps-input');
+    const distanceInput = container.querySelector('#distance-input');
+    const durationInput = container.querySelector('#duration-input');
 
     logSetBtn?.addEventListener('click', () => {
-      const weight = weightInput.value;
-      const reps = repsInput.value;
-
-      if (!reps) {
-        window.toast?.warning('Informe o número de repetições');
-        return;
-      }
-
       const exercise = this.getCurrentExercise();
       const setNumber = exercise.setsCompleted + 1;
 
-      this.logSet(setNumber, reps, weight || 0);
+      let data = {};
+
+      if (exercise.type === 'cardio') {
+        const distance = distanceInput?.value;
+        const duration = durationInput?.value;
+
+        if (!distance && !duration) {
+          window.toast?.warning('Informe a distância ou tempo');
+          return;
+        }
+
+        data = {
+          distance: parseFloat(distance) || 0,
+          duration: parseFloat(duration) || 0,
+          type: 'cardio'
+        };
+      } else {
+        const weight = weightInput?.value;
+        const reps = repsInput?.value;
+
+        if (!reps) {
+          window.toast?.warning('Informe o número de repetições');
+          return;
+        }
+
+        data = {
+          reps: parseInt(reps),
+          weight: parseFloat(weight) || 0,
+          type: 'strength'
+        };
+      }
+
+      this.logSet(setNumber, data);
 
       // Update display
       const setsDisplay = container.querySelector('#sets-display');
       setsDisplay.innerHTML = this.renderSetsDisplay(exercise);
 
       // Clear inputs
-      repsInput.value = '';
+      if (repsInput) repsInput.value = '';
+      if (distanceInput) distanceInput.value = '';
+      if (durationInput) durationInput.value = '';
 
       // Show toast
       window.toast?.success(`Série ${setNumber} registrada!`);

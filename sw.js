@@ -1,5 +1,5 @@
 // MFIT Personal - Service Worker
-const CACHE_NAME = 'mfit-personal-v9';
+const CACHE_NAME = 'mfit-personal-v10';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

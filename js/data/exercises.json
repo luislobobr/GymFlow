@@ -4999,6 +4999,56 @@
       "level": "intermediario",
       "instructions": "Step com ponta do pé.",
       "videoUrl": "https://www.youtube.com/watch?v=dQqApCGd5Ss"
+    },
+    {
+      "id": 1001,
+      "name": "Corrida (Rua)",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "cardio",
+      "level": "iniciante",
+      "instructions": "Corrida ao ar livre em ritmo constante ou intervalado.",
+      "videoUrl": ""
+    },
+    {
+      "id": 1002,
+      "name": "Esteira",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "cardio",
+      "level": "iniciante",
+      "instructions": "Corrida ou caminhada na esteira ergométrica.",
+      "videoUrl": ""
+    },
+    {
+      "id": 1003,
+      "name": "Caminhada",
+      "muscle": "cardio",
+      "equipment": "peso_corporal",
+      "type": "cardio",
+      "level": "iniciante",
+      "instructions": "Caminhada em ritmo acelerado.",
+      "videoUrl": ""
+    },
+    {
+      "id": 1004,
+      "name": "Ciclismo (Ergométrica)",
+      "muscle": "cardio",
+      "equipment": "maquina",
+      "type": "cardio",
+      "level": "iniciante",
+      "instructions": "Pedalar na bicicleta ergométrica.",
+      "videoUrl": ""
+    },
+    {
+      "id": 1005,
+      "name": "Pular Corda",
+      "muscle": "cardio",
+      "equipment": "acessorio",
+      "type": "cardio",
+      "level": "intermediario",
+      "instructions": "Pular corda mantendo o ritmo.",
+      "videoUrl": ""
     }
   ],
   "muscleGroups": [
