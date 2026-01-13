@@ -1,19 +1,23 @@
 /**
  * MFIT Personal - Modal Component
- * Reusable modal dialog system
+ * Reusable modal dialog system with Stack Support
  */
 
 class Modal {
     constructor() {
-        this.activeModal = null;
+        this.modalsStack = []; // Stack of active modals
         this.init();
     }
 
     init() {
         // Close modal on ESC key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.activeModal) {
-                this.close();
+            if (e.key === 'Escape' && this.modalsStack.length > 0) {
+                const topModal = this.modalsStack[this.modalsStack.length - 1];
+                // Check if closable via dataset
+                if (topModal.dataset.closable === 'true') {
+                    this.close();
+                }
             }
         });
     }
@@ -23,11 +27,6 @@ class Modal {
      * @param {object} config - Modal configuration
      */
     open(config) {
-        // Close any existing modal first
-        if (this.activeModal) {
-            this.close();
-        }
-
         const {
             title = '',
             content = '',
@@ -46,6 +45,10 @@ class Modal {
         overlay.setAttribute('aria-modal', 'true');
         overlay.setAttribute('aria-labelledby', 'modal-title');
 
+        // Increase z-index based on stack depth to ensure proper layering
+        const baseZIndex = 1100;
+        overlay.style.zIndex = baseZIndex + (this.modalsStack.length * 10);
+
         // Size classes
         const sizeClass = {
             sm: 'max-width: 400px;',
@@ -55,7 +58,7 @@ class Modal {
             full: 'max-width: 95%; max-height: 95%;'
         };
 
-        // Create modal
+        // Create modal content
         overlay.innerHTML = `
        <div class="modal" style="${sizeClass[size] || sizeClass.md}">
         <div class="modal-header">
@@ -83,15 +86,28 @@ class Modal {
 
         // Close handlers
         if (closable) {
-            overlay.querySelector('.modal-close').addEventListener('click', () => this.close());
+            // Close button click
+            overlay.querySelector('.modal-close').addEventListener('click', () => {
+                // Ensure we are closing THIS modal (top of stack)
+                if (this.modalsStack[this.modalsStack.length - 1] === overlay) {
+                    this.close();
+                }
+            });
+
+            // Overlay click (click outside)
             overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) this.close();
+                if (e.target === overlay) {
+                    // Ensure we are closing THIS modal
+                    if (this.modalsStack[this.modalsStack.length - 1] === overlay) {
+                        this.close();
+                    }
+                }
             });
         }
 
         // Store callbacks
-        overlay.dataset.onClose = onClose ? 'true' : 'false';
-        this._onClose = onClose;
+        // Attach onClose directly to the DOM element to retrieve it later easily
+        overlay._onCloseCallback = onClose;
 
         // Add to DOM
         document.body.appendChild(overlay);
@@ -102,7 +118,8 @@ class Modal {
             overlay.classList.add('active');
         });
 
-        this.activeModal = overlay;
+        // Add to stack
+        this.modalsStack.push(overlay);
 
         // Call onOpen callback
         if (onOpen) onOpen(overlay);
@@ -111,28 +128,27 @@ class Modal {
     }
 
     /**
-     * Close the active modal
+     * Close the top-most modal
      */
     close() {
-        if (!this.activeModal) return;
+        if (this.modalsStack.length === 0) return;
 
-        const overlay = this.activeModal;
+        // Pop the top modal
+        const overlay = this.modalsStack.pop();
         overlay.classList.remove('active');
 
         // Call onClose callback
-        if (this._onClose) {
-            this._onClose();
+        if (overlay._onCloseCallback) {
+            overlay._onCloseCallback();
         }
 
         setTimeout(() => {
             overlay.remove();
-            document.body.style.overflow = '';
 
-            // Only clear activeModal if it's still the same one (avoid clearing new modal ref)
-            if (this.activeModal === overlay) {
-                this.activeModal = null;
+            // Only restore body scrolling if no more modals exist
+            if (this.modalsStack.length === 0) {
+                document.body.style.overflow = '';
             }
-            this._onClose = null;
         }, 250);
     }
 
@@ -155,22 +171,25 @@ class Modal {
         <button class="btn ${danger ? 'btn-danger' : confirmClass} modal-confirm">${confirmText}</button>
       `;
 
-            const modal = this.open({
+            // We need a reference to modify closure behavior
+            let modalOverlay = null;
+
+            modalOverlay = this.open({
                 title,
                 content: `<p>${message}</p>`,
                 footer,
                 size: 'sm'
             });
 
-            modal.querySelector('.modal-cancel').addEventListener('click', () => {
+            const handleClose = (result) => {
+                // Only call this once
+                // Note: this.close() will close the top modal, which IS this one because confirm is always on top when interacting
                 this.close();
-                resolve(false);
-            });
+                resolve(result);
+            };
 
-            modal.querySelector('.modal-confirm').addEventListener('click', () => {
-                this.close();
-                resolve(true);
-            });
+            modalOverlay.querySelector('.modal-cancel').addEventListener('click', () => handleClose(false));
+            modalOverlay.querySelector('.modal-confirm').addEventListener('click', () => handleClose(true));
         });
     }
 
@@ -187,14 +206,14 @@ class Modal {
         return new Promise((resolve) => {
             const footer = `<button class="btn btn-primary modal-ok">${buttonText}</button>`;
 
-            const modal = this.open({
+            const modalOverlay = this.open({
                 title,
                 content: `<p>${message}</p>`,
                 footer,
                 size: 'sm'
             });
 
-            modal.querySelector('.modal-ok').addEventListener('click', () => {
+            modalOverlay.querySelector('.modal-ok').addEventListener('click', () => {
                 this.close();
                 resolve();
             });
@@ -228,33 +247,30 @@ class Modal {
         <button class="btn btn-primary modal-confirm">${confirmText}</button>
       `;
 
-            const modal = this.open({
+            const modalOverlay = this.open({
                 title,
                 content,
                 footer,
                 size: 'sm'
             });
 
-            const input = modal.querySelector('.modal-input');
+            const input = modalOverlay.querySelector('.modal-input');
             input.focus();
+
+            const handleClose = (result) => {
+                this.close();
+                resolve(result);
+            };
 
             // Submit on Enter
             input.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
-                    this.close();
-                    resolve(input.value);
+                    handleClose(input.value);
                 }
             });
 
-            modal.querySelector('.modal-cancel').addEventListener('click', () => {
-                this.close();
-                resolve(null);
-            });
-
-            modal.querySelector('.modal-confirm').addEventListener('click', () => {
-                this.close();
-                resolve(input.value);
-            });
+            modalOverlay.querySelector('.modal-cancel').addEventListener('click', () => handleClose(null));
+            modalOverlay.querySelector('.modal-confirm').addEventListener('click', () => handleClose(input.value));
         });
     }
 }
