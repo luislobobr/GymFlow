@@ -1655,7 +1655,8 @@ async function showWorkoutCreator(existingWorkout = null) {
           router.navigate('workouts');
         } catch (error) {
           console.error('Error saving workout:', error);
-          toast.error('Erro ao salvar treino');
+          // Show specific error to user
+          toast.error('Erro ao salvar treino: ' + (error.message || 'Erro desconhecido'));
         }
       });
 
