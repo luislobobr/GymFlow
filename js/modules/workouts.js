@@ -8,6 +8,7 @@ import { timer } from './timer.js';
 import { modal } from '../components/modal.js';
 import { toast } from '../components/toast.js';
 import { logger } from '../utils/logger.js';
+import { recordCheckin, getWeeklyCheckins, generateShareableCard } from './checkins.js';
 
 // Default workout templates
 const WORKOUT_TEMPLATES = [
@@ -260,9 +261,16 @@ class WorkoutsManager {
     );
 
     // Save to history
-    // Save to history
     try {
       const historyId = await db.add(STORES.history, this.workoutSession);
+
+      // Record check-in for today
+      try {
+        await recordCheckin(userId, this.workoutSession.durationMinutes, historyId);
+        logger.info('[Workout] Check-in recorded for today');
+      } catch (checkinError) {
+        logger.warn('[Workout] Check-in failed:', checkinError);
+      }
 
       // Clear session
       const completedSession = { ...this.workoutSession, id: historyId };
@@ -687,11 +695,29 @@ class WorkoutsManager {
     container.querySelector('.finish-workout-btn')?.addEventListener('click', async () => {
       timer.stop();
       const userId = window.MFIT?.state?.user?.id;
+      const userName = window.MFIT?.state?.user?.name || 'Usuário';
       const result = await this.finishSession(userId);
 
       if (result) {
-        window.toast?.success(`Treino finalizado! 🎉 ${result.durationMinutes} min, ${result.totalSets} séries`);
-        window.location.hash = 'workouts';
+        // Get weekly check-in data for the modal
+        try {
+          const weekData = await getWeeklyCheckins(userId);
+          const cardHtml = generateShareableCard(weekData, userName);
+
+          // Emit custom event for app.js to show the check-in modal
+          window.dispatchEvent(new CustomEvent('workout-complete', {
+            detail: {
+              session: result,
+              weekData,
+              cardHtml,
+              userName
+            }
+          }));
+        } catch (e) {
+          logger.warn('[Workout] Could not generate check-in card:', e);
+          window.toast?.success(`Treino finalizado! 🎉 ${result.durationMinutes} min, ${result.totalSets} séries`);
+          window.location.hash = 'workouts';
+        }
       }
     });
   }

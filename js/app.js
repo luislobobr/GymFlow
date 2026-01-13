@@ -221,6 +221,97 @@ function setupEventListeners() {
       showLoginModal();
     }
   });
+
+  // Listen for workout completion to show check-in modal
+  window.addEventListener('workout-complete', (e) => {
+    const { session, weekData, cardHtml, userName } = e.detail;
+    showCheckinModal(session, weekData, cardHtml, userName);
+  });
+}
+
+/**
+ * Show check-in modal after workout completion
+ */
+function showCheckinModal(session, weekData, cardHtml, userName) {
+  const { durationMinutes, totalSets, totalVolume } = session;
+  const hours = Math.floor(durationMinutes / 60);
+  const mins = durationMinutes % 60;
+  const timeStr = hours > 0 ? `${hours}h ${mins}min` : `${mins}min`;
+
+  modal.open({
+    title: '🎉 Treino Finalizado!',
+    content: `
+      <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+        <p style="font-size: var(--font-size-lg); color: var(--text-primary); margin-bottom: var(--spacing-sm);">
+          Parabéns! Você completou seu treino!
+        </p>
+        <div style="display: flex; justify-content: center; gap: var(--spacing-xl); margin: var(--spacing-lg) 0;">
+          <div>
+            <div style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--accent-primary);">
+              ${timeStr}
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--text-muted);">duração</div>
+          </div>
+          <div>
+            <div style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--accent-primary);">
+              ${totalSets}
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--text-muted);">séries</div>
+          </div>
+          <div>
+            <div style="font-size: var(--font-size-2xl); font-weight: 800; color: var(--accent-primary);">
+              ${Math.round(totalVolume)}kg
+            </div>
+            <div style="font-size: var(--font-size-sm); color: var(--text-muted);">volume</div>
+          </div>
+        </div>
+      </div>
+      
+      <h4 style="margin-bottom: var(--spacing-md); text-align: center;">📅 Sua Semana</h4>
+      ${cardHtml}
+      
+      <div class="checkin-actions">
+        <button class="btn btn-secondary" id="checkin-close-btn">Fechar</button>
+        <button class="btn btn-share" id="checkin-share-btn">
+          📤 Compartilhar
+        </button>
+      </div>
+    `,
+    closable: true,
+    onOpen: (overlay) => {
+      overlay.querySelector('#checkin-close-btn')?.addEventListener('click', () => {
+        modal.close();
+        window.location.hash = 'workouts';
+      });
+
+      overlay.querySelector('#checkin-share-btn')?.addEventListener('click', async () => {
+        const card = overlay.querySelector('.checkin-card');
+        if (!card) return;
+
+        try {
+          // Try to share
+          if (navigator.share) {
+            await navigator.share({
+              title: 'Meu Check-in GymFlow',
+              text: `Completei meu treino de ${timeStr}! 💪 ${weekData.daysCompleted}/7 dias esta semana. 🔥 Sequência de ${weekData.streak} dias!`
+            });
+            toast.success('Compartilhado!');
+          } else {
+            // Fallback: copy to clipboard
+            const text = `💪 Check-in GymFlow!\n📅 ${weekData.daysCompleted}/7 dias esta semana\n⏱️ ${timeStr} de treino hoje\n🔥 Sequência de ${weekData.streak} dias!`;
+            await navigator.clipboard.writeText(text);
+            toast.success('Texto copiado! Cole em suas redes sociais.');
+          }
+        } catch (err) {
+          console.error('[Checkin] Share error:', err);
+          toast.error('Erro ao compartilhar');
+        }
+      });
+    },
+    onClose: () => {
+      window.location.hash = 'workouts';
+    }
+  });
 }
 
 /**

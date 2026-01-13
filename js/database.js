@@ -4,7 +4,7 @@
  */
 
 const DB_NAME = 'mfit_personal';
-const DB_VERSION = 2; // Bumped for progress store
+const DB_VERSION = 3; // Bumped for checkins store
 
 const STORES = {
     users: 'users',
@@ -14,6 +14,7 @@ const STORES = {
     assessments: 'assessments',
     progress: 'progress',
     students: 'students',
+    checkins: 'checkins',
     settings: 'settings'
 };
 
@@ -93,6 +94,13 @@ class Database {
                     const progressStore = db.createObjectStore(STORES.progress, { keyPath: 'id', autoIncrement: true });
                     progressStore.createIndex('userId', 'userId', { unique: false });
                     progressStore.createIndex('date', 'date', { unique: false });
+                }
+
+                // Checkins store (daily workout tracking)
+                if (!db.objectStoreNames.contains(STORES.checkins)) {
+                    const checkinStore = db.createObjectStore(STORES.checkins, { keyPath: 'id', autoIncrement: true });
+                    checkinStore.createIndex('userId', 'userId', { unique: false });
+                    checkinStore.createIndex('date', 'date', { unique: false });
                 }
 
                 // Settings store
