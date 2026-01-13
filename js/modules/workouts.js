@@ -8,7 +8,7 @@ import { timer } from './timer.js';
 import { modal } from '../components/modal.js';
 import { toast } from '../components/toast.js';
 import { logger } from '../utils/logger.js';
-import { recordCheckin, getWeeklyCheckins, generateShareableCard } from './checkins.js';
+import { recordCheckin, getWeeklyCheckins, getStreak, generateShareableCard } from './checkins.js';
 
 // Default workout templates
 const WORKOUT_TEMPLATES = [
@@ -744,8 +744,14 @@ class WorkoutsManager {
       if (result) {
         // Get weekly check-in data for the modal
         try {
-          const weekData = await getWeeklyCheckins(userId);
-          const cardHtml = generateShareableCard(weekData, userName);
+          const weeksCheckins = await getWeeklyCheckins(userId);
+          const streak = await getStreak(userId);
+          const cardHtml = generateShareableCard(weeksCheckins, userName);
+
+          const weekData = {
+            daysCompleted: weeksCheckins.filter(d => d.completed).length,
+            streak
+          };
 
           // Emit custom event for app.js to show the check-in modal
           window.dispatchEvent(new CustomEvent('workout-complete', {
