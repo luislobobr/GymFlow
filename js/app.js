@@ -325,23 +325,28 @@ async function logout() {
   }
 
   try {
-    // 1. Clear Local State PRIMEIRO
-    console.log('[Logout] 1. Clearing local state...');
-    const oldUserId = state.user?.id;
+    // 1. Clear state immediately
+    console.log('[Logout] 1. Clearing state...');
     state.user = null;
 
-    // 2. Limpar todas as formas de persistência
-    console.log('[Logout] 2. Clearing persistence...');
+    // 2. Clear ALL persistence - aggressive approach
+    console.log('[Logout] 2. Clearing ALL persistence...');
+
+    // Clear localStorage
+    localStorage.clear();
+
+    // Clear sessionStorage  
+    sessionStorage.clear();
+
+    // Try to clear settings in DB (may fail with multiple tabs)
     try {
       await db.setSetting('currentUserId', null);
     } catch (e) {
-      console.warn('[Logout] DB setSetting failed:', e);
+      console.warn('[Logout] DB setSetting failed, continuing:', e);
     }
-    localStorage.removeItem('user_session');
-    sessionStorage.clear();
-    console.log('[Logout] 2. Done');
 
-    // 3. Tentar logout remoto (com timeout)
+    // 3. Firebase logout with timeout
+    console.log('[Logout] 3. Firebase logout...');
     try {
       const firebaseModule = await import('./firebase-config.js');
       const timeout = new Promise((_, reject) =>
@@ -358,29 +363,44 @@ async function logout() {
         timeout
       ]);
     } catch (e) {
-      console.warn('[Auth] Remote logout skipped:', e);
+      console.warn('[Logout] Firebase logout skipped:', e);
     }
 
-    // 4. Limpar UI
-    updateUserUI();
+    // 4. Delete the entire IndexedDB to ensure clean state
+    console.log('[Logout] 4. Deleting IndexedDB...');
+    try {
+      const dbs = await indexedDB.databases();
+      for (const dbInfo of dbs) {
+        if (dbInfo.name && dbInfo.name.includes('mfit')) {
+          indexedDB.deleteDatabase(dbInfo.name);
+          console.log('[Logout] Deleted DB:', dbInfo.name);
+        }
+      }
+    } catch (e) {
+      console.warn('[Logout] IndexedDB cleanup skipped:', e);
+    }
+
+    // 5. Clear modals
+    console.log('[Logout] 5. Clearing UI...');
     document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
     modal.activeModal = null;
 
-    // 5. Toast
-    console.log('[Logout] 5. Showing toast and reloading...');
+    // 6. Toast
+    console.log('[Logout] 6. Showing toast...');
     toast.success('Você saiu da conta!');
 
-    // 6. Recarregar aplicação
-    console.log('[Logout] 6. Scheduling reload...');
+    // 7. Hard reload
+    console.log('[Logout] 7. Reloading...');
     setTimeout(() => {
-      console.log('[Logout] Reloading now!');
-      window.location.reload();
-    }, 300);
+      window.location.href = window.location.pathname;
+    }, 500);
 
   } catch (err) {
-    console.error('[Auth] Logout error:', err);
-    // Force reload mesmo com erro
-    window.location.reload();
+    console.error('[Logout] Error:', err);
+    // Force hard reload
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = window.location.pathname;
   }
 }
 
