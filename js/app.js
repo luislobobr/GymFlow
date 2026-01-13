@@ -366,14 +366,17 @@ async function logout() {
       console.warn('[Logout] Firebase logout skipped:', e);
     }
 
-    // 4. Delete the entire IndexedDB to ensure clean state
+    // 4. Delete IndexedDB - mobile compatible (doesn't use indexedDB.databases())
     console.log('[Logout] 4. Deleting IndexedDB...');
     try {
-      const dbs = await indexedDB.databases();
-      for (const dbInfo of dbs) {
-        if (dbInfo.name && dbInfo.name.includes('mfit')) {
-          indexedDB.deleteDatabase(dbInfo.name);
-          console.log('[Logout] Deleted DB:', dbInfo.name);
+      // Delete known database names directly (works on all browsers including iOS Safari)
+      const dbNames = ['mfit-personal', 'mfit-personal-db', 'firebaseLocalStorageDb'];
+      for (const name of dbNames) {
+        try {
+          indexedDB.deleteDatabase(name);
+          console.log('[Logout] Deleted DB:', name);
+        } catch (e) {
+          console.warn('[Logout] Could not delete', name);
         }
       }
     } catch (e) {
