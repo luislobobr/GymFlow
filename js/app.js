@@ -281,7 +281,6 @@ function showCheckinModal(session, weekData, cardHtml, userName) {
     onOpen: (overlay) => {
       overlay.querySelector('#checkin-close-btn')?.addEventListener('click', () => {
         modal.close();
-        window.location.hash = 'workouts';
       });
 
       overlay.querySelector('#checkin-share-btn')?.addEventListener('click', async () => {

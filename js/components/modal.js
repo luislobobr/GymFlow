@@ -127,7 +127,11 @@ class Modal {
         setTimeout(() => {
             overlay.remove();
             document.body.style.overflow = '';
-            this.activeModal = null;
+
+            // Only clear activeModal if it's still the same one (avoid clearing new modal ref)
+            if (this.activeModal === overlay) {
+                this.activeModal = null;
+            }
             this._onClose = null;
         }, 250);
     }
