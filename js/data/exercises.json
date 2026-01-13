@@ -2,7 +2,7 @@
   "exercises": [
     {
       "id": 1,
-      "name": "Supino Reto com Barra",
+      "name": "Supino Reto com Barra (Bench Press)",
       "muscle": "peito",
       "equipment": "barra",
       "type": "composto",
@@ -12,7 +12,7 @@
     },
     {
       "id": 2,
-      "name": "Supino Inclinado com Halteres",
+      "name": "Supino Inclinado com Halteres (Incline Dumbbell Press)",
       "muscle": "peito",
       "equipment": "halteres",
       "type": "composto",
@@ -22,7 +22,7 @@
     },
     {
       "id": 3,
-      "name": "Supino Declinado",
+      "name": "Supino Declinado (Decline Bench Press)",
       "muscle": "peito",
       "equipment": "barra",
       "type": "composto",
@@ -32,7 +32,7 @@
     },
     {
       "id": 4,
-      "name": "Flexão de Braço",
+      "name": "Flexão de Braço (Push-up)",
       "muscle": "peito",
       "equipment": "peso_corporal",
       "type": "composto",
@@ -42,7 +42,7 @@
     },
     {
       "id": 5,
-      "name": "Crossover no Cabo",
+      "name": "Crossover no Cabo (Cable Crossover)",
       "muscle": "peito",
       "equipment": "cabo",
       "type": "isolador",
@@ -52,7 +52,7 @@
     },
     {
       "id": 6,
-      "name": "Peck Deck (Voador)",
+      "name": "Peck Deck / Voador (Machine Fly)",
       "muscle": "peito",
       "equipment": "maquina",
       "type": "isolador",
@@ -62,7 +62,7 @@
     },
     {
       "id": 7,
-      "name": "Crucifixo com Halteres",
+      "name": "Crucifixo com Halteres (Dumbbell Fly)",
       "muscle": "peito",
       "equipment": "halteres",
       "type": "isolador",
@@ -82,7 +82,7 @@
     },
     {
       "id": 9,
-      "name": "Pullover com Haltere",
+      "name": "Pullover com Haltere (Dumbbell Pullover)",
       "muscle": "peito",
       "equipment": "halteres",
       "type": "isolador",
@@ -92,7 +92,7 @@
     },
     {
       "id": 10,
-      "name": "Supino na Máquina",
+      "name": "Supino na Máquina (Machine Press)",
       "muscle": "peito",
       "equipment": "maquina",
       "type": "composto",
@@ -202,7 +202,7 @@
     },
     {
       "id": 21,
-      "name": "Barra Fixa Pronada",
+      "name": "Barra Fixa Pronada (Pull-up)",
       "muscle": "costas",
       "equipment": "peso_corporal",
       "type": "composto",
@@ -212,7 +212,7 @@
     },
     {
       "id": 22,
-      "name": "Puxada Alta",
+      "name": "Puxada Alta (Lat Pulldown)",
       "muscle": "costas",
       "equipment": "cabo",
       "type": "composto",
@@ -222,7 +222,7 @@
     },
     {
       "id": 23,
-      "name": "Remada Curvada com Barra",
+      "name": "Remada Curvada (Bent Over Row)",
       "muscle": "costas",
       "equipment": "barra",
       "type": "composto",
@@ -242,7 +242,7 @@
     },
     {
       "id": 25,
-      "name": "Remada Unilateral",
+      "name": "Remada Unilateral (Dumbbell Row)",
       "muscle": "costas",
       "equipment": "halteres",
       "type": "composto",
@@ -272,7 +272,7 @@
     },
     {
       "id": 28,
-      "name": "Pulldown com Corda",
+      "name": "Pull-down (Straight Arm Pulldown)",
       "muscle": "costas",
       "equipment": "cabo",
       "type": "isolador",
@@ -282,7 +282,7 @@
     },
     {
       "id": 29,
-      "name": "Levantamento Terra",
+      "name": "Levantamento Terra (Deadlift)",
       "muscle": "costas",
       "equipment": "barra",
       "type": "composto",
@@ -352,7 +352,7 @@
     },
     {
       "id": 36,
-      "name": "Puxada Pegada Neutra",
+      "name": "Puxada Pegada Neutra (Neutral Grip Pulldown)",
       "muscle": "costas",
       "equipment": "cabo",
       "type": "composto",
@@ -402,7 +402,7 @@
     },
     {
       "id": 41,
-      "name": "Agachamento Livre",
+      "name": "Agachamento Livre (Squat)",
       "muscle": "pernas",
       "equipment": "barra",
       "type": "composto",
@@ -422,7 +422,7 @@
     },
     {
       "id": 43,
-      "name": "Cadeira Extensora",
+      "name": "Cadeira Extensora (Leg Extension)",
       "muscle": "pernas",
       "equipment": "maquina",
       "type": "isolador",
@@ -432,7 +432,7 @@
     },
     {
       "id": 44,
-      "name": "Mesa Flexora",
+      "name": "Mesa Flexora (Leg Curl)",
       "muscle": "pernas",
       "equipment": "maquina",
       "type": "isolador",
@@ -472,7 +472,7 @@
     },
     {
       "id": 48,
-      "name": "Agachamento Sumô",
+      "name": "Agachamento Sumô (Sumo Squat)",
       "muscle": "pernas",
       "equipment": "halteres",
       "type": "composto",
@@ -482,7 +482,7 @@
     },
     {
       "id": 49,
-      "name": "Panturrilha em Pé",
+      "name": "Panturrilha em Pé (Standing Calf Raise)",
       "muscle": "pernas",
       "equipment": "maquina",
       "type": "isolador",
@@ -532,7 +532,7 @@
     },
     {
       "id": 54,
-      "name": "Agachamento Búlgaro",
+      "name": "Agachamento Búlgaro (Bulgarian Split Squat)",
       "muscle": "pernas",
       "equipment": "halteres",
       "type": "composto",
@@ -562,7 +562,7 @@
     },
     {
       "id": 57,
-      "name": "Hip Thrust",
+      "name": "Elevação Pélvica / Hip Thrust (Barbell Hip Thrust)",
       "muscle": "pernas",
       "equipment": "barra",
       "type": "composto",
@@ -702,7 +702,7 @@
     },
     {
       "id": 71,
-      "name": "Desenvolvimento Militar",
+      "name": "Desenvolvimento Militar (Overhead Press)",
       "muscle": "ombros",
       "equipment": "barra",
       "type": "composto",
@@ -712,7 +712,7 @@
     },
     {
       "id": 72,
-      "name": "Desenvolvimento com Halteres",
+      "name": "Desenvolvimento com Halteres (Dumbbell Press)",
       "muscle": "ombros",
       "equipment": "halteres",
       "type": "composto",
@@ -722,7 +722,7 @@
     },
     {
       "id": 73,
-      "name": "Elevação Lateral",
+      "name": "Elevação Lateral (Lateral Raise)",
       "muscle": "ombros",
       "equipment": "halteres",
       "type": "isolador",
@@ -732,7 +732,7 @@
     },
     {
       "id": 74,
-      "name": "Elevação Frontal",
+      "name": "Elevação Frontal (Front Raise)",
       "muscle": "ombros",
       "equipment": "halteres",
       "type": "isolador",
@@ -742,7 +742,7 @@
     },
     {
       "id": 75,
-      "name": "Crucifixo Invertido",
+      "name": "Crucifixo Invertido (Reverse Fly)",
       "muscle": "ombros",
       "equipment": "halteres",
       "type": "isolador",
@@ -752,7 +752,7 @@
     },
     {
       "id": 76,
-      "name": "Desenvolvimento na Máquina",
+      "name": "Desenvolvimento na Máquina (Machine Press)",
       "muscle": "ombros",
       "equipment": "maquina",
       "type": "composto",
@@ -802,7 +802,7 @@
     },
     {
       "id": 81,
-      "name": "Remada Alta com Barra",
+      "name": "Remada Alta com Barra (Upright Row)",
       "muscle": "ombros",
       "equipment": "barra",
       "type": "composto",
@@ -902,7 +902,7 @@
     },
     {
       "id": 91,
-      "name": "Rosca Direta com Barra",
+      "name": "Rosca Direta com Barra (Barbell Curl)",
       "muscle": "biceps",
       "equipment": "barra",
       "type": "isolador",
@@ -912,7 +912,7 @@
     },
     {
       "id": 92,
-      "name": "Rosca Alternada",
+      "name": "Rosca Alternada (Alternating Curl)",
       "muscle": "biceps",
       "equipment": "halteres",
       "type": "isolador",
@@ -922,7 +922,7 @@
     },
     {
       "id": 93,
-      "name": "Rosca Concentrada",
+      "name": "Rosca Concentrada (Concentration Curl)",
       "muscle": "biceps",
       "equipment": "halteres",
       "type": "isolador",
@@ -932,7 +932,7 @@
     },
     {
       "id": 94,
-      "name": "Rosca Martelo",
+      "name": "Rosca Martelo (Hammer Curl)",
       "muscle": "biceps",
       "equipment": "halteres",
       "type": "isolador",
@@ -952,7 +952,7 @@
     },
     {
       "id": 96,
-      "name": "Rosca Scott",
+      "name": "Rosca Scott (Preacher Curl)",
       "muscle": "biceps",
       "equipment": "barra",
       "type": "isolador",
@@ -962,7 +962,7 @@
     },
     {
       "id": 97,
-      "name": "Rosca 21",
+      "name": "Rosca 21 (21s)",
       "muscle": "biceps",
       "equipment": "barra",
       "type": "isolador",
@@ -1042,7 +1042,7 @@
     },
     {
       "id": 105,
-      "name": "Rosca W com Barra",
+      "name": "Rosca W com Barra (EZ Bar Curl)",
       "muscle": "biceps",
       "equipment": "barra",
       "type": "isolador",
@@ -1102,7 +1102,7 @@
     },
     {
       "id": 111,
-      "name": "Tríceps Pulley",
+      "name": "Tríceps Pulley (Tricep Pushdown)",
       "muscle": "triceps",
       "equipment": "cabo",
       "type": "isolador",
@@ -1112,7 +1112,7 @@
     },
     {
       "id": 112,
-      "name": "Tríceps Corda",
+      "name": "Tríceps Corda (Rope Pushdown)",
       "muscle": "triceps",
       "equipment": "cabo",
       "type": "isolador",
@@ -1122,7 +1122,7 @@
     },
     {
       "id": 113,
-      "name": "Tríceps Testa",
+      "name": "Tríceps Testa (Skullcrushers)",
       "muscle": "triceps",
       "equipment": "barra",
       "type": "isolador",
@@ -1132,7 +1132,7 @@
     },
     {
       "id": 114,
-      "name": "Tríceps Francês",
+      "name": "Tríceps Francês (Overhead Extension)",
       "muscle": "triceps",
       "equipment": "halteres",
       "type": "isolador",
@@ -1142,7 +1142,7 @@
     },
     {
       "id": 115,
-      "name": "Tríceps Banco (Dips)",
+      "name": "Tríceps Banco (Bench Dips)",
       "muscle": "triceps",
       "equipment": "peso_corporal",
       "type": "composto",
@@ -1152,7 +1152,7 @@
     },
     {
       "id": 116,
-      "name": "Tríceps Coice",
+      "name": "Tríceps Coice (Tricep Kickback)",
       "muscle": "triceps",
       "equipment": "halteres",
       "type": "isolador",
@@ -1162,7 +1162,7 @@
     },
     {
       "id": 117,
-      "name": "Mergulho Tríceps",
+      "name": "Mergulho Tríceps (Tricep Dips)",
       "muscle": "triceps",
       "equipment": "peso_corporal",
       "type": "composto",
@@ -1172,7 +1172,7 @@
     },
     {
       "id": 118,
-      "name": "Supino Fechado",
+      "name": "Supino Fechado (Close Grip Bench Press)",
       "muscle": "triceps",
       "equipment": "barra",
       "type": "composto",
@@ -1202,7 +1202,7 @@
     },
     {
       "id": 121,
-      "name": "Flexão Diamante Tríceps",
+      "name": "Flexão Diamante (Diamond Push-up)",
       "muscle": "triceps",
       "equipment": "peso_corporal",
       "type": "composto",
@@ -1212,7 +1212,7 @@
     },
     {
       "id": 122,
-      "name": "Tríceps Barra V",
+      "name": "Tríceps Barra V (V-Bar Pushdown)",
       "muscle": "triceps",
       "equipment": "cabo",
       "type": "isolador",
@@ -1252,7 +1252,7 @@
     },
     {
       "id": 126,
-      "name": "Flexão Fechada",
+      "name": "Flexão Fechada (Close Grip Push-up)",
       "muscle": "triceps",
       "equipment": "peso_corporal",
       "type": "composto",
@@ -1272,7 +1272,7 @@
     },
     {
       "id": 128,
-      "name": "Tríceps Barra Reta",
+      "name": "Tríceps Barra Reta (Straight Bar Pushdown)",
       "muscle": "triceps",
       "equipment": "cabo",
       "type": "isolador",

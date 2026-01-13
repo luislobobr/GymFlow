@@ -2807,17 +2807,28 @@ async function seedDatabase() {
 
     let addedCount = 0;
 
-    // Batch add missing exercises
+    // Batch add/update exercises
+    let addedCount = 0;
+    let updatedCount = 0;
+
     for (const exercise of data.exercises) {
       if (!existingIds.has(exercise.id)) {
         await db.add(STORES.exercises, exercise);
         addedCount++;
+      } else {
+        // Check for updates (e.g. name translation)
+        const existing = await db.get(STORES.exercises, exercise.id);
+        if (existing.name !== exercise.name) {
+          await db.update(STORES.exercises, exercise);
+          updatedCount++;
+        }
       }
     }
 
-    if (addedCount > 0) {
-      console.log(`[Seed] Added ${addedCount} new exercises (migration)`);
-      toast.info(`${addedCount} novos exercícios adicionados!`);
+    if (addedCount > 0 || updatedCount > 0) {
+      console.log(`[Seed] Sync: ${addedCount} added, ${updatedCount} updated`);
+      if (addedCount > 0) toast.info(`${addedCount} novos exercícios adicionados!`);
+      if (updatedCount > 0) toast.info(`${updatedCount} exercícios atualizados!`);
     }
 
   } catch (error) {
