@@ -302,22 +302,21 @@ async function logout() {
   }
 
   try {
+    // 1. Clear Local State PRIMEIRO
     const oldUserId = state.user?.id;
-
-    // 1. Clear Local State IMMEDIATELY AND AGGRESSIVELY
     state.user = null;
 
-    // Explicitly DELETE the setting, don't just set to null
-    // Assuming db.setSetting(key, null) works, but let's be safe
+    // 2. Limpar todas as formas de persistência
     await db.setSetting('currentUserId', null);
-
     localStorage.removeItem('user_session');
+    sessionStorage.clear();
 
-    // 2. Try Remote Logout (with timeout)
+    // 3. Tentar logout remoto (com timeout)
     try {
       const firebaseModule = await import('./firebase-config.js');
-
-      const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000));
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout')), 2000)
+      );
 
       await Promise.race([
         (async () => {
@@ -328,18 +327,24 @@ async function logout() {
         })(),
         timeout
       ]);
-
     } catch (e) {
       console.warn('[Auth] Remote logout skipped:', e);
     }
 
-    toast.success('Você saiu da conta. Até logo!');
+    // 4. Limpar UI
+    updateUserUI();
+    document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+    modal.activeModal = null;
 
-    // 3. Reload
-    setTimeout(() => window.location.reload(), 200);
+    // 5. Toast
+    toast.success('Você saiu da conta!');
+
+    // 6. Recarregar aplicação
+    setTimeout(() => window.location.reload(), 300);
 
   } catch (err) {
-    console.error('[Auth] Logout failed:', err);
+    console.error('[Auth] Logout error:', err);
+    // Force reload mesmo com erro
     window.location.reload();
   }
 }
@@ -506,7 +511,30 @@ function showLoginModal() {
         </svg>
         Entrar com Google
       </button>
-      <div style="text-align: center; margin-top: 10px; font-size: 10px; color: #555;">v5.0 Check</div>
+      
+      <div style="display: flex; align-items: center; margin: var(--spacing-lg) 0; gap: var(--spacing-md);">
+        <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
+        <span style="color: var(--text-muted); font-size: var(--font-size-sm);">Baixe o App</span>
+        <div style="flex: 1; height: 1px; background: var(--border-color);"></div>
+      </div>
+      
+      <div style="display: flex; gap: var(--spacing-sm);">
+        <button class="btn btn-ghost" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;" id="install-pwa-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Instalar PWA
+        </button>
+        <a href="https://github.com/luislobobr/GymFlow/releases" target="_blank" class="btn btn-ghost" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
+      <div style="text-align: center; margin-top: 10px; font-size: 10px; color: var(--text-muted);">v5.1</div>
     </div>
     
     <div id="register-form" class="auth-form hidden">
@@ -641,11 +669,7 @@ function showLoginModal() {
           if (error.code === 'auth/popup-blocked') {
             toast.error('Popup bloqueado. Permita popups neste site.');
           } else if (error.code === 'auth/popup-closed-by-user') {
-            toast.warning('Login cancelado (v4) - Tentando redirecionar...');
-            // Force redirect here just in case firebase-config failed to do it
-            const firebaseModule = await import('./firebase-config.js');
-            await firebaseModule.initFirebase();
-            firebaseModule.firebaseAuth.signInWithRedirect(firebaseModule.auth, firebaseModule.googleProvider);
+            toast.warning('Login cancelado.');
           } else if (error.code === 'auth/network-request-failed') {
             toast.error('Sem conexão. Verifique sua internet.');
           } else if (error.message?.includes('Google sign-in requires cloud mode')) {
@@ -691,6 +715,11 @@ function showLoginModal() {
         updateUserUI();
         router.navigate('dashboard');
         toast.success('Conta criada com sucesso!');
+      });
+
+      // PWA Install button handler
+      overlay.querySelector('#install-pwa-btn')?.addEventListener('click', () => {
+        window.installPWA?.();
       });
     }
   });
@@ -2273,9 +2302,21 @@ function showDownloadModal() {
     const container = document.createElement('div');
     container.className = 'animate-slide-up';
 
-    const workouts = state.user ? await workoutsManager.getWorkouts(state.user.id) : [];
-
+    // Loading state
     container.innerHTML = `
+    <div style="padding: var(--spacing-xl); text-align: center;">
+      <div class="loading-spinner"></div>
+      <p style="color: var(--text-muted); margin-top: var(--spacing-md);">Carregando configurações...</p>
+    </div>
+  `;
+
+    // Yield to UI
+    await new Promise(resolve => setTimeout(resolve, 0));
+
+    try {
+      const workouts = state.user ? await workoutsManager.getWorkouts(state.user.id) : [];
+
+      container.innerHTML = `
     <div style="margin-bottom: var(--spacing-xl);">
       <h2>Configurações</h2>
       <p style="color: var(--text-muted);">Personalize o aplicativo</p>
@@ -2381,94 +2422,94 @@ function showDownloadModal() {
     </div>
   `;
 
-    // Setup event listeners
-    setTimeout(() => {
-      // Theme select
-      container.querySelector('#theme-select')?.addEventListener('change', async (e) => {
-        state.theme = e.target.value;
-        document.body.classList.toggle('light-theme', state.theme === 'light');
-        await db.setSetting('theme', state.theme);
-        toast.success(`Tema ${state.theme === 'dark' ? 'escuro' : 'claro'} aplicado`);
-      });
+      // Setup event listeners
+      setTimeout(() => {
+        // Theme select
+        container.querySelector('#theme-select')?.addEventListener('change', async (e) => {
+          state.theme = e.target.value;
+          document.body.classList.toggle('light-theme', state.theme === 'light');
+          await db.setSetting('theme', state.theme);
+          toast.success(`Tema ${state.theme === 'dark' ? 'escuro' : 'claro'} aplicado`);
+        });
 
-      // Export workout PDF
-      container.querySelector('#export-workout-btn')?.addEventListener('click', async () => {
-        const select = container.querySelector('#workout-export-select');
-        const workoutId = parseInt(select?.value);
+        // Export workout PDF
+        container.querySelector('#export-workout-btn')?.addEventListener('click', async () => {
+          const select = container.querySelector('#workout-export-select');
+          const workoutId = parseInt(select?.value);
 
-        if (!workoutId) {
-          toast.warning('Selecione um treino');
-          return;
-        }
+          if (!workoutId) {
+            toast.warning('Selecione um treino');
+            return;
+          }
 
-        const workout = await workoutsManager.getWorkout(workoutId);
-        if (workout) {
-          pdfExporter.exportWorkout(workout);
+          const workout = await workoutsManager.getWorkout(workoutId);
+          if (workout) {
+            pdfExporter.exportWorkout(workout);
+            toast.success('Gerando PDF...');
+          }
+        });
+
+        // Export assessment PDF
+        container.querySelector('#export-assessment-btn')?.addEventListener('click', async () => {
+          const anamnesis = await assessmentsManager.getLatestAnamnesis(state.user.id);
+          const measurements = await progressManager.getLatest(state.user.id);
+
+          if (!anamnesis && !measurements) {
+            toast.warning('Preencha a anamnese ou medidas primeiro');
+            return;
+          }
+
+          pdfExporter.exportAssessment(anamnesis, measurements, state.user.name);
           toast.success('Gerando PDF...');
-        }
-      });
+        });
 
-      // Export assessment PDF
-      container.querySelector('#export-assessment-btn')?.addEventListener('click', async () => {
-        const anamnesis = await assessmentsManager.getLatestAnamnesis(state.user.id);
-        const measurements = await progressManager.getLatest(state.user.id);
+        // Export all data
+        container.querySelector('#export-data-btn')?.addEventListener('click', async () => {
+          const data = {
+            user: state.user,
+            workouts: await workoutsManager.getWorkouts(state.user.id),
+            history: await historyManager.getHistory(state.user.id, 100),
+            progress: await progressManager.getMeasurements(state.user.id),
+            exportedAt: new Date().toISOString()
+          };
 
-        if (!anamnesis && !measurements) {
-          toast.warning('Preencha a anamnese ou medidas primeiro');
-          return;
-        }
+          const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `gymflow_backup_${new Date().toISOString().split('T')[0]}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+          toast.success('Dados exportados!');
+        });
 
-        pdfExporter.exportAssessment(anamnesis, measurements, state.user.name);
-        toast.success('Gerando PDF...');
-      });
-
-      // Export all data
-      container.querySelector('#export-data-btn')?.addEventListener('click', async () => {
-        const data = {
-          user: state.user,
-          workouts: await workoutsManager.getWorkouts(state.user.id),
-          history: await historyManager.getHistory(state.user.id, 100),
-          progress: await progressManager.getMeasurements(state.user.id),
-          exportedAt: new Date().toISOString()
-        };
-
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `gymflow_backup_${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        toast.success('Dados exportados!');
-      });
-
-      // Logout
-      container.querySelector('#logout-btn')?.addEventListener('click', () => {
-        modal.open({
-          title: '👋 Sair',
-          content: '<p>Deseja realmente sair da sua conta?</p>',
-          footer: `
+        // Logout
+        container.querySelector('#logout-btn')?.addEventListener('click', () => {
+          modal.open({
+            title: '👋 Sair',
+            content: '<p>Deseja realmente sair da sua conta?</p>',
+            footer: `
           <button class="btn btn-secondary" id="cancel-logout-btn">Cancelar</button>
           <button class="btn btn-danger" id="confirm-logout">Sair</button>
         `,
-          onOpen: (overlay) => {
-            overlay.querySelector('#cancel-logout-btn')?.addEventListener('click', () => modal.close());
-            overlay.querySelector('#confirm-logout')?.addEventListener('click', async () => {
-              await logout();
-              modal.close();
-            });
-          }
+            onOpen: (overlay) => {
+              overlay.querySelector('#cancel-logout-btn')?.addEventListener('click', () => modal.close());
+              overlay.querySelector('#confirm-logout')?.addEventListener('click', async () => {
+                await logout();
+                modal.close();
+              });
+            }
+          });
         });
-      });
-    }, 100);
+      }, 100);
 
-    return container;
-  }
+      return container;
+    }
 
   function renderProfile() {
-    const user = state.user || { name: 'Usuário', email: '', type: 'student' };
+      const user = state.user || { name: 'Usuário', email: '', type: 'student' };
 
-    return `
+      return `
     <div class="animate-slide-up">
       <div style="margin-bottom: var(--spacing-xl);">
         <h2>Meu Perfil</h2>
@@ -2511,108 +2552,108 @@ function showDownloadModal() {
       </div>
     </div>
   `;
-  }
-
-
-  /**
-   * Seed database with initial data
-   */
-  async function seedDatabase() {
-    try {
-      const exercises = await db.getAll(STORES.exercises);
-      if (exercises?.length > 0) {
-        // DEV: console.log('[Seed] Exercises already loaded');
-        return;
-      }
-
-      // DEV: console.log('[Seed] Loading exercises...');
-      const response = await fetch('./js/data/exercises.json');
-      const data = await response.json();
-
-      if (!data?.exercises?.length) {
-        console.warn('[Seed] No exercises data found');
-        return;
-      }
-
-      // Batch insert using logic from user request
-      // We access localDB directly or use a loop. 
-      // Since db-adapter abstracts this, we will use the loop but optimized if possible.
-      // The user requested explicit transaction usage.
-
-      // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
-      // But we can try to use db.add in parallel or just loop simple.
-      // User asked for: "const transaction = localDB.db.transaction..."
-      // BUT we don't have 'localDB' imported here. We have 'db'.
-
-      // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
-      // OR we could try to import localDB. 
-      // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
-
-      let count = 0;
-      for (const exercise of data.exercises) {
-        await db.add(STORES.exercises, exercise);
-        count++;
-      }
-      // console.log(`[Seed] Seeded ${count} exercises`);
-
-    } catch (error) {
-      console.error('[Seed] Error:', error);
-      // Non-blocking
     }
-  }
 
-  // Initialize app when DOM is ready
-  document.addEventListener('DOMContentLoaded', init);
 
-  /**
-   * Check for pending redirect login results
-   */
-  async function checkRedirectLogin() {
-    if (state.user) return;
-
-    try {
-      const firebaseModule = await import('./firebase-config.js');
-      await firebaseModule.initFirebase();
-
-      const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
-
-      if (firebaseUser) {
-        // Limpar URL de parâmetros do redirect
-        window.history.replaceState(
-          null,
-          '',
-          window.location.pathname + window.location.hash
-        );
-
-        // Buscar/criar usuário local
-        let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
-        if (users.length === 0) {
-          const userId = await db.add(STORES.users, {
-            name: firebaseUser.displayName || 'Usuário Google',
-            email: firebaseUser.email,
-            type: 'student',
-            avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
-            googleId: firebaseUser.uid,
-            createdAt: new Date().toISOString()
-          });
-          state.user = await db.get(STORES.users, userId);
-        } else {
-          state.user = users[0];
+    /**
+     * Seed database with initial data
+     */
+    async function seedDatabase() {
+      try {
+        const exercises = await db.getAll(STORES.exercises);
+        if (exercises?.length > 0) {
+          // DEV: console.log('[Seed] Exercises already loaded');
+          return;
         }
 
-        // Usar função centralizada
-        await handleSuccessfulLogin(state.user);
-      }
+        // DEV: console.log('[Seed] Loading exercises...');
+        const response = await fetch('./js/data/exercises.json');
+        const data = await response.json();
 
-    } catch (error) {
-      console.error('[Auth] Redirect check error:', error);
-      // Não mostrar toast a menos que seja erro real do Firebase
-      if (error.code && error.code !== 'auth/popup-closed-by-user') {
-        toast.error(`Erro no login: ${error.message}`);
+        if (!data?.exercises?.length) {
+          console.warn('[Seed] No exercises data found');
+          return;
+        }
+
+        // Batch insert using logic from user request
+        // We access localDB directly or use a loop. 
+        // Since db-adapter abstracts this, we will use the loop but optimized if possible.
+        // The user requested explicit transaction usage.
+
+        // NOTE: app.js imports 'db' (the adapter). It doesn't export 'localDB' directly usually.
+        // But we can try to use db.add in parallel or just loop simple.
+        // User asked for: "const transaction = localDB.db.transaction..."
+        // BUT we don't have 'localDB' imported here. We have 'db'.
+
+        // We will stick to simple loop but wrapped in robust try/catch to satisfy the request functionality
+        // OR we could try to import localDB. 
+        // Let's stick to the SAFE loop provided in the request but adapted for our 'db' adapter.
+
+        let count = 0;
+        for (const exercise of data.exercises) {
+          await db.add(STORES.exercises, exercise);
+          count++;
+        }
+        // console.log(`[Seed] Seeded ${count} exercises`);
+
+      } catch (error) {
+        console.error('[Seed] Error:', error);
+        // Non-blocking
       }
     }
-  }
 
-  // Global Exports for debugging
-  window.db = db;
-  window.MFIT = { state, db, router, toast, modal };
+    // Initialize app when DOM is ready
+    document.addEventListener('DOMContentLoaded', init);
+
+    /**
+     * Check for pending redirect login results
+     */
+    async function checkRedirectLogin() {
+      if (state.user) return;
+
+      try {
+        const firebaseModule = await import('./firebase-config.js');
+        await firebaseModule.initFirebase();
+
+        const firebaseUser = await firebaseModule.firebaseAuth.checkRedirectResult();
+
+        if (firebaseUser) {
+          // Limpar URL de parâmetros do redirect
+          window.history.replaceState(
+            null,
+            '',
+            window.location.pathname + window.location.hash
+          );
+
+          // Buscar/criar usuário local
+          let users = await db.getByIndex(STORES.users, 'email', firebaseUser.email);
+          if (users.length === 0) {
+            const userId = await db.add(STORES.users, {
+              name: firebaseUser.displayName || 'Usuário Google',
+              email: firebaseUser.email,
+              type: 'student',
+              avatar: firebaseUser.displayName?.charAt(0).toUpperCase() || 'G',
+              googleId: firebaseUser.uid,
+              createdAt: new Date().toISOString()
+            });
+            state.user = await db.get(STORES.users, userId);
+          } else {
+            state.user = users[0];
+          }
+
+          // Usar função centralizada
+          await handleSuccessfulLogin(state.user);
+        }
+
+      } catch (error) {
+        console.error('[Auth] Redirect check error:', error);
+        // Não mostrar toast a menos que seja erro real do Firebase
+        if (error.code && error.code !== 'auth/popup-closed-by-user') {
+          toast.error(`Erro no login: ${error.message}`);
+        }
+      }
+    }
+
+    // Global Exports for debugging
+    window.db = db;
+    window.MFIT = { state, db, router, toast, modal };

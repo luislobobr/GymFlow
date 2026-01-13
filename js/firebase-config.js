@@ -133,27 +133,22 @@ const firebaseAuth = {
 
     // Sign in with Google (Popup with Redirect Fallback)
     async signInWithGoogle() {
-        // 1. Prefer Redirect on known mobile devices - DISABLED (Testing Popup first)
-        /*
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-            await signInWithRedirect(auth, googleProvider);
-            return null;
-        }
-        */
-
-        // 2. Try Popup on Desktop/Other
+        // Try Popup first
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
             await this._handleUser(user);
             return user;
         } catch (error) {
-            // 3. FALLBACK TO REDIRECT ON ANY ERROR
-            // If the popup fails for ANY reason (closed, blocked, network, etc),
-            // we assume the environment is hostile to popups (common on mobile in-app browsers).
-            console.warn('Popup login failed, forcing redirect fallback. Error:', error);
-            await signInWithRedirect(auth, googleProvider);
-            return null;
+            // Only fallback to redirect on popup-blocked errors
+            // DO NOT redirect on popup-closed-by-user - just propagate the error
+            if (error.code === 'auth/popup-blocked') {
+                console.warn('Popup blocked, using redirect fallback');
+                await signInWithRedirect(auth, googleProvider);
+                return null;
+            }
+            // Propagate all other errors (including popup-closed-by-user)
+            throw error;
         }
     },
 
