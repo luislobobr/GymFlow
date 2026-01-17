@@ -33,10 +33,7 @@ window.assessmentsManager = assessmentsManager;
 window.studentsManager = studentsManager;
 window.pdfExporter = pdfExporter;
 
-// Expose app state for modules
-window.MFIT = { db, state: null };
-
-// App State
+// App State (must be declared before window.MFIT reference)
 const state = {
   user: null,
   theme: 'dark',
@@ -44,10 +41,19 @@ const state = {
   isLoading: true
 };
 
+// Expose app state for modules
+window.MFIT = { db, state };
+
 /**
  * Initialize the application
  */
+let initRunning = false;
 async function init() {
+  if (initRunning) {
+    console.warn('[Init] Already running, skipping duplicate call');
+    return;
+  }
+  initRunning = true;
   console.log('[Init] Starting...');
 
   try {
@@ -466,22 +472,9 @@ async function logout() {
       console.warn('[Logout] Firebase logout skipped:', e);
     }
 
-    // 4. Delete IndexedDB - mobile compatible (doesn't use indexedDB.databases())
-    console.log('[Logout] 4. Deleting IndexedDB...');
-    try {
-      // Delete known database names directly (works on all browsers including iOS Safari)
-      const dbNames = ['mfit_personal', 'mfit-personal', 'mfit-personal-db', 'firebaseLocalStorageDb'];
-      for (const name of dbNames) {
-        try {
-          indexedDB.deleteDatabase(name);
-          console.log('[Logout] Deleted DB:', name);
-        } catch (e) {
-          console.warn('[Logout] Could not delete', name);
-        }
-      }
-    } catch (e) {
-      console.warn('[Logout] IndexedDB cleanup skipped:', e);
-    }
+    // 4. NOTE: We do NOT delete IndexedDB - user data should persist for next login
+    // Only the currentUserId setting is cleared (done above in step 2)
+    console.log('[Logout] 4. IndexedDB preserved (user data kept)...');
 
     // 5. Clear modals
     console.log('[Logout] 5. Clearing UI...');
@@ -746,17 +739,56 @@ function showLoginModal() {
           return;
         }
 
-        // Simple demo login (in real app, validate password)
-        const users = await db.getByIndex(STORES.users, 'email', email);
-        if (users.length > 0) {
-          state.user = users[0];
+        try {
+          // Use Firebase Auth to sign in
+          const firebaseModule = await import('./firebase-config.js');
+          await firebaseModule.initFirebase();
+          const firebaseUser = await firebaseModule.firebaseAuth.signIn(email, password);
+
+          // Fetch user data from Firestore
+          const userData = await firebaseModule.firebaseDB.get('users', firebaseUser.uid);
+
+          if (userData) {
+            state.user = userData;
+          } else {
+            // Fallback: create user object from Firebase Auth data
+            state.user = {
+              id: firebaseUser.uid,
+              uid: firebaseUser.uid,
+              name: firebaseUser.displayName || email.split('@')[0],
+              email: firebaseUser.email,
+              type: 'student',
+              avatar: (firebaseUser.displayName || email).charAt(0).toUpperCase(),
+              createdAt: new Date().toISOString()
+            };
+          }
+
           await db.setSetting('currentUserId', state.user.id);
-          modal.close();
+
+          // Force close ALL modals (login modal has closable=false)
+          document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+          modal.modalsStack = [];
+          document.body.style.overflow = '';
+
           updateUserUI();
           router.navigate('dashboard');
           toast.success(`Bem-vindo, ${state.user.name}!`);
-        } else {
-          toast.error('Usuário não encontrado');
+
+        } catch (error) {
+          console.error('Login error:', error);
+
+          // Handle specific Firebase errors
+          if (error.code === 'auth/user-not-found') {
+            toast.error('Usuário não encontrado');
+          } else if (error.code === 'auth/wrong-password') {
+            toast.error('Senha incorreta');
+          } else if (error.code === 'auth/invalid-email') {
+            toast.error('Email inválido');
+          } else if (error.code === 'auth/too-many-requests') {
+            toast.error('Muitas tentativas. Tente novamente mais tarde.');
+          } else {
+            toast.error('Erro ao entrar: ' + error.message);
+          }
         }
       });
 
@@ -850,29 +882,56 @@ function showLoginModal() {
           return;
         }
 
-        // Check if email already exists
-        const existing = await db.getByIndex(STORES.users, 'email', email);
-        if (existing.length > 0) {
-          toast.error('Email já cadastrado');
-          return;
+        try {
+          // Use Firebase Auth to create user account
+          const firebaseModule = await import('./firebase-config.js');
+          await firebaseModule.initFirebase();
+          const firebaseUser = await firebaseModule.firebaseAuth.signUp(email, password, name, type);
+
+          // Create local user object for state/cache
+          state.user = {
+            id: firebaseUser.uid,
+            uid: firebaseUser.uid,
+            name,
+            email,
+            type,
+            avatar: name.charAt(0).toUpperCase(),
+            createdAt: new Date().toISOString()
+          };
+
+          // Also save to local IndexedDB for offline support
+          try {
+            await db.add(STORES.users, state.user);
+          } catch (e) {
+            // Ignore if already exists locally
+            console.warn('Local cache add:', e.message);
+          }
+
+          await db.setSetting('currentUserId', state.user.id);
+
+          // Force close ALL modals (login modal has closable=false)
+          document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+          modal.modalsStack = [];
+          document.body.style.overflow = '';
+
+          updateUserUI();
+          router.navigate('dashboard');
+          toast.success('Conta criada com sucesso!');
+
+        } catch (error) {
+          console.error('Registration error:', error);
+
+          // Handle specific Firebase errors
+          if (error.code === 'auth/email-already-in-use') {
+            toast.error('Email já cadastrado');
+          } else if (error.code === 'auth/weak-password') {
+            toast.error('Senha muito fraca (mínimo 6 caracteres)');
+          } else if (error.code === 'auth/invalid-email') {
+            toast.error('Email inválido');
+          } else {
+            toast.error('Erro ao criar conta: ' + error.message);
+          }
         }
-
-        // Create user
-        const userId = await db.add(STORES.users, {
-          name,
-          email,
-          password, // In real app, hash this!
-          type,
-          avatar: name.charAt(0).toUpperCase(),
-          createdAt: new Date().toISOString()
-        });
-
-        state.user = await db.get(STORES.users, userId);
-        await db.setSetting('currentUserId', userId);
-        modal.close();
-        updateUserUI();
-        router.navigate('dashboard');
-        toast.success('Conta criada com sucesso!');
       });
 
       // PWA Install button handler
@@ -1279,29 +1338,46 @@ async function renderWorkouts() {
     </div>
   `;
 
-  // Setup event listeners directly (works even before DOM insertion)
-  // Start workout buttons
-  container.querySelectorAll('.start-workout-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const workoutId = parseInt(btn.dataset.workoutId);
-      const workout = await workoutsManager.getWorkout(workoutId);
-      if (workout) {
-        workoutsManager.startSession(workout);
-        router.navigate('workout-execute');
+  // Setup event delegation for workout buttons (works for dynamic content)
+  const workoutsList = container.querySelector('#workouts-list');
+  if (workoutsList) {
+    workoutsList.addEventListener('click', async (e) => {
+      // Handle Start Workout button
+      const startBtn = e.target.closest('.start-workout-btn');
+      if (startBtn) {
+        e.stopPropagation();
+        const rawId = startBtn.dataset.workoutId;
+        const workoutId = !isNaN(rawId) ? Number(rawId) : rawId;
+        console.log('[Workout] Starting workout:', workoutId);
+        const workout = await workoutsManager.getWorkout(workoutId);
+        if (workout) {
+          workoutsManager.startSession(workout);
+          router.navigate('workout-execute');
+        } else {
+          console.error('[Workout] Workout not found:', workoutId);
+          toast.error('Treino não encontrado');
+        }
+        return;
+      }
+
+      // Handle Edit Workout button
+      const editBtn = e.target.closest('.edit-workout-btn');
+      if (editBtn) {
+        e.stopPropagation();
+        const rawId = editBtn.dataset.workoutId;
+        const workoutId = !isNaN(rawId) ? Number(rawId) : rawId;
+        console.log('[Workout] Editing workout:', workoutId);
+        const workout = await workoutsManager.getWorkout(workoutId);
+        if (workout) {
+          showWorkoutCreator(workout);
+        } else {
+          console.error('[Workout] Workout not found:', workoutId);
+          toast.error('Treino não encontrado');
+        }
+        return;
       }
     });
-  });
-
-  // Edit workout buttons
-  container.querySelectorAll('.edit-workout-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const workoutId = parseInt(btn.dataset.workoutId);
-      const workout = await workoutsManager.getWorkout(workoutId);
-      if (workout) showWorkoutCreator(workout);
-    });
-  });
+  }
 
   // Create workout button
   const createBtn = container.querySelector('#create-workout-btn');
@@ -1318,6 +1394,92 @@ async function renderWorkouts() {
       showAIWizard();
     });
   }
+
+  // Tab switching for Meus Treinos / Modelos PPL
+  container.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', async () => {
+      // Update active tab styling
+      container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const workoutsList = container.querySelector('#workouts-list');
+      const isTemplates = tab.dataset.tab === 'templates';
+
+      if (isTemplates) {
+        // Show PPL templates
+        workoutsList.innerHTML = WORKOUT_TEMPLATES.map(template => `
+          <div class="card card-gradient workout-card" style="border-left: 4px solid ${template.color}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--spacing-md);">
+              <div>
+                <h4 style="margin-bottom: var(--spacing-xs);">${template.name}</h4>
+                <p style="font-size: var(--font-size-sm); color: var(--text-muted);">${template.description}</p>
+              </div>
+              <span style="background: var(--accent-primary); color: white; padding: 4px 12px; border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: 600;">
+                ${template.exercises.length} exercícios
+              </span>
+            </div>
+            <div style="margin-top: var(--spacing-md);">
+              <button class="btn btn-primary btn-sm use-template-btn" data-template-name="${template.name}">
+                Usar este modelo
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        // Add event listeners for "Use Template" buttons
+        workoutsList.querySelectorAll('.use-template-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const templateName = btn.dataset.templateName;
+            const template = WORKOUT_TEMPLATES.find(t => t.name === templateName);
+            if (template && state.user) {
+              await workoutsManager.createWorkout({
+                userId: state.user.id,
+                ...template
+              });
+              toast.success(`Treino "${template.name}" criado!`);
+              // Switch back to my workouts tab
+              container.querySelector('.tab[data-tab="my"]').click();
+            }
+          });
+        });
+      } else {
+        // Show user's workouts
+        const userWorkouts = state.user ? await workoutsManager.getWorkouts(state.user.id) : [];
+        workoutsList.innerHTML = userWorkouts.length > 0
+          ? userWorkouts.map(w => workoutsManager.renderWorkoutCard(w)).join('')
+          : `<div class="card">
+              <div class="empty-state">
+                <h4 class="empty-title">Nenhum treino criado</h4>
+                <p class="empty-description">Clique em "Novo Treino" para começar</p>
+              </div>
+            </div>`;
+
+        // Re-attach event listeners for the new workout cards
+        workoutsList.querySelectorAll('.start-workout-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const rawId = btn.dataset.workoutId;
+            const workoutId = !isNaN(rawId) ? Number(rawId) : rawId;
+            const workout = await workoutsManager.getWorkout(workoutId);
+            if (workout) {
+              workoutsManager.startSession(workout);
+              router.navigate('workout-execute');
+            }
+          });
+        });
+
+        workoutsList.querySelectorAll('.edit-workout-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const rawId = btn.dataset.workoutId;
+            const workoutId = !isNaN(rawId) ? Number(rawId) : rawId;
+            const workout = await workoutsManager.getWorkout(workoutId);
+            if (workout) showWorkoutCreator(workout);
+          });
+        });
+      }
+    });
+  });
 
   return container;
 }
@@ -1632,13 +1794,22 @@ async function showWorkoutCreator(existingWorkout = null) {
           // Remove exercise buttons
           container.querySelectorAll('.remove-exercise-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-              const idx = parseInt(e.target.dataset.index);
-              currentExercises.splice(idx, 1);
-              updateExercisesList();
+              e.stopPropagation();
+              const button = e.target.closest('.remove-exercise-btn');
+              const idx = parseInt(button?.dataset.index);
+              if (!isNaN(idx)) {
+                currentExercises.splice(idx, 1);
+                updateExercisesList();
+              }
             });
           });
         }
       };
+
+      // FIX: Initialize event listeners for existing exercises when editing
+      if (isEditing && currentExercises.length > 0) {
+        updateExercisesList();
+      }
 
       // Save workout
       overlay.querySelector('#save-workout-btn')?.addEventListener('click', async () => {
@@ -1690,20 +1861,31 @@ async function showWorkoutCreator(existingWorkout = null) {
 
       // Delete workout
       overlay.querySelector('#delete-workout-btn')?.addEventListener('click', async () => {
-        if (confirm('Tem certeza que deseja excluir este treino?')) {
+        const confirmed = await modal.confirm({
+          title: 'Excluir Treino',
+          message: `Tem certeza que deseja excluir o treino "${existingWorkout.name}"? Esta ação não pode ser desfeita.`,
+          confirmText: 'Excluir',
+          cancelText: 'Cancelar',
+          danger: true
+        });
+
+        if (confirmed) {
           try {
+            console.log('[Delete] Deleting workout:', existingWorkout.id, existingWorkout.name);
             await workoutsManager.deleteWorkout(existingWorkout.id);
-            toast.success('Treino excluído!');
-            modal.close();
-            // Force refresh
-            if (window.location.hash === '#workouts' || !window.location.hash) {
-              await renderWorkouts();
-            } else {
-              router.navigate('workouts');
-            }
+            toast.success('Treino excluído com sucesso!');
+
+            // Close all modals first
+            document.querySelectorAll('.modal-overlay').forEach(el => el.remove());
+            modal.modalsStack = [];
+            document.body.style.overflow = '';
+
+            // Force page reload to refresh the list
+            window.location.hash = '#workouts';
+            window.location.reload();
           } catch (error) {
-            console.error('Error deleting workout:', error);
-            toast.error('Erro ao excluir treino');
+            console.error('[Delete] Error deleting workout:', error);
+            toast.error('Erro ao excluir treino: ' + error.message);
           }
         }
       });
@@ -2843,8 +3025,7 @@ async function seedDatabase() {
   }
 }
 
-// Initialize app when DOM is ready
-document.addEventListener('DOMContentLoaded', init);
+// Note: App initialization moved to end of file (lines ~2990)
 
 /**
  * Check for pending redirect login results
@@ -2852,7 +3033,12 @@ document.addEventListener('DOMContentLoaded', init);
 async function checkRedirectLogin() {
   if (state.user) return;
 
-  try {
+  // Add timeout to prevent blocking app init if Firebase hangs
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Redirect check timeout')), 3000)
+  );
+
+  const check = async () => {
     const firebaseModule = await import('./firebase-config.js');
     await firebaseModule.initFirebase();
 
@@ -2885,8 +3071,15 @@ async function checkRedirectLogin() {
       // Usar função centralizada
       await handleSuccessfulLogin(state.user);
     }
+  };
 
+  try {
+    await Promise.race([check(), timeout]);
   } catch (error) {
+    if (error.message === 'Redirect check timeout') {
+      console.warn('[Auth] Redirect check timed out, continuing...');
+      return;
+    }
     console.error('[Auth] Redirect check error:', error);
     // Não mostrar toast a menos que seja erro real do Firebase
     if (error.code && error.code !== 'auth/popup-closed-by-user') {

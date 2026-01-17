@@ -96,7 +96,7 @@ class Router {
         this.currentRoute = path;
 
         // Update page title
-        document.title = `${route.title} | MFIT Personal`;
+        document.title = `${route.title} | GymFlow`;
 
         // Update active nav item
         this.updateNavigation(path);

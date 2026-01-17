@@ -117,6 +117,10 @@ class Database {
      * Generic CRUD operations
      */
     async add(storeName, data) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping add');
+            return null;
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readwrite');
             const store = transaction.objectStore(storeName);
@@ -128,6 +132,10 @@ class Database {
     }
 
     async get(storeName, id) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping get');
+            return null;
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readonly');
             const store = transaction.objectStore(storeName);
@@ -139,6 +147,10 @@ class Database {
     }
 
     async getAll(storeName) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping getAll');
+            return [];
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readonly');
             const store = transaction.objectStore(storeName);
@@ -150,6 +162,10 @@ class Database {
     }
 
     async getByIndex(storeName, indexName, value) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping getByIndex');
+            return [];
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readonly');
             const store = transaction.objectStore(storeName);
@@ -162,6 +178,10 @@ class Database {
     }
 
     async update(storeName, data) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping update');
+            return null;
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readwrite');
             const store = transaction.objectStore(storeName);
@@ -173,6 +193,10 @@ class Database {
     }
 
     async delete(storeName, id) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping delete');
+            return;
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readwrite');
             const store = transaction.objectStore(storeName);
@@ -184,6 +208,10 @@ class Database {
     }
 
     async clear(storeName) {
+        if (!this.db) {
+            console.warn('[DB] Database not initialized, skipping clear');
+            return;
+        }
         return new Promise((resolve, reject) => {
             const transaction = this.db.transaction(storeName, 'readwrite');
             const store = transaction.objectStore(storeName);

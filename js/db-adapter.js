@@ -20,12 +20,10 @@ let useFirebase = false;
 
 /**
  * Database configuration
+ * Firebase HABILITADO - sincronização com cloud
  */
 const dbConfig = {
-    // Set to true to use Firebase, false for local IndexedDB only
-    useCloud: false,
-
-    // Firebase will be initialized when enabled
+    useCloud: true,
     isFirebaseReady: false
 };
 
@@ -33,25 +31,24 @@ const dbConfig = {
  * Initialize database adapter
  */
 async function initDatabase() {
-    // Always initialize local DB first (for offline support)
+    // Initialize local DB first (for offline support)
     await localDB.init();
 
-    // Check if Firebase should be enabled
+    // Try to enable Firebase if cloud mode is on
     if (dbConfig.useCloud) {
         try {
             firebaseModule = await import('./firebase-config.js');
-            const success = await firebaseModule.initFirebase();
-            if (success) {
-                dbConfig.isFirebaseReady = true;
-                useFirebase = true;
-                // DEV: console.log('✅ Cloud database enabled');
-            }
-        } catch (error) {
-            console.warn('⚠️ Firebase not available, using local database only');
+            await firebaseModule.initFirebase();
+            useFirebase = true;
+            dbConfig.isFirebaseReady = true;
+            console.log('✅ Firebase cloud sync enabled');
+        } catch (e) {
+            console.warn('⚠️ Firebase not available, using local only:', e.message);
             useFirebase = false;
         }
+    } else {
+        useFirebase = false;
     }
-
     return true;
 }
 
@@ -218,11 +215,15 @@ const auth = {
     currentUser: null,
 
     /**
-     * Sign up
+     * Sign up with email/password
+     * @param {string} email
+     * @param {string} password
+     * @param {string} name
+     * @param {string} type - 'student' or 'trainer'
      */
-    async signUp(email, password, name) {
+    async signUp(email, password, name, type = 'student') {
         if (useFirebase && firebaseModule) {
-            const user = await firebaseModule.firebaseAuth.signUp(email, password, name);
+            const user = await firebaseModule.firebaseAuth.signUp(email, password, name, type);
             this.currentUser = user;
             return user;
         }
@@ -232,7 +233,7 @@ const auth = {
             id: Date.now(),
             email,
             name,
-            type: 'student',
+            type: type,
             createdAt: new Date().toISOString()
         };
         await localDB.add(STORES.users, user);

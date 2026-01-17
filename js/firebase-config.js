@@ -109,16 +109,17 @@ const firebaseAuth = {
     },
 
     // Sign up with email/password
-    async signUp(email, password, name) {
+    async signUp(email, password, name, type = 'student') {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Create user document in Firestore
+        // Create user document in Firestore with correct type
         await setDoc(doc(db, 'users', user.uid), {
             uid: user.uid,
             email: email,
             name: name,
-            type: 'student',
+            type: type,
+            avatar: name.charAt(0).toUpperCase(),
             createdAt: new Date().toISOString()
         });
 
@@ -220,7 +221,7 @@ const firebaseDB = {
 
     // Get documents by index (field value)
     async getByIndex(collectionName, field, value) {
-        const q = query(collection(db, collectionName), where(field, '===', value));
+        const q = query(collection(db, collectionName), where(field, '==', value));
         const querySnapshot = await getDocs(q);
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     },
@@ -270,7 +271,7 @@ const firebaseDB = {
 
     // Subscribe to real-time updates
     subscribe(collectionName, field, value, callback) {
-        const q = query(collection(db, collectionName), where(field, '===', value));
+        const q = query(collection(db, collectionName), where(field, '==', value));
         return onSnapshot(q, (snapshot) => {
             const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             callback(data);
