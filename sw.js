@@ -1,5 +1,5 @@
 // MFIT Personal - Service Worker
-const CACHE_NAME = 'mfit-personal-v13';
+const CACHE_NAME = 'mfit-personal-v17';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -10,6 +10,18 @@ const ASSETS_TO_CACHE = [
   '/js/firebase-config.js',
   '/js/router.js',
   '/js/data/exercises.json',
+  '/js/components/toast.js',
+  '/js/components/modal.js',
+  '/js/modules/workouts.js',
+  '/js/modules/history.js',
+  '/js/modules/progress.js',
+  '/js/modules/assessments.js',
+  '/js/modules/students.js',
+  '/js/modules/pdf.js',
+  '/js/modules/ai-wizard.js',
+  '/js/modules/timer.js',
+  '/js/modules/checkins.js',
+  '/js/utils/logger.js',
   '/manifest.json',
   '/.well-known/assetlinks.json'
 ];
@@ -64,7 +76,7 @@ self.addEventListener('fetch', (event) => {
       })
       .catch(() => {
         // Offline fallback for HTML pages
-        if (event.request.headers.get('accept').includes('text/html')) {
+        if (event.request.headers.get('accept')?.includes('text/html')) {
           return caches.match('/index.html');
         }
       })
